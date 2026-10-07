@@ -1,0 +1,227 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+  margin-top: -80px; /* Counter Layout padding if wrapped, though usually admin doesn't use main layout */
+  padding-top: 80px;
+}
+
+.admin-sidebar {
+  width: 260px;
+  background-color: white;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.admin-logo {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--primary);
+  text-align: center;
+}
+
+.admin-nav {
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  border-radius: var(--border-radius-sm);
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: left;
+}
+
+.admin-nav-item:hover {
+  background-color: #f8f9fa;
+  color: var(--primary);
+}
+
+.admin-nav-item.active {
+  background-color: var(--primary-light);
+  color: white;
+}
+
+.badge-count {
+  background-color: var(--accent);
+  color: white;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: auto;
+}
+
+.admin-footer {
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.admin-main {
+  flex-grow: 1;
+  margin-left: 260px;
+  padding: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-primary { background-color: var(--primary); }
+.bg-warning { background-color: #f59f00; }
+.bg-success { background-color: #2b8a3e; }
+
+.stat-info h3 {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.stat-info p {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.admin-card {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+}
+
+.max-w-lg {
+  max-width: 600px;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 1rem;
+  border-bottom: 2px solid var(--border-color);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.admin-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.admin-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.table-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.text-sm { font-size: 0.85rem; }
+.ml-1 { margin-left: 0.5rem; }
+.mb-0 { margin-bottom: 0; }
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-new { background-color: #fff3cd; color: #856404; }
+.status-in-progress { background-color: #cce5ff; color: #004085; }
+.status-completed { background-color: #d4edda; color: #155724; }
+
+.status-select {
+  padding: 0.4rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  color: var(--secondary);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  transition: var(--transition);
+}
+.btn-icon:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .admin-sidebar {
+    width: 60px;
+  }
+  .admin-logo h2, .admin-nav-item text, .badge-count {
+    display: none;
+  }
+  .admin-nav-item {
+    justify-content: center;
+    padding: 0.75rem 0;
+  }
+  .admin-main {
+    margin-left: 60px;
+    padding: 1rem;
+  }
+}
