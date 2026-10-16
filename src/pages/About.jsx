@@ -106,7 +106,7 @@ export default function About({ settings }) {
             <div className="about-image">
               <img 
                 src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=800&q=80" 
-                alt="WHO-GMP Manufacturing Facility" 
+                alt="High Quality Medicines Formulation Facility" 
                 className="rounded-image shadow" 
               />
             </div>

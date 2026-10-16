@@ -339,3 +339,31 @@ p { margin-bottom: 1rem; color: var(--text-muted); font-size: 1.025rem; }
   .section { padding: 3.5rem 0; }
   .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 1.5rem; }
 }
+
+/* ========================================================
+   GLOBAL PROMINENT SCROLL FADE-IN EFFECT FOR ALL SECTIONS
+   ======================================================== */
+.scroll-fade-target {
+  opacity: 0;
+  transform: translateY(60px);
+  filter: blur(5px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), 
+              filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+.scroll-fade-target.scroll-in-view {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  filter: blur(0) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-fade-target {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}

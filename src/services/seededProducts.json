@@ -1,0 +1,802 @@
+[
+  {
+    "id": "1",
+    "name": "Livpik Ayurvedic Liver Tonic",
+    "genericName": "Silymarin, Tricholine Citrate & Sorbitol Oral Liquid",
+    "category": "Liquids Orals",
+    "dosageForm": "Syrup (Oral Liquid)",
+    "indications": "Hepato-protective tonic indicated for fatty liver, sluggish liver, loss of appetite, and aiding optimal liver detoxification.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.14 AM.jpeg",
+    "featured": true
+  },
+  {
+    "id": "2",
+    "name": "Auspik Appetone Syrup",
+    "genericName": "Cyproheptadine HCl & Tricholine Citrate Syrup",
+    "category": "Liquids Orals",
+    "dosageForm": "Syrup (Oral Liquid)",
+    "indications": "Appetite stimulant syrup for children and adults experiencing poor food intake, nutritional deficiency, or convalescent recovery.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.30 AM (1).jpeg",
+    "featured": true
+  },
+  {
+    "id": "3",
+    "name": "Kofpik-DX Cough Syrup",
+    "genericName": "Dextromethorphan HBr, Phenylephrine HCl & Chlorpheniramine Maleate",
+    "category": "Liquids Orals",
+    "dosageForm": "Syrup (Oral Liquid)",
+    "indications": "Comprehensive relief from dry irritating cough, throat tickle, nasal congestion, and allergic upper respiratory symptoms.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.30 AM.jpeg",
+    "featured": true
+  },
+  {
+    "id": "4",
+    "name": "Kofpik-LS Expectorant",
+    "genericName": "Levosalbutamol, Ambroxol HCl & Guaiphenesin Syrup",
+    "category": "Liquids Orals",
+    "dosageForm": "Syrup (Oral Liquid)",
+    "indications": "Mucolytic bronchorelaxant indicated for productive chesty cough, asthma-related bronchospasm, and chronic bronchitis.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.32 AM (1).jpeg",
+    "featured": true
+  },
+  {
+    "id": "5",
+    "name": "Auspik Cold Suspension",
+    "genericName": "Paracetamol, Phenylephrine HCl, Chlorpheniramine & Sodium Citrate",
+    "category": "Liquids Orals",
+    "dosageForm": "Oral Suspension",
+    "indications": "Fast relief from fever, headache, body aches, runny nose, and sinus congestion associated with the common cold.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.32 AM.jpeg",
+    "featured": true
+  },
+  {
+    "id": "6",
+    "name": "Megapik Multivitamin Tonic",
+    "genericName": "B-Complex with L-Lysine & Zinc Oral Liquid",
+    "category": "Liquids Orals",
+    "dosageForm": "Syrup (Oral Liquid)",
+    "indications": "Daily energy booster, supports metabolic vitality, enhances immunity, and replenishes essential B-vitamins.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.34 AM.jpeg",
+    "featured": true
+  },
+  {
+    "id": "7",
+    "name": "Docysalate Plus Suspension",
+    "genericName": "Docusate Sodium & Sennosides Concentrated Liquid",
+    "category": "Liquids Orals",
+    "dosageForm": "Oral Suspension",
+    "indications": "Gentle, effective dual-action bowel evacuant providing dependable relief from occasional and chronic constipation.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.35 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "8",
+    "name": "Pikcid Gel Suspension",
+    "genericName": "Magaldrate & Simethicone Antacid Oral Gel",
+    "category": "Liquids Orals",
+    "dosageForm": "Antacid Gel",
+    "indications": "Immediate neutralizing relief for acid indigestion, heartburn, GERD, sour stomach, and hyperacidity discomfort.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.36 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "9",
+    "name": "Ferropik-XT Tonic",
+    "genericName": "Ferrous Ascorbate, Folic Acid & Cyanocobalamin Syrup",
+    "category": "Liquids Orals",
+    "dosageForm": "Syrup (Oral Liquid)",
+    "indications": "Highly bioavailable oral iron supplement for pregnancy, nutritional iron-deficiency anemia, and post-operative recovery.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.37 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "10",
+    "name": "Auspik Zinc-20 Drops",
+    "genericName": "Zinc Gluconate Pediatric Oral Solution 20mg",
+    "category": "Liquids Orals",
+    "dosageForm": "Pediatric Drops",
+    "indications": "Pediatric immune supplement and adjunct therapy in childhood acute diarrhea to accelerate mucosal repair.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.38 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "11",
+    "name": "Pikmox-CV Dry Syrup",
+    "genericName": "Amoxicillin & Potassium Clavulanate Oral Suspension IP",
+    "category": "Liquids Orals",
+    "dosageForm": "Oral Suspension",
+    "indications": "Broad-spectrum antibiotic suspension for pediatric respiratory, ear-nose-throat, and soft tissue bacterial infections.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.39 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "12",
+    "name": "Pikpod-50 Dry Syrup",
+    "genericName": "Cefpodoxime Proxetil 50mg / 5ml Oral Suspension",
+    "category": "Liquids Orals",
+    "dosageForm": "Oral Suspension",
+    "indications": "Third-generation cephalosporin suspension for pediatric ENT infections, bronchitis, and acute urinary infections.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.40 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "13",
+    "name": "AUSPIK FACELITE CREAM",
+    "genericName": "Hydroquinone 2.0%, Tretinoin 0.025% & Mometasone Furoate 0.1% w/w",
+    "category": "Creams & Topicals",
+    "dosageForm": "Topical Cream",
+    "indications": "Dermatological triple-action depigmenting cream for moderate-to-severe melasma, hyperpigmentation, and post-acne blemishes.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.42 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "14",
+    "name": "Dermapik-Plus Cream",
+    "genericName": "Clobetasol Propionate, Neomycin Sulphate & Miconazole Nitrate",
+    "category": "Creams & Topicals",
+    "dosageForm": "Topical Cream",
+    "indications": "Broad-spectrum antimicrobial and corticosteroid cream indicated for inflamed dermal fungal and mixed microbial infections.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.43 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "15",
+    "name": "Lulipik-1% Cream",
+    "genericName": "Luliconazole Topical Cream 1.0% w/w",
+    "category": "Creams & Topicals",
+    "dosageForm": "Topical Cream",
+    "indications": "Potent topical antifungal for tinea pedis, tinea cruris (jock itch), and tinea corporis (ringworm) infections.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.45 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "16",
+    "name": "Piknazole Dusting Powder",
+    "genericName": "Clotrimazole Absorbent Dusting Powder 1% w/w",
+    "category": "Creams & Topicals",
+    "dosageForm": "Topical Powder",
+    "indications": "Absorbent antifungal powder for prickly heat, chafing, fungal rash, and moisture-associated skin fold irritation.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.46 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "17",
+    "name": "Pikflam Gel",
+    "genericName": "Diclofenac Diethylamine, Methyl Salicylate, Linseed Oil & Menthol",
+    "category": "Creams & Topicals",
+    "dosageForm": "Topical Gel",
+    "indications": "Deep-penetrating pain relief gel for acute musculoskeletal trauma, sprains, sports injuries, and neck/back spasms.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.48 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "18",
+    "name": "Silverpik Burn Cream",
+    "genericName": "Silver Sulfadiazine 1% & Chlorhexidine Gluconate 0.2%",
+    "category": "Creams & Topicals",
+    "dosageForm": "Topical Cream",
+    "indications": "Topical antibacterial cream for prophylaxis and treatment of wound sepsis in second- and third-degree burn lesions.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.49 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "19",
+    "name": "Auspik Scab Relief Lotion",
+    "genericName": "Permethrin 5% w/v Topical Lotion",
+    "category": "Creams & Topicals",
+    "dosageForm": "Topical Lotion",
+    "indications": "Gold standard scabicide for eradication of Sarcoptes scabiei mites and pediculosis capitis infestations.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.51 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "20",
+    "name": "Ketopik Scalp Lotion",
+    "genericName": "Ketoconazole 2% & Zinc Pyrithione (ZPTO) 1% Lotion",
+    "category": "Creams & Topicals",
+    "dosageForm": "Topical Solution",
+    "indications": "Anti-dandruff and anti-seborrheic dermatitis medicated topical wash controlling Malassezia scalp colonization.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.52 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "21",
+    "name": "Auspik Foot Care Cream",
+    "genericName": "Urea, Lactic Acid, Propylene Glycol & Liquid Paraffin",
+    "category": "Creams & Topicals",
+    "dosageForm": "Topical Cream",
+    "indications": "Intensive keratolytic emollient cream for cracked heels, hyperkeratotic fissures, and extremely dry coarse skin.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.54 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "22",
+    "name": "Pikcort 0.05% Ointment",
+    "genericName": "Clobetasol Propionate Ointment 0.05% w/w",
+    "category": "Creams & Topicals",
+    "dosageForm": "Topical Ointment",
+    "indications": "High-potency topical steroid formulation for recalcitrant psoriasis, stubborn eczema, and lichen planus plaques.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.55 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "23",
+    "name": "Mupipik 2% Ointment",
+    "genericName": "Mupirocin Topical Ointment 2% w/w",
+    "category": "Creams & Topicals",
+    "dosageForm": "Topical Ointment",
+    "indications": "Topical antibiotic ointment indicated for primary superficial impetigo, folliculitis, and minor open infected skin lesions.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.57 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "24",
+    "name": "Pikclear Anti-Acne Gel",
+    "genericName": "Clindamycin Phosphate 1% & Nicotinamide 4% Gel",
+    "category": "Creams & Topicals",
+    "dosageForm": "Topical Gel",
+    "indications": "Dermatological gel targeting Propionibacterium acnes, reducing inflammatory papules and facial acne erythema.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.50.58 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "25",
+    "name": "Auspik Ortho Pain Relief Oil",
+    "genericName": "Mahanarayan Taila, Gandhapura, Eucalyptus & Camphor Blend",
+    "category": "Pain Relief Oils",
+    "dosageForm": "Medicated Oil",
+    "indications": "Ayurvedic therapeutic joint oil formulated with classical herbs for rapid penetrating relief from arthritis, joint stiffness, and backache.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.51.00 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "26",
+    "name": "Pikvedic Liniment Oil",
+    "genericName": "Capsaicin, Wintergreen, Nilgiri & Shallaki Bio-Oil",
+    "category": "Pain Relief Oils",
+    "dosageForm": "Medicated Oil",
+    "indications": "Instant thermal action liniment for chronic cervical spondylitis, frozen shoulder, lumbago, and muscular contractures.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.51.01 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "27",
+    "name": "Auspik Mahavishgarbha Taila",
+    "genericName": "Classical Ayurvedic Taila with 32 Active Botanicals",
+    "category": "Pain Relief Oils",
+    "dosageForm": "Medicated Oil",
+    "indications": "Potent traditional medicated oil specifically indicated for neuromuscular conditions, sciatica, numbness, and joint weakness.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.51.03 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "28",
+    "name": "Auspik Nilgiri Steam Vapor Oil",
+    "genericName": "Pure Eucalyptus Globulus & Camphor Essential Extract",
+    "category": "Pain Relief Oils",
+    "dosageForm": "Aromatherapy Oil",
+    "indications": "Aromatic therapeutic inhalant oil for clearing clogged sinus pathways, bronchial heaviness, and chest tightness.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.52.12 AM (1).jpeg",
+    "featured": false
+  },
+  {
+    "id": "29",
+    "name": "Pikartho Forte Roll-On Oil",
+    "genericName": "Gandhapura, Pudina Satva & Karpoor Concentrated Oil",
+    "category": "Pain Relief Oils",
+    "dosageForm": "Roll-On Oil",
+    "indications": "Mess-free pocket roll-on delivering fast localized analgesic relief for tension headaches, neck strain, and athletic aches.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.52.12 AM (2).jpeg",
+    "featured": false
+  },
+  {
+    "id": "30",
+    "name": "Auspik Joint-Shield Herbal Liniment",
+    "genericName": "Boswellia Serrata, Nirgundi & Devdaru Active Taila",
+    "category": "Pain Relief Oils",
+    "dosageForm": "Medicated Oil",
+    "indications": "Deeply penetrating Ayurvedic formulation soothing chronic knee effusion and sports-related ligament strain.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.52.12 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "31",
+    "name": "Auspik Bhringraj Herbal Hair Oil",
+    "genericName": "Eclipta Alba, Amla, Brahmi & Sesame Infused Taila",
+    "category": "Herbals",
+    "dosageForm": "Hair Oil",
+    "indications": "Revitalizing botanical scalp formulation promoting robust follicular strength, combating dandruff, and preventing premature graying.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.52.13 AM (1).jpeg",
+    "featured": false
+  },
+  {
+    "id": "32",
+    "name": "Pikzyme Digestive Herbal Syrup",
+    "genericName": "Carica Papaya, Zingiber Officinale & Pippali Ferment",
+    "category": "Herbals",
+    "dosageForm": "Herbal Syrup",
+    "indications": "Carminative herbal digestive stimulant relieving postprandial heaviness, dyspepsia, flatulence, and epigastric fullness.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.52.13 AM (2).jpeg",
+    "featured": false
+  },
+  {
+    "id": "33",
+    "name": "Auspik Madhu-Shield Juice",
+    "genericName": "Karela, Jamun, Methi & Gudmar Standardized Extract",
+    "category": "Herbals",
+    "dosageForm": "Oral Juice",
+    "indications": "Synergistic botanical juice supporting healthy pancreatic insulin sensitivity and glycemic balance.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.52.13 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "34",
+    "name": "Auspik Giloy-Tulsi Immune Tonic",
+    "genericName": "Tinospora Cordifolia (Giloy) & Ocimum Sanctum Juice",
+    "category": "Herbals",
+    "dosageForm": "Herbal Syrup",
+    "indications": "Immunomodulating herbal tonic bolstering platelet counts, fighting chronic low-grade pyrexia, and enhancing resistance.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.52.14 AM (1).jpeg",
+    "featured": false
+  },
+  {
+    "id": "35",
+    "name": "Pikrespo Herbal Cough Kadha",
+    "genericName": "Adhatoda Vasica (Vasa), Mulethi, Kantakari & Tulsi",
+    "category": "Herbals",
+    "dosageForm": "Herbal Syrup",
+    "indications": "Time-tested Ayurvedic soothing decoction for liquefying sticky bronchial phlegm without inducing drowsiness.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.52.14 AM (2).jpeg",
+    "featured": false
+  },
+  {
+    "id": "36",
+    "name": "Auspik Triphala Detox Syrup",
+    "genericName": "Haritaki, Bibhitaki & Amalaki Balanced Concentrate",
+    "category": "Herbals",
+    "dosageForm": "Herbal Liquid",
+    "indications": "Gentle everyday internal purifier promoting natural digestive regularity and antioxidant wellness.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.52.14 AM (3).jpeg",
+    "featured": false
+  },
+  {
+    "id": "37",
+    "name": "Pikvita Ayurvedic Energy Tonic",
+    "genericName": "Withania Somnifera (Ashwagandha) & Safed Musli Tonic",
+    "category": "Herbals",
+    "dosageForm": "Herbal Syrup",
+    "indications": "Rejuvenating rasayana tonic combating physical fatigue, mental exhaustion, and enhancing stamina.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.52.14 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "38",
+    "name": "Auspik Liv-Amrit Herbal Drops",
+    "genericName": "Bhumi Amla, Punarnava & Kasani Concentrated Drops",
+    "category": "Herbals",
+    "dosageForm": "Oral Drops",
+    "indications": "Targeted botanical liver protector stimulating bile secretion and preventing chemical-induced hepatotoxicity.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.52.15 AM (1).jpeg",
+    "featured": false
+  },
+  {
+    "id": "39",
+    "name": "Penzo-40 Tablets",
+    "genericName": "Pantoprazole Gastro-Resistant Tablets IP 40mg",
+    "category": "Tablets",
+    "dosageForm": "Enteric Coated Tablet",
+    "indications": "Gold-standard proton pump inhibitor indicated for GERD, peptic ulcer healing, and prevention of NSAID-induced ulcers.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.52.15 AM (2).jpeg",
+    "featured": false
+  },
+  {
+    "id": "40",
+    "name": "Penzo-DSR Capsules",
+    "genericName": "Pantoprazole Sodium 40mg & Domperidone 30mg SR",
+    "category": "Tablets",
+    "dosageForm": "Sustained Release Capsule",
+    "indications": "Dual-action PPI & prokinetic formulation for acid reflux accompanied by severe nausea, bloating, and gastroparesis.",
+    "image": "/product_images/WhatsApp Image 2026-09-28 at 11.52.15 AM.jpeg",
+    "featured": false
+  },
+  {
+    "id": "41",
+    "name": "Drotypik-MF Tablets",
+    "genericName": "Drotaverine HCl 80mg & Mefenamic Acid 250mg",
+    "category": "Tablets",
+    "dosageForm": "Tablet",
+    "indications": "Potent antispasmodic and analgesic formulation specifically relieving severe spasmodic dysmenorrhea and visceral colic.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (1).jpeg",
+    "featured": false
+  },
+  {
+    "id": "42",
+    "name": "Calcium K27 Tablets",
+    "genericName": "Calcium Citrate Malate, Calcitriol & Vitamin K2-7",
+    "category": "Tablets",
+    "dosageForm": "Film-Coated Tablet",
+    "indications": "Advanced bone nutrition matrix ensuring optimal arterial-safe calcium deposition for osteoporosis and postmenopausal bone loss.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (10).jpeg",
+    "featured": false
+  },
+  {
+    "id": "43",
+    "name": "Auspik Paracetamol 650",
+    "genericName": "Paracetamol IP 650mg High-Potency Tablets",
+    "category": "Tablets",
+    "dosageForm": "Tablet",
+    "indications": "Fast antipyretic and analgesic tablet for high fever, viral chills, tension headache, and body aches.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (11).jpeg",
+    "featured": false
+  },
+  {
+    "id": "44",
+    "name": "Pikclofen-SP Tablets",
+    "genericName": "Aceclofenac 100mg, Paracetamol 325mg & Serratiopeptidase 15mg",
+    "category": "Tablets",
+    "dosageForm": "Film-Coated Tablet",
+    "indications": "Triple-action anti-inflammatory, analgesic, and anti-edema tablet for dental pain, orthopedic trauma, and post-surgical swelling.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (12).jpeg",
+    "featured": false
+  },
+  {
+    "id": "45",
+    "name": "Montpik-LC Tablets",
+    "genericName": "Montelukast Sodium 10mg & Levocetirizine Dihydrochloride 5mg",
+    "category": "Tablets",
+    "dosageForm": "Film-Coated Tablet",
+    "indications": "Comprehensive therapy for seasonal allergic rhinitis, chronic allergic dermatitis, and comorbid mild allergic asthma.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (13).jpeg",
+    "featured": false
+  },
+  {
+    "id": "46",
+    "name": "Telmipik-40 Tablets",
+    "genericName": "Telmisartan Tablets IP 40mg",
+    "category": "Tablets",
+    "dosageForm": "Tablet",
+    "indications": "Long-acting angiotensin receptor blocker for essential hypertension and cardiovascular risk reduction.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (14).jpeg",
+    "featured": false
+  },
+  {
+    "id": "47",
+    "name": "Telmipik-AM Tablets",
+    "genericName": "Telmisartan 40mg & Amlodipine Besylate 5mg",
+    "category": "Tablets",
+    "dosageForm": "Tablet",
+    "indications": "Synergistic dual antihypertensive combination for patients uncontrolled on monotherapy.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (15).jpeg",
+    "featured": false
+  },
+  {
+    "id": "48",
+    "name": "Auspik Azithro-500",
+    "genericName": "Azithromycin Tablets IP 500mg",
+    "category": "Tablets",
+    "dosageForm": "Film-Coated Tablet",
+    "indications": "Broad-spectrum macrolide antibiotic for community-acquired pneumonia, acute bacterial sinusitis, and tonsillitis.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (16).jpeg",
+    "featured": false
+  },
+  {
+    "id": "49",
+    "name": "Pikflox-OZ Tablets",
+    "genericName": "Ofloxacin 200mg & Ornidazole 500mg",
+    "category": "Tablets",
+    "dosageForm": "Film-Coated Tablet",
+    "indications": "Potent broad-spectrum anti-infective indicated for acute mixed bacterial and protozoal gastroenteritis and dysentery.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (17).jpeg",
+    "featured": false
+  },
+  {
+    "id": "50",
+    "name": "Glipik-M2 Tablets",
+    "genericName": "Glimepiride 2mg & Metformin Hydrochloride 500mg SR",
+    "category": "Tablets",
+    "dosageForm": "Bilayered Tablet",
+    "indications": "Sustained-release dual oral antidiabetic therapy for glycemic control in adult Type 2 Diabetes Mellitus.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (18).jpeg",
+    "featured": false
+  },
+  {
+    "id": "51",
+    "name": "Deflapik-6 Tablets",
+    "genericName": "Deflazacort Tablets IP 6mg",
+    "category": "Tablets",
+    "dosageForm": "Tablet",
+    "indications": "Glucocorticoid with high bone-sparing profile for rheumatoid arthritis, severe asthma, and systemic inflammatory disorders.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (19).jpeg",
+    "featured": false
+  },
+  {
+    "id": "52",
+    "name": "Cefpik-200 Tablets",
+    "genericName": "Cefixime Dispersible Tablets IP 200mg",
+    "category": "Tablets",
+    "dosageForm": "Dispersible Tablet",
+    "indications": "Third-generation cephalosporin for acute bronchitis, uncomplicated typhoid fever, and urinary tract infections.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (2).jpeg",
+    "featured": false
+  },
+  {
+    "id": "53",
+    "name": "Neurobee Forte Capsules",
+    "genericName": "Methylcobalamin 1500mcg, Alpha Lipoic Acid 100mg, Pyridoxine & Folic Acid",
+    "category": "Capsules",
+    "dosageForm": "Capsule",
+    "indications": "Gold-standard neuroprotective formula for diabetic peripheral neuropathy, sciatica, and nerve regeneration support.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (20).jpeg",
+    "featured": false
+  },
+  {
+    "id": "54",
+    "name": "Rabepik-DSR Capsules",
+    "genericName": "Rabeprazole Sodium 20mg & Domperidone 30mg SR",
+    "category": "Capsules",
+    "dosageForm": "Sustained Release Capsule",
+    "indications": "Rapid acid suppression and anti-emetic action for severe gastroesophageal reflux, erosive esophagitis, and morning fullness.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (21).jpeg",
+    "featured": false
+  },
+  {
+    "id": "55",
+    "name": "Omepik-20 Capsules",
+    "genericName": "Omeprazole Gastro-Resistant Capsules IP 20mg",
+    "category": "Capsules",
+    "dosageForm": "Capsule",
+    "indications": "Established proton pump inhibitor providing 24-hour gastric acid suppression for duodenal and gastric ulcers.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (22).jpeg",
+    "featured": false
+  },
+  {
+    "id": "56",
+    "name": "Itrapik-200 Capsules",
+    "genericName": "Itraconazole Capsules IP 200mg (Pellet Technology)",
+    "category": "Capsules",
+    "dosageForm": "Hard Gelatin Capsule",
+    "indications": "Broad-spectrum systemic triazole antifungal for onychomycosis, systemic candidiasis, and recalcitrant tinea infections.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (23).jpeg",
+    "featured": false
+  },
+  {
+    "id": "57",
+    "name": "Auspik Pre & Probiotic Plus",
+    "genericName": "Lactobacillus, Bifidobacterium, FOS & Zinc Spores",
+    "category": "Capsules",
+    "dosageForm": "Capsule",
+    "indications": "Restorative synbiotic formula for antibiotic-associated diarrhea, gut dysbiosis, and irritable bowel syndrome.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (24).jpeg",
+    "featured": false
+  },
+  {
+    "id": "58",
+    "name": "Cardio-Q10 Softgels",
+    "genericName": "Coenzyme Q10 100mg, Omega-3 Fatty Acids & L-Carnitine",
+    "category": "Capsules",
+    "dosageForm": "Soft Gelatin Capsule",
+    "indications": "Cardiometabolic vitality formula supporting myocardial bioenergetics, vascular elasticity, and antioxidant defense.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (25).jpeg",
+    "featured": false
+  },
+  {
+    "id": "59",
+    "name": "Auspik D3-60K Softgels",
+    "genericName": "Cholecalciferol (Vitamin D3) Capsules IP 60,000 IU",
+    "category": "Capsules",
+    "dosageForm": "Softgel Capsule",
+    "indications": "High-concentration weekly vitamin D3 therapy for hypocalcemia, osteomalacia, and severe vitamin D deficiency.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (26).jpeg",
+    "featured": false
+  },
+  {
+    "id": "60",
+    "name": "Silymarin-140 Plus Capsules",
+    "genericName": "Standardized Milk Thistle Extract (Silymarin 140mg) & Lecithin",
+    "category": "Capsules",
+    "dosageForm": "Capsule",
+    "indications": "Cellular hepatoprotective agent stabilizing liver hepatocyte membranes against toxic damage and alcoholic stress.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (27).jpeg",
+    "featured": false
+  },
+  {
+    "id": "61",
+    "name": "Auspik Joint-Flex Softgels",
+    "genericName": "Glucosamine Sulfate, Chondroitin & Rosehip Extract",
+    "category": "Capsules",
+    "dosageForm": "Softgel Capsule",
+    "indications": "Nutraceutical joint chondroprotection stimulating synovial lubrication and rebuilding articular cartilage.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (28).jpeg",
+    "featured": false
+  },
+  {
+    "id": "62",
+    "name": "Ginkgopik Memory Capsules",
+    "genericName": "Ginkgo Biloba Standardized Extract & Brahmi 120mg",
+    "category": "Capsules",
+    "dosageForm": "Capsule",
+    "indications": "Cerebral microcirculation enhancer improving cognitive recall, mental clarity, and relieving peripheral vascular coldness.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (29).jpeg",
+    "featured": false
+  },
+  {
+    "id": "63",
+    "name": "Auspik Evit-400 Softgels",
+    "genericName": "Natural Vitamin E (d-alpha Tocopherol) 400 IU",
+    "category": "Capsules",
+    "dosageForm": "Softgel Capsule",
+    "indications": "Lipophilic antioxidant supporting cellular skin rejuvenation, vascular integrity, and reproductive health.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (3).jpeg",
+    "featured": false
+  },
+  {
+    "id": "64",
+    "name": "Esopik-DSR Capsules",
+    "genericName": "Esomeprazole Magnesium 40mg & Domperidone 30mg SR",
+    "category": "Capsules",
+    "dosageForm": "Capsule",
+    "indications": "S-isomer proton pump inhibitor combination for treatment of erosive esophagitis and refractory reflux.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (30).jpeg",
+    "featured": false
+  },
+  {
+    "id": "65",
+    "name": "Auspik Hair-Vital Softgels",
+    "genericName": "Biotin 10mg, Keratin, Amino Acids & Natural Extracts",
+    "category": "Capsules",
+    "dosageForm": "Softgel Capsule",
+    "indications": "Nutritional dermatological supplement strengthening hair follicle roots, halting excessive shedding, and nourishing brittle nails.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (31).jpeg",
+    "featured": false
+  },
+  {
+    "id": "66",
+    "name": "Ironpik-Z Capsules",
+    "genericName": "Carbonyl Iron, Zinc Sulfate & Folic Acid Time-Release",
+    "category": "Capsules",
+    "dosageForm": "Capsule",
+    "indications": "Gradual gastric-friendly iron formulation for optimal hematinic regeneration without gastrointestinal distress.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (32).jpeg",
+    "featured": false
+  },
+  {
+    "id": "67",
+    "name": "Carbopik 0.5% Eye Drops",
+    "genericName": "Carboxymethylcellulose Sodium Lubricant Eye Drops 0.5% w/v",
+    "category": "Eye Drops",
+    "dosageForm": "Sterile Ophthalmic Drops",
+    "indications": "Sterile artificial tear substitute for instant soothing of dry, gritty, irritated, burning eyes caused by computer strain.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (33).jpeg",
+    "featured": false
+  },
+  {
+    "id": "68",
+    "name": "Moxipik Eye Drops",
+    "genericName": "Moxifloxacin Hydrochloride Ophthalmic Solution 0.5% w/v",
+    "category": "Eye Drops",
+    "dosageForm": "Sterile Ophthalmic Drops",
+    "indications": "Fourth-generation fluoroquinolone eyedrop for bacterial conjunctivitis, corneal ulcers, and post-cataract prophylaxis.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (34).jpeg",
+    "featured": false
+  },
+  {
+    "id": "69",
+    "name": "Moxipik-D Eye Drops",
+    "genericName": "Moxifloxacin 0.5% & Dexamethasone Sodium Phosphate 0.1%",
+    "category": "Eye Drops",
+    "dosageForm": "Sterile Ophthalmic Drops",
+    "indications": "Antibacterial and anti-inflammatory combination for ocular inflammatory conditions where bacterial ocular infection risks exist.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (35).jpeg",
+    "featured": false
+  },
+  {
+    "id": "70",
+    "name": "Olopik 0.1% Eye Drops",
+    "genericName": "Olopatadine Hydrochloride Ophthalmic Solution 0.1% w/v",
+    "category": "Eye Drops",
+    "dosageForm": "Sterile Ophthalmic Drops",
+    "indications": "Dual-action mast cell stabilizer and antihistamine for rapid treatment of ocular symptoms associated with allergic conjunctivitis.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (36).jpeg",
+    "featured": false
+  },
+  {
+    "id": "71",
+    "name": "Auspik Refresh Tears Gel Drops",
+    "genericName": "Sodium Hyaluronate 0.18% Viscous Ophthalmic Solution",
+    "category": "Eye Drops",
+    "dosageForm": "Sterile Ophthalmic Gel Drops",
+    "indications": "High molecular weight viscoelastic drops maintaining prolonged ocular surface moisture in severe keratoconjunctivitis sicca.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (37).jpeg",
+    "featured": false
+  },
+  {
+    "id": "72",
+    "name": "Brimopik-T Eye Drops",
+    "genericName": "Brimonidine Tartrate 0.2% & Timolol Maleate 0.5%",
+    "category": "Eye Drops",
+    "dosageForm": "Sterile Ophthalmic Drops",
+    "indications": "Dual antiglaucoma eyedrops reducing intraocular pressure in chronic open-angle glaucoma or ocular hypertension.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (38).jpeg",
+    "featured": false
+  },
+  {
+    "id": "73",
+    "name": "Nepapik 0.1% Eye Drops",
+    "genericName": "Nepafenac Ophthalmic Suspension 0.1% w/v",
+    "category": "Eye Drops",
+    "dosageForm": "Sterile Ophthalmic Drops",
+    "indications": "Targeted prodrug NSAID drop for prevention and treatment of postoperative pain and inflammation associated with cataract surgery.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (39).jpeg",
+    "featured": false
+  },
+  {
+    "id": "74",
+    "name": "Electropik ORS Powder",
+    "genericName": "WHO Recommended Oral Rehydration Salts Formulation",
+    "category": "Powders",
+    "dosageForm": "Dry Powder Sachet",
+    "indications": "Standardized scientific electrolyte rehydration formula restoring vital fluid-electrolyte equilibrium during diarrhea or vomiting.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (4).jpeg",
+    "featured": false
+  },
+  {
+    "id": "75",
+    "name": "Pikpro High-Protein Powder",
+    "genericName": "Whey Protein Isolate with DHA, Bovine Colostrum & Minerals",
+    "category": "Powders",
+    "dosageForm": "Nutritional Powder",
+    "indications": "Clinical nutritional supplement for muscle protein synthesis, surgical convalescence, debility, and geriatric nourishment.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (5).jpeg",
+    "featured": false
+  },
+  {
+    "id": "76",
+    "name": "Argipik Sachet Granules",
+    "genericName": "L-Arginine 3g & Proanthocyanidins 75mg Sugar-Free Granules",
+    "category": "Powders",
+    "dosageForm": "Effervescent Granules",
+    "indications": "Nitric oxide donor formula indicated during pregnancy for improving uteroplacental blood circulation and fetal growth.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (6).jpeg",
+    "featured": false
+  },
+  {
+    "id": "77",
+    "name": "Pikbiotic Sachet Granules",
+    "genericName": "Lyophilized Saccharomyces Boulardii 250mg Probiotic",
+    "category": "Powders",
+    "dosageForm": "Sachet Granules",
+    "indications": "Probiotic yeast sachet proven to prevent and treat acute diarrheal illness and restore healthy microflora balance.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (7).jpeg",
+    "featured": false
+  },
+  {
+    "id": "78",
+    "name": "Collapik Joint Powder",
+    "genericName": "Hydrolyzed Bioactive Collagen Peptides & Vitamin C",
+    "category": "Powders",
+    "dosageForm": "Soluble Powder",
+    "indications": "Structural joint cartilage supplement stimulating chondrocyte extracellular matrix synthesis and joint comfort.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (8).jpeg",
+    "featured": false
+  },
+  {
+    "id": "79",
+    "name": "Auspik Lacto-Clean Granules",
+    "genericName": "Isabgol Husk (Psyllium) 70% with Lactitol Monohydrate",
+    "category": "Powders",
+    "dosageForm": "Effervescent Granules",
+    "indications": "Dual osmotic and bulk-forming natural fiber laxative for gentle, strain-free morning regularity.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM (9).jpeg",
+    "featured": false
+  },
+  {
+    "id": "80",
+    "name": "Glucopik-D Instant Energy Powder",
+    "genericName": "Dextrose Monohydrate with Vitamin D & Calcium",
+    "category": "Powders",
+    "dosageForm": "Instant Energy Powder",
+    "indications": "Rapid bioavailable glucose recharger combating dehydration, physical fatigue, and summer heat exhaustion.",
+    "image": "/product_images/WhatsApp Image 2026-10-09 at 3.08.39 PM.jpeg",
+    "featured": false
+  }
+]

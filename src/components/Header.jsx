@@ -3,17 +3,28 @@ import { NavLink, Link } from 'react-router-dom';
 import { Menu, X, Phone, Mail, Award, Activity, ArrowRight } from 'lucide-react';
 import companyLogo from '../assets/Project_images/Pharma_Company_logo.jpeg';
 import './Header.css';
+import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 export default function Header({ settings }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAdminLoggedIn(!!user);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      unsubscribe();
+    };
   }, []);
 
   const toggleMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -30,16 +41,13 @@ export default function Header({ settings }) {
       <div className="top-bar">
         <div className="container top-bar-container">
           <div className="top-bar-left">
-            <span className="top-bar-item">
-              <Award size={14} />
-              <span>WHO-GMP & ISO 9001:2015 Certified Manufacturing</span>
-            </span>
-          </div>
-          <div className="top-bar-right">
             <a href={`mailto:${emailAddr}`} className="top-bar-item link">
               <Mail size={14} />
               <span>{emailAddr}</span>
             </a>
+          </div>
+          <div className="top-bar-right">
+            
             <a href={`tel:${firstPhoneNum}`} className="top-bar-item link font-semibold">
               <Phone size={14} />
               <span>{phoneNum}</span>
@@ -65,12 +73,17 @@ export default function Header({ settings }) {
             <NavLink to="/about" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'} onClick={closeMenu}>
               About Us
             </NavLink>
+            <NavLink to="/careers" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'} onClick={closeMenu}>
+              Careers
+            </NavLink>
             <NavLink to="/contact" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'} onClick={closeMenu}>
               Contact Us
             </NavLink>
-            <NavLink to="/admin" className={({isActive}) => isActive ? 'nav-item admin-tag' : 'nav-item admin-tag'} onClick={closeMenu}>
-              Portal Admin
-            </NavLink>
+            {isAdminLoggedIn && (
+              <NavLink to="/admin" className={({isActive}) => isActive ? 'nav-item admin-tag' : 'nav-item admin-tag'} onClick={closeMenu}>
+                Portal Admin
+              </NavLink>
+            )}
           </div>
 
           <div className="header-actions">

@@ -31,7 +31,7 @@ export default function ProductDetailModal({ product, onClose, onInquire }) {
             </div>
             
             <div className="product-features">
-              <div className="feature"><CheckCircle size={16} /> WHO-GMP Certified</div>
+              <div className="feature"><CheckCircle size={16} /> High Quality Medicines</div>
               <div className="feature"><CheckCircle size={16} /> Export Quality</div>
               <div className="feature"><CheckCircle size={16} /> Clinically Tested</div>
             </div>

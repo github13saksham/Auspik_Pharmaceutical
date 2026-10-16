@@ -27,21 +27,10 @@ try {
   console.warn("Firebase initialization failed. Falling back to localStorage.", error);
 }
 
-// Seed Data
-const seedProducts = [
-  { id: '1', name: 'NeuroXel-500', genericName: 'Citicoline Sodium 500mg', category: 'Neurology', dosageForm: 'Tablet', indications: 'Stroke, Head Trauma, Cognitive Dysfunction', image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: '2', name: 'CardioStat-40', genericName: 'Atorvastatin 40mg', category: 'Cardiology', dosageForm: 'Tablet', indications: 'Hypercholesterolemia, Cardiovascular Risk Reduction', image: 'https://images.unsplash.com/photo-1550572017-edb79904990c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: '3', name: 'GastroSoothe', genericName: 'Pantoprazole 40mg', category: 'Gastroenterology', dosageForm: 'Capsule', indications: 'GERD, Peptic Ulcer Disease', image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: '4', name: 'CeftiMax-1g', genericName: 'Ceftriaxone Injection 1g', category: 'Injectables', dosageForm: 'Injection (Vial)', indications: 'Severe bacterial infections', image: 'https://images.unsplash.com/photo-1628771065518-0d82f1938462?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: '5', name: 'DermaGlow Plus', genericName: 'Clindamycin + Nicotinamide', category: 'Dermatology', dosageForm: 'Gel', indications: 'Acne Vulgaris', image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: '6', name: 'NutriVit Gold', genericName: 'Multivitamins + Minerals + Antioxidants', category: 'Nutraceuticals', dosageForm: 'Softgel', indications: 'Nutritional deficiency, Immunity booster', image: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: '7', name: 'Diabetin-M', genericName: 'Metformin Hydrochloride 500mg SR', category: 'Endocrinology', dosageForm: 'Tablet', indications: 'Type 2 Diabetes Mellitus', image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: '8', name: 'BoneCal-D3', genericName: 'Calcium Carbonate + Vitamin D3', category: 'Orthopedics', dosageForm: 'Tablet', indications: 'Osteoporosis, Calcium deficiency', image: 'https://images.unsplash.com/photo-1550572017-edb79904990c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: '9', name: 'RespiraClear', genericName: 'Levosalbutamol + Ipratropium', category: 'Pulmonology', dosageForm: 'Respul', indications: 'COPD, Asthma', image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: '10', name: 'IronMax-XT', genericName: 'Ferrous Ascorbate + Folic Acid', category: 'Gynecology', dosageForm: 'Syrup', indications: 'Iron Deficiency Anemia', image: 'https://images.unsplash.com/photo-1628771065518-0d82f1938462?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: '11', name: 'HepatoShield', genericName: 'Silymarin + L-Ornithine L-Aspartate', category: 'Hepatology', dosageForm: 'Tablet', indications: 'Liver Disorders, Fatty Liver', image: 'https://images.unsplash.com/photo-1550572017-edb79904990c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: '12', name: 'PainRelief-SP', genericName: 'Aceclofenac + Paracetamol + Serratiopeptidase', category: 'Orthopedics', dosageForm: 'Tablet', indications: 'Pain and Inflammation', image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }
-];
+import seededProducts from './seededProducts.json';
+
+// Seed Data with all uploaded authentic product images (80 items)
+const seedProducts = seededProducts;
 
 const seedSettings = {
   companyName: 'Auspik Pharmaceuticals Pvt. Ltd.',
@@ -49,13 +38,24 @@ const seedSettings = {
   phone: '9671240000, 8222844644, 8053022283',
   email: 'auspikpharma@gmail.com',
   address: '167-B sector 3 industrial area karnal haryana 132001',
-  certifications: 'WHO-GMP & ISO 9001:2015 Certified'
+  certifications: 'Dedicated to High Quality Medicines'
 };
 
-// Initialize LocalStorage Data if Empty
-const initLocalData = () => {
-  if (!localStorage.getItem('products')) {
+// Initialize LocalStorage Data if Empty or if dummy data detected
+export const initLocalData = (forceReset = false) => {
+  if (typeof window === 'undefined') return;
+  const currentProds = localStorage.getItem('products');
+  const catalogVersion = localStorage.getItem('catalog_version');
+  const CURRENT_VERSION = 'v2_real_pharma_catalog';
+  const hasOutdatedData = !currentProds || 
+    currentProds.includes('Auspik Formulation #') || 
+    currentProds.includes('NeuroXel-500') || 
+    currentProds.includes('CardioStat-40') || 
+    catalogVersion !== CURRENT_VERSION;
+  
+  if (forceReset || hasOutdatedData) {
     localStorage.setItem('products', JSON.stringify(seedProducts));
+    localStorage.setItem('catalog_version', CURRENT_VERSION);
   }
   if (!localStorage.getItem('inquiries')) {
     localStorage.setItem('inquiries', JSON.stringify([]));
@@ -65,7 +65,7 @@ const initLocalData = () => {
   }
 };
 
-if (useLocalStorage) {
+if (typeof window !== 'undefined') {
   initLocalData();
 }
 
@@ -75,8 +75,9 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 // --- PRODUCTS ---
 export const getProducts = async () => {
   if (useLocalStorage) {
-    await delay(300);
-    return JSON.parse(localStorage.getItem('products'));
+    await delay(200);
+    initLocalData();
+    return JSON.parse(localStorage.getItem('products')) || seedProducts;
   }
   try {
     const querySnapshot = await getDocs(collection(db, "products"));
@@ -88,11 +89,21 @@ export const getProducts = async () => {
       }
       return seedProducts;
     }
-    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const docs = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    // If DB currently contains only the old 12 dummy products, update it to real products
+    const hasDummyInDB = docs.some(p => p.name === 'NeuroXel-500' || p.name === 'CardioStat-40');
+    if (hasDummyInDB) {
+      const productsRef = collection(db, "products");
+      for (const prod of seedProducts) {
+        await setDoc(doc(productsRef, prod.id), prod);
+      }
+      return seedProducts;
+    }
+    return docs;
   } catch (error) {
     console.error("Error fetching products from DB, falling back to local:", error);
     initLocalData();
-    return JSON.parse(localStorage.getItem('products'));
+    return JSON.parse(localStorage.getItem('products')) || seedProducts;
   }
 };
 
@@ -101,15 +112,54 @@ export const addProduct = async (productData) => {
   const product = { ...productData, id: newId };
   
   if (useLocalStorage) {
-    await delay(300);
-    const products = JSON.parse(localStorage.getItem('products'));
-    products.push(product);
+    await delay(200);
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+    products.unshift(product);
     localStorage.setItem('products', JSON.stringify(products));
     return product;
   }
   
-  await setDoc(doc(collection(db, "products"), newId), product);
+  try {
+    await setDoc(doc(collection(db, "products"), newId), product);
+  } catch (e) {
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+    products.unshift(product);
+    localStorage.setItem('products', JSON.stringify(products));
+  }
   return product;
+};
+
+export const deleteProduct = async (productId) => {
+  if (useLocalStorage) {
+    await delay(200);
+    const products = (JSON.parse(localStorage.getItem('products')) || []).filter(p => p.id !== productId);
+    localStorage.setItem('products', JSON.stringify(products));
+    return true;
+  }
+  try {
+    const { deleteDoc } = await import('firebase/firestore');
+    await deleteDoc(doc(db, "products", productId));
+  } catch (e) {
+    const products = (JSON.parse(localStorage.getItem('products')) || []).filter(p => p.id !== productId);
+    localStorage.setItem('products', JSON.stringify(products));
+  }
+  return true;
+};
+
+export const resetProductsToRealSeed = async () => {
+  if (useLocalStorage) {
+    localStorage.setItem('products', JSON.stringify(seedProducts));
+    return seedProducts;
+  }
+  try {
+    const productsRef = collection(db, "products");
+    for (const prod of seedProducts) {
+      await setDoc(doc(productsRef, prod.id), prod);
+    }
+  } catch (e) {
+    localStorage.setItem('products', JSON.stringify(seedProducts));
+  }
+  return seedProducts;
 };
 
 // --- INQUIRIES ---

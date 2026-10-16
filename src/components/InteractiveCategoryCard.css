@@ -1,0 +1,156 @@
+/* 3D Flip Card Container */
+.cat-flip-container {
+  background-color: transparent;
+  perspective: 1200px;
+  height: 280px;
+  cursor: pointer;
+}
+
+/* Inner 3D container */
+.cat-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.cat-flip-container.flipped .cat-flip-inner {
+  transform: rotateY(180deg);
+}
+
+/* Base Card Face styling */
+.cat-card-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* FRONT FACE: Clean, symbol/icon prominently displayed */
+.cat-card-front {
+  background: #FFFFFF;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  padding: 2.25rem 1.75rem;
+  justify-content: center;
+  align-items: center;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cat-flip-container:hover .cat-card-front {
+  border-color: rgba(37, 99, 235, 0.25);
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.08);
+}
+
+.cat-front-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Illustration Box */
+.cat-illustration-box {
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.cat-svg-illustration {
+  width: 95px;
+  height: 95px;
+  transition: transform 0.4s ease;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.06));
+}
+
+.cat-flip-container:hover .cat-svg-illustration {
+  transform: scale(1.08);
+}
+
+.cat-card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.01em;
+}
+
+.cat-hover-hint {
+  font-size: 0.78rem;
+  color: #94A3B8;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* BACK FACE: Flipped 180deg with clean white card background */
+.cat-card-back {
+  background: #FFFFFF;
+  color: #0F172A;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.08);
+  transform: rotateY(180deg);
+  padding: 2.25rem 2rem;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.cat-back-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.cat-back-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1E3A8A;
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.01em;
+}
+
+/* Fade-in container & description */
+.cat-fadein-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100px;
+}
+
+.cat-card-desc {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #475569;
+  margin: 0;
+  word-break: break-word;
+  text-align: center;
+}
+
+.cat-desc-fadein {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s;
+}
+
+.cat-flip-container.flipped .cat-desc-fadein {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+

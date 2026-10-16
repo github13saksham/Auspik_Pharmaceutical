@@ -1,0 +1,568 @@
+/* ==========================================================================
+   CAREERS PAGE STYLES
+   - Clean, light background matching corporate website theme
+   - Left bold typography & narrative introduction
+   - Right 2x2 minimalist tile cards inspired by user screenshot reference
+   - No sparkles, no heavy glow, no badges
+   ========================================================================== */
+
+.careers-page {
+  padding-bottom: 5rem;
+  background-color: #ffffff;
+  min-height: 85vh;
+}
+
+/* Page Header Matching About & Products */
+.careers-page-header {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.85) 100%), url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+}
+
+/* --------------------------------------------------------------------------
+   HERO SPLIT SECTION (Clean, Minimalist 2-Column Layout)
+   -------------------------------------------------------------------------- */
+.careers-hero-clean-section {
+  padding: 5rem 0 4.5rem;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.careers-hero-split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 4.5rem;
+  align-items: center;
+}
+
+/* Left Content Column */
+.careers-hero-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.careers-headline {
+  font-size: 3.6rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  margin: 0 0 1.75rem 0;
+}
+
+.careers-lead-text {
+  font-size: 1.05rem;
+  color: #475569;
+  line-height: 1.75;
+  margin: 0 0 2rem 0;
+  max-width: 520px;
+}
+
+.careers-facility-meta {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: 0.02em;
+}
+
+/* Right 2x2 Tile Grid (Matching Reference Screenshot) */
+.careers-hero-tiles-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.career-tile-box {
+  background: #f1f3f5;
+  border-radius: 4px;
+  padding: 2.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 250px;
+}
+
+.tile-icon-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.tile-outline-icon {
+  color: #1e293b;
+  stroke-width: 1.75;
+}
+
+.tile-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.01em;
+}
+
+.tile-subtitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+  margin: 0 0 0.75rem 0;
+}
+
+.tile-text {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   JOB OPENINGS SECTION
+   -------------------------------------------------------------------------- */
+.careers-openings-section {
+  padding: 4.5rem 0 3rem;
+  background: #ffffff;
+}
+
+.careers-openings-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.openings-section-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.35rem 0;
+  letter-spacing: -0.02em;
+}
+
+.openings-section-desc {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.openings-count-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1e293b;
+  background: #f1f5f9;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+}
+
+/* Search and Filter Row */
+.openings-controls-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2.25rem;
+}
+
+.openings-search-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 440px;
+}
+
+.openings-search-input svg {
+  position: absolute;
+  left: 1rem;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.openings-search-input input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.925rem;
+  background: #ffffff;
+  color: #0f172a;
+  outline: none;
+}
+
+.openings-search-input input:focus {
+  border-color: #0f172a;
+}
+
+.openings-dept-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.dept-filter-btn {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dept-filter-btn:hover {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.dept-filter-btn.active {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+
+/* Clean Openings List */
+.openings-clean-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.opening-row-item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.85rem 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+}
+
+.opening-info {
+  flex: 1;
+}
+
+.opening-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.35rem 0;
+  letter-spacing: -0.01em;
+}
+
+.opening-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+  margin-bottom: 0.65rem;
+}
+
+.opening-desc {
+  font-size: 0.925rem;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 820px;
+}
+
+.opening-btn-wrap {
+  flex-shrink: 0;
+}
+
+.opening-apply-btn {
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.75rem 1.6rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.opening-apply-btn:hover {
+  background: var(--primary);
+}
+
+.openings-empty-state {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: #64748b;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+}
+
+/* Direct HR Outreach Box */
+.careers-direct-hr-box {
+  margin-top: 3.5rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 2.25rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.direct-hr-content h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.35rem 0;
+}
+
+.direct-hr-content p {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.btn-direct-mail {
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.75rem 1.4rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-direct-mail:hover {
+  background: var(--primary);
+}
+
+/* --------------------------------------------------------------------------
+   APPLICATION MODAL
+   -------------------------------------------------------------------------- */
+.career-modal-content {
+  max-width: 650px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 12px;
+}
+
+.career-modal-body {
+  padding: 0.5rem 0.25rem;
+}
+
+.modal-header-block {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-job-title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.4rem 0;
+}
+
+.modal-job-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.job-key-requirements {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.job-key-requirements h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.6rem;
+}
+
+.job-key-requirements ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.job-key-requirements li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #475569;
+  line-height: 1.45;
+}
+
+.req-check-icon {
+  color: var(--primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.career-apply-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon svg {
+  position: absolute;
+  left: 0.85rem;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.input-with-icon input {
+  padding-left: 2.4rem !important;
+}
+
+.file-upload-box {
+  position: relative;
+}
+
+.file-input-hidden {
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.file-upload-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  background: #f8fafc;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.file-upload-label:hover {
+  border-color: #0f172a;
+}
+
+.modal-actions-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.submit-app-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.application-success-box {
+  padding: 2.5rem 1.5rem;
+}
+
+.success-icon-badge {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #16a34a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.application-success-box h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 0.75rem;
+}
+
+.application-success-box p {
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.55;
+  margin-bottom: 0.5rem;
+}
+
+.success-note {
+  font-size: 0.9rem !important;
+  color: #64748b !important;
+  margin-bottom: 1.75rem !important;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE DESIGN
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .careers-hero-split-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .careers-direct-hr-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .careers-headline {
+    font-size: 2.6rem;
+  }
+  .careers-hero-tiles-grid {
+    grid-template-columns: 1fr;
+  }
+  .opening-row-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+  }
+  .opening-btn-wrap {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  .opening-apply-btn {
+    width: 100%;
+    text-align: center;
+  }
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
