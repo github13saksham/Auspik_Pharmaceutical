@@ -6,6 +6,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 // Pages
 import Home from './pages/Home';
 import Products from './pages/Products';
+import ProductDetail from './pages/ProductDetail';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Careers from './pages/Careers';
@@ -31,6 +32,7 @@ function App() {
           <Route path="/" element={<Layout settings={settings} />}>
             <Route index element={<Home settings={settings} />} />
             <Route path="products" element={<Products />} />
+            <Route path="products/:id" element={<ProductDetail />} />
             <Route path="about" element={<About settings={settings} />} />
             <Route path="careers" element={<Careers />} />
             <Route path="contact" element={<Contact settings={settings} />} />

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Building2, Truck, FileText, ChevronRight, ChevronLeft, Info,
   Star, ThumbsUp, Sparkles, Check, HeartPulse,
@@ -7,17 +7,53 @@ import {
 } from 'lucide-react';
 import { getProducts } from '../services/pharmaService';
 import './Home.css';
-import ProductDetailModal from '../components/ProductDetailModal';
 import InquiryModal from '../components/InquiryModal';
 
 export default function Home({ settings }) {
+  const navigate = useNavigate();
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showInquiryModal, setShowInquiryModal] = useState(false);
   const [activeProductIndex, setActiveProductIndex] = useState(0);
+  const [sliderIndex, setSliderIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
   const [isHoveredFormulation, setIsHoveredFormulation] = useState(false);
   const [activeDirector, setActiveDirector] = useState(0);
+
+  const productCount = featuredProducts.length;
+
+  useEffect(() => {
+    if (productCount > 0) {
+      setSliderIndex(productCount);
+    }
+  }, [productCount]);
+
+  const slideTo = (nextIdx) => {
+    if (productCount === 0) return;
+    setIsTransitioning(true);
+    setSliderIndex(nextIdx);
+    setActiveProductIndex(((nextIdx % productCount) + productCount) % productCount);
+  };
+
+  const handleNext = () => {
+    slideTo(sliderIndex + 1);
+  };
+
+  const handlePrev = () => {
+    slideTo(sliderIndex - 1);
+  };
+
+  const handleTransitionEnd = () => {
+    if (productCount === 0) return;
+    if (sliderIndex >= productCount * 2) {
+      setIsTransitioning(false);
+      setSliderIndex(sliderIndex - productCount);
+    } else if (sliderIndex < productCount) {
+      setIsTransitioning(false);
+      setSliderIndex(sliderIndex + productCount);
+    }
+  };
 
   const missionRef = useRef(null);
   const visionRef = useRef(null);
@@ -52,14 +88,14 @@ export default function Home({ settings }) {
     return () => observer.disconnect();
   }, []);
 
-  // Autoswipe for Featured Formulations
+  // Autoswipe for Featured Formulations (calling handleNext for smooth sliding)
   useEffect(() => {
     if (featuredProducts.length <= 1 || isHoveredFormulation) return;
     const interval = setInterval(() => {
-      setActiveProductIndex((prev) => (prev + 1) % featuredProducts.length);
+      handleNext();
     }, 3500);
     return () => clearInterval(interval);
-  }, [featuredProducts.length, isHoveredFormulation]);
+  }, [featuredProducts.length, isHoveredFormulation, sliderIndex]);
 
   // Managing Directors data
   const directors = [
@@ -68,7 +104,7 @@ export default function Home({ settings }) {
       name: 'Anand Mohan',
       role: 'Managing Director & Founder',
       credentials: 'Leader in Pharmaceutical Formulation & Quality Governance',
-      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+      image: '/anand-mohan.jpg',
       period: 'Leadership & Formulation Science',
       statement: 'At Auspik, pharmaceutical manufacturing is our solemn commitment to human well-being. Every medicine is engineered with uncompromising precision and rigorous scientific ethics to make premium healthcare accessible across borders.',
       focus: 'Pioneering formulation excellence, strict quality benchmarks, and therapeutic syrups, creams and pain relief oils.'
@@ -78,7 +114,7 @@ export default function Home({ settings }) {
       name: 'Lalit Arora',
       role: 'Managing Director & Operations Head',
       credentials: 'Head of Operations, Supply Chain & Strategic Alliances',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
+      image: '/lalit-arora.jpg',
       period: 'Strategic Expansion & Supply Chain',
       statement: 'Sustainable pharmaceutical growth thrives on trust, supply-chain resilience, and empowering our distribution network. We build lasting value by ensuring seamless quality and reliability from our facility to patient.',
       focus: 'Scaling cleanroom production units, digital compliance, and expanding distribution networks.'
@@ -102,22 +138,7 @@ export default function Home({ settings }) {
     fetchProducts();
   }, []);
 
-  // Circular display for symmetric 5-card window
-  const getCircularDisplayProducts = () => {
-    if (featuredProducts.length === 0) return [];
-    const len = featuredProducts.length;
-    const indices = [-2, -1, 0, 1, 2];
-    return indices.map(offset => {
-      const actualIdx = (activeProductIndex + offset + len * 10) % len;
-      return {
-        ...featuredProducts[actualIdx],
-        offset,
-        actualIdx,
-        isCenter: offset === 0,
-        uniqueKey: `${featuredProducts[actualIdx]?.id || actualIdx}-${offset}`
-      };
-    });
-  };
+
 
   const handleInquire = (product) => {
     setSelectedProduct(product);
@@ -572,7 +593,7 @@ export default function Home({ settings }) {
                 <button
                   type="button"
                   className="card-nav-arrow-btn"
-                  onClick={() => setActiveProductIndex(prev => (prev > 0 ? prev - 1 : featuredProducts.length - 1))}
+                  onClick={handlePrev}
                   aria-label="Previous product"
                 >
                   <ChevronLeft size={16} />
@@ -583,7 +604,7 @@ export default function Home({ settings }) {
                       key={i}
                       type="button"
                       className={`card-nav-dot ${activeProductIndex === i ? 'active' : ''}`}
-                      onClick={() => setActiveProductIndex(i)}
+                      onClick={() => slideTo(productCount + i)}
                       aria-label={`Go to product ${i + 1}`}
                     />
                   ))}
@@ -591,7 +612,7 @@ export default function Home({ settings }) {
                 <button
                   type="button"
                   className="card-nav-arrow-btn"
-                  onClick={() => setActiveProductIndex(prev => (prev < featuredProducts.length - 1 ? prev + 1 : 0))}
+                  onClick={handleNext}
                   aria-label="Next product"
                 >
                   <ChevronRight size={16} />
@@ -602,8 +623,21 @@ export default function Home({ settings }) {
         </div>
 
         {loading ? (
-          <div className="container">
-            <div className="spinner"></div>
+          <div className="container" aria-busy="true" aria-label="Loading featured medicines">
+            <div className="featured-stage-container">
+              <div className="featured-stage-track" style={{ justifyContent: 'center', gap: '1.5rem', display: 'flex' }}>
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="ref-medicine-card is-active-card" style={{ pointerEvents: 'none' }}>
+                    <div className="sk-block" style={{ width: '100%', height: '220px', borderRadius: '12px 12px 0 0' }}></div>
+                    <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                      <div className="sk-block" style={{ width: '70%', height: '22px', borderRadius: '6px' }}></div>
+                      <div className="sk-block" style={{ width: '90%', height: '14px', borderRadius: '6px' }}></div>
+                      <div className="sk-block" style={{ width: '50%', height: '14px', borderRadius: '6px' }}></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         ) : (
           <>
@@ -612,64 +646,59 @@ export default function Home({ settings }) {
               onMouseEnter={() => setIsHoveredFormulation(true)}
               onMouseLeave={() => setIsHoveredFormulation(false)}
             >
-              <div className="featured-stage-track">
-                {getCircularDisplayProducts().map((item) => {
-                  const isActive = item.isCenter;
+              <div 
+                className="featured-stage-track"
+                onTransitionEnd={handleTransitionEnd}
+                style={{
+                  transform: `translateX(calc(-${sliderIndex} * (var(--card-unit, 270px) + var(--card-gap, 32px)) - (var(--card-unit, 270px) / 2)))`,
+                  transition: isTransitioning ? 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' : 'none'
+                }}
+              >
+                {productCount > 0 && [0, 1, 2].flatMap((setIdx) => 
+                  featuredProducts.map((item, originalIdx) => {
+                    const globalIdx = setIdx * productCount + originalIdx;
+                    const isActive = globalIdx === sliderIndex;
 
-                  return (
-                    <div
-                      key={item.uniqueKey}
-                      className={`ref-medicine-card ${isActive ? 'is-active-card' : ''}`}
-                      onClick={() => setActiveProductIndex(item.actualIdx)}
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          setActiveProductIndex(item.actualIdx);
-                        }
-                      }}
-                      role="button"
-                      aria-pressed={isActive}
-                      aria-label={item.name}
-                    >
-                      <div className="ref-card-img-box">
-                        <img src={item.image} alt={item.name} loading="lazy" />
-                      </div>
+                    return (
+                      <div
+                        key={`product-${item.id || originalIdx}-set-${setIdx}`}
+                        className={`ref-medicine-card ${isActive ? 'is-active-card' : ''}`}
+                        onClick={() => slideTo(globalIdx)}
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            slideTo(globalIdx);
+                          }
+                        }}
+                        role="button"
+                        aria-pressed={isActive}
+                        aria-label={item.name}
+                      >
+                        <div className="ref-card-img-box">
+                          <img src={item.image} alt={item.name} loading="lazy" />
+                        </div>
 
-                      <div className="ref-card-body">
-                        <h3 className="ref-card-title">{item.name}</h3>
-                        <p className="ref-card-generic">
-                          {item.genericName || 'Pharmaceutical Formulation Active Complex'}
-                        </p>
+                        <div className="ref-card-body">
+                          <h3 className="ref-card-title">{item.name}</h3>
+                          <p className="ref-card-dosage">{item.dosageForm}</p>
+                          <p className="ref-card-generic">
+                            {item.genericName || 'Pharmaceutical Formulation Active Complex'}
+                          </p>
 
-                        <div className="ref-card-actions">
-                          <button
-                            type="button"
-                            className="ref-btn-details"
+                          <span 
+                            className="ref-card-cta"
                             onClick={(e) => {
                               e.stopPropagation();
-                              setSelectedProduct(item);
+                              navigate(`/products/${item.id}`);
                             }}
                           >
-                            <Info size={16} />
-                            <span>Details</span>
-                          </button>
-
-                          <button
-                            type="button"
-                            className="ref-btn-quote"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleInquire(item);
-                            }}
-                          >
-                            <FileText size={16} />
-                            <span>Inquire</span>
-                          </button>
+                            View Formulation &rsaquo;
+                          </span>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })
+                )}
               </div>
             </div>
 
@@ -853,15 +882,7 @@ export default function Home({ settings }) {
         </div>
       </section>
 
-      {/* Modals */}
-      {selectedProduct && !showInquiryModal && (
-        <ProductDetailModal 
-          product={selectedProduct} 
-          onClose={() => setSelectedProduct(null)} 
-          onInquire={handleInquire}
-        />
-      )}
-      
+      {/* Inquiry Modal */}
       {showInquiryModal && (
         <InquiryModal 
           product={selectedProduct} 

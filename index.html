@@ -2,12 +2,45 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/jpeg" href="/auspik-logo-mark.jpg" />
+    <link rel="apple-touch-icon" href="/auspik-logo-mark.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pharma_company</title>
+    <title>Auspik Pharmaceuticals</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Instant Pre-boot HTML Skeleton: Renders before any JavaScript loads -->
+      <div id="initial-page-skeleton" style="position:fixed;inset:0;background:#f8fafc;z-index:999999;display:flex;flex-direction:column;font-family:system-ui,-apple-system,sans-serif;">
+        <div style="height:92px;background:#ffffff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,4rem);">
+          <div style="width:140px;height:38px;border-radius:8px;background:linear-gradient(105deg,#cbd5e1 30%,#ffffff 50%,#cbd5e1 70%);background-size:250% 100%;animation:initialShimmer 1.5s infinite;"></div>
+          <div style="display:flex;gap:1.5rem;">
+            <div style="width:70px;height:16px;border-radius:6px;background:#cbd5e1;"></div>
+            <div style="width:70px;height:16px;border-radius:6px;background:#cbd5e1;"></div>
+            <div style="width:70px;height:16px;border-radius:6px;background:#cbd5e1;"></div>
+            <div style="width:70px;height:16px;border-radius:6px;background:#cbd5e1;"></div>
+          </div>
+          <div style="width:120px;height:40px;border-radius:999px;background:#cbd5e1;"></div>
+        </div>
+        <div style="flex:1;max-width:1280px;margin:0 auto;width:100%;padding:2.5rem clamp(1rem,5vw,4rem);display:flex;flex-direction:column;gap:2.5rem;">
+          <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:3rem;align-items:center;">
+            <div style="display:flex;flex-direction:column;gap:1rem;">
+              <div style="width:120px;height:24px;border-radius:999px;background:#cbd5e1;"></div>
+              <div style="width:90%;height:44px;border-radius:10px;background:#cbd5e1;"></div>
+              <div style="width:70%;height:44px;border-radius:10px;background:#cbd5e1;"></div>
+              <div style="width:95%;height:18px;border-radius:6px;background:#cbd5e1;margin-top:0.5rem;"></div>
+              <div style="width:80%;height:18px;border-radius:6px;background:#cbd5e1;"></div>
+            </div>
+            <div style="width:100%;height:280px;border-radius:20px;background:#cbd5e1;"></div>
+          </div>
+        </div>
+      </div>
+      <style>
+        @keyframes initialShimmer {
+          0% { background-position: 150% 0; }
+          100% { background-position: -150% 0; }
+        }
+      </style>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -295,7 +295,7 @@ export default function Contact({ settings }) {
                     required 
                     value={formData.phone} 
                     onChange={handleChange} 
-                    placeholder="+91 9XXXXXXX" 
+                    placeholder="+91 XXXXXXXXXX" 
                   />
                 </div>
               </div>

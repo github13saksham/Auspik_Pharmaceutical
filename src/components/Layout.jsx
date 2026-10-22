@@ -1,13 +1,36 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import WhatsAppWidget from './WhatsAppWidget';
 import CookieConsent from './CookieConsent';
 import WelcomeModal from './WelcomeModal';
+import WebsiteSkeleton from './WebsiteSkeleton';
 
 export default function Layout({ settings }) {
   const location = useLocation();
+  const [isPageReady, setIsPageReady] = useState(false);
+  // Track visited routes so skeleton shows ONLY ONCE per page
+  const visitedRoutes = useRef(new Set());
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+
+    if (!visitedRoutes.current.has(currentPath)) {
+      // First time visiting this page: show skeleton first, content stays hidden
+      setIsPageReady(false);
+      visitedRoutes.current.add(currentPath);
+
+      const skeletonTimer = setTimeout(() => {
+        setIsPageReady(true);
+      }, 950);
+
+      return () => clearTimeout(skeletonTimer);
+    } else {
+      // Page has already been visited: show immediately without re-triggering skeleton
+      setIsPageReady(true);
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     // Global scroll reveal observer for all sections across whole website
@@ -52,14 +75,28 @@ export default function Layout({ settings }) {
 
   return (
     <div className="app-layout">
-      <Header settings={settings} />
-      <main style={{ minHeight: 'calc(100vh - 350px)', paddingTop: '92px' }}>
-        <Outlet />
-      </main>
-      <WhatsAppWidget phone={settings?.phone} />
-      <CookieConsent />
-      <WelcomeModal />
-      <Footer settings={settings} />
+      {/* Global Website Skeleton Preloader Crossfade */}
+      <WebsiteSkeleton isLoaded={isPageReady} />
+
+      {/* Actual Website Content: Completely HIDDEN until skeleton crossfade activates */}
+      <div 
+        className="website-real-content"
+        style={{
+          opacity: isPageReady ? 1 : 0,
+          visibility: isPageReady ? 'visible' : 'hidden',
+          transition: 'opacity 0.4s ease-in',
+          pointerEvents: isPageReady ? 'auto' : 'none'
+        }}
+      >
+        <Header settings={settings} />
+        <main style={{ minHeight: 'calc(100vh - 350px)', paddingTop: '92px' }}>
+          <Outlet />
+        </main>
+        <WhatsAppWidget phone={settings?.phone} />
+        <CookieConsent />
+        <WelcomeModal isReady={isPageReady} />
+        <Footer settings={settings} />
+      </div>
     </div>
   );
 }

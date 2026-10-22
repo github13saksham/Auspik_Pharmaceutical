@@ -37,8 +37,8 @@ export default function Footer({ settings }) {
             <ul>
               <li><Link to="/products?category=Cardiology">Cardiology</Link></li>
               <li><Link to="/products?category=Neurology">Neurology</Link></li>
-              <li><Link to="/products?category=Injectables">Injectables</Link></li>
-              <li><Link to="/products?category=Orthopedics">Orthopedics</Link></li>
+              <li><Link to="/products?category=Gasology">Gasology</Link></li>
+              <li><Link to="/products?category=Neutraceutical">Neutraceutical</Link></li>
             </ul>
           </div>
           
@@ -62,7 +62,7 @@ export default function Footer({ settings }) {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} {settings?.companyName}. All rights reserved. {settings?.certifications}</p>
+          <p>&copy; {new Date().getFullYear()} {settings?.companyName}. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -29,7 +29,7 @@ try {
 
 import seededProducts from './seededProducts.json';
 
-// Seed Data with all uploaded authentic product images (80 items)
+// Seed Data with all uploaded authentic product images (40 authentic items)
 const seedProducts = seededProducts;
 
 const seedSettings = {
@@ -41,12 +41,13 @@ const seedSettings = {
   certifications: 'Dedicated to High Quality Medicines'
 };
 
-// Initialize LocalStorage Data if Empty or if dummy data detected
+const CURRENT_VERSION = 'v4_exact_medicine_names_and_descriptions';
+
+// Initialize LocalStorage Data if Empty or if outdated data detected
 export const initLocalData = (forceReset = false) => {
   if (typeof window === 'undefined') return;
   const currentProds = localStorage.getItem('products');
   const catalogVersion = localStorage.getItem('catalog_version');
-  const CURRENT_VERSION = 'v2_real_pharma_catalog';
   const hasOutdatedData = !currentProds || 
     currentProds.includes('Auspik Formulation #') || 
     currentProds.includes('NeuroXel-500') || 
@@ -81,18 +82,29 @@ export const getProducts = async () => {
   }
   try {
     const querySnapshot = await getDocs(collection(db, "products"));
-    if (querySnapshot.empty) {
-      // Seed DB if empty
-      const productsRef = collection(db, "products");
-      for (const prod of seedProducts) {
-        await setDoc(doc(productsRef, prod.id), prod);
-      }
-      return seedProducts;
-    }
     const docs = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    // If DB currently contains only the old 12 dummy products, update it to real products
-    const hasDummyInDB = docs.some(p => p.name === 'NeuroXel-500' || p.name === 'CardioStat-40');
-    if (hasDummyInDB) {
+    
+    // Check if Firestore needs re-seeding: empty, has duplicate/old items, or doesn't have the new verified names (e.g. NEUROBEE FORTE)
+    const needsReseed = querySnapshot.empty || 
+      docs.length !== seedProducts.length ||
+      docs.some(p => p.name === 'NeuroXel-500' || p.name === 'CardioStat-40' || p.name?.startsWith('Auspik Formulation #') || p.name === 'Livpik Ayurvedic Liver Tonic' || Number(p.id) > 40);
+
+    if (needsReseed) {
+      console.log("Seeding authentic 40 products to Firebase Firestore...");
+      const { deleteDoc } = await import('firebase/firestore');
+      
+      // Delete any surplus/duplicate docs from Firestore
+      for (const d of querySnapshot.docs) {
+        if (!seedProducts.some(p => p.id === d.id)) {
+          try {
+            await deleteDoc(doc(db, "products", d.id));
+          } catch (delErr) {
+            console.warn("Could not delete old doc:", d.id, delErr);
+          }
+        }
+      }
+
+      // Upsert the 40 clean authentic products
       const productsRef = collection(db, "products");
       for (const prod of seedProducts) {
         await setDoc(doc(productsRef, prod.id), prod);
@@ -149,15 +161,27 @@ export const deleteProduct = async (productId) => {
 export const resetProductsToRealSeed = async () => {
   if (useLocalStorage) {
     localStorage.setItem('products', JSON.stringify(seedProducts));
+    localStorage.setItem('catalog_version', CURRENT_VERSION);
     return seedProducts;
   }
   try {
+    const { deleteDoc } = await import('firebase/firestore');
+    const existing = await getDocs(collection(db, "products"));
+    for (const d of existing.docs) {
+      if (!seedProducts.some(p => p.id === d.id)) {
+        await deleteDoc(doc(db, "products", d.id));
+      }
+    }
     const productsRef = collection(db, "products");
     for (const prod of seedProducts) {
       await setDoc(doc(productsRef, prod.id), prod);
     }
-  } catch (e) {
     localStorage.setItem('products', JSON.stringify(seedProducts));
+    localStorage.setItem('catalog_version', CURRENT_VERSION);
+  } catch (e) {
+    console.error("Error resetting products in Firestore:", e);
+    localStorage.setItem('products', JSON.stringify(seedProducts));
+    localStorage.setItem('catalog_version', CURRENT_VERSION);
   }
   return seedProducts;
 };

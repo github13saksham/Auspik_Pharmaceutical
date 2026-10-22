@@ -2,24 +2,28 @@ import { ShieldCheck, Globe, Building, Users, Award, FlaskConical, CheckCircle2 
 import './About.css';
 
 export default function About({ settings }) {
-  const companyName = settings?.companyName || 'Ausptik Pharmaceuticals';
+  const companyName = settings?.companyName || 'Auspik Pharmaceuticals';
 
   return (
     <div className="about-page">
       {/* Hero Header Section with High Res Image & White Text */}
-      <div className="page-header about-header">
+      <div className="page-header about-header text-center">
         <div className="container">
           <h1>About {companyName}</h1>
           <p>Committed to providing world-class pharmaceutical products & formulations worldwide.</p>
         </div>
       </div>
 
-      {/* Mission & Vision */}
-      <section className="section">
+      {/* Mission & Purpose Section */}
+      <section className="section about-intro-section">
         <div className="container">
+          <div className="section-title text-center">
+            <h2>Wellness the Auspicious Way</h2>
+            <p>A new paradigm of pharmaceutical enterprise founded upon intellectual rigour and progressive thinking.</p>
+          </div>
+
           <div className="about-grid">
             <div className="about-text animate-fade-in">
-              <h2  style={{marginBottom: '20px'}}>WELLNESS THE AUSPICIOUS WAY.</h2>
               <p>
                 <strong>Auspik Pharmaceuticals Pvt. Ltd.</strong> stands at the threshold of a new era in healthcare—one shaped by ambition, guided by purpose, and anchored in an unwavering commitment to excellence.
               </p>
@@ -44,10 +48,64 @@ export default function About({ settings }) {
         </div>
       </section>
 
+      {/* Founders Section */}
+      <section className="section founders-section">
+        <div className="container">
+          <div className="section-title text-center">
+            <h2>Founders & Leadership</h2>
+            <p className="founders-subheading">Steering Auspik Pharmaceuticals toward global excellence in formulation science and compassionate healthcare.</p>
+          </div>
+
+          {/* Founders Grid - Two Photos with Names & Designations underneath */}
+          <div className="founders-grid">
+            {/* Founder 1 */}
+            <div className="founder-card-item">
+              <div className="founder-photo-wrapper">
+                <img 
+                  src="/anand-mohan.jpg" 
+                  alt="Anand Mohan" 
+                  className="founder-photo-img"
+                  loading="lazy"
+                />
+              </div>
+              <div className="founder-meta">
+                <h3 className="founder-person-name">Anand Mohan</h3>
+                <span className="founder-person-role">Managing Director & Founder</span>
+                <p className="founder-person-creds">Formulation Science & Quality Governance</p>
+              </div>
+            </div>
+
+            {/* Founder 2 */}
+            <div className="founder-card-item">
+              <div className="founder-photo-wrapper">
+                <img 
+                  src="/lalit-arora.jpg" 
+                  alt="Lalit Arora" 
+                  className="founder-photo-img"
+                  loading="lazy"
+                />
+              </div>
+              <div className="founder-meta">
+                <h3 className="founder-person-name">Lalit Arora</h3>
+                <span className="founder-person-role">Managing Director & Founder</span>
+                <p className="founder-person-creds">Operations, Supply Chain & Alliances</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Common Shared Description under both Founders */}
+          <div className="founders-shared-description text-center">
+            <p>
+              At Auspik Pharmaceuticals, our vision extends beyond the manufacturing of medicines. Guided by intellectual rigour, progressive thinking, and an unwavering commitment to human well-being, we have built an enterprise where experience meets ambition and heritage meets modern healthcare innovation. Every therapeutic formulation is crafted to the most stringent international quality benchmarks, fostering enduring partnerships and delivering accessible, life-enhancing wellness across communities.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Core Values */}
       <section className="section bg-light">
         <div className="container">
-          <div className="section-title">
+          <div className="section-title text-center">
             <h2>Our Core Values</h2>
             <p>Guided by principles of integrity, quality, and scientific rigor.</p>
           </div>
@@ -82,9 +140,13 @@ export default function About({ settings }) {
       {/* The Road Ahead / Legacy Section */}
       <section className="section">
         <div className="container">
+          <div className="section-title text-center">
+            <h2>The Road Ahead</h2>
+            <p>Shaping Auspik to be agile in its thinking, uncompromising in its standards, and purposeful in its impact.</p>
+          </div>
+
           <div className="about-grid reverse">
             <div className="about-text">
-              <h2>The Road Ahead</h2>
               <p>
                 Through a thoughtfully curated portfolio, an evolving presence across therapeutic segments, and a relentless pursuit of quality, we are shaping Auspik to be agile in its thinking, uncompromising in its standards, and purposeful in its impact.
               </p>
@@ -95,9 +157,11 @@ export default function About({ settings }) {
                 We envision an Auspik that transcends conventional boundaries—where innovation is purposeful, partnerships are enduring, and excellence is not an aspiration but an ethos.
               </p>
               
-              <div className="mt-4 p-4" style={{ backgroundColor: 'var(--bg-color)', borderRadius: '12px', borderLeft: '4px solid var(--primary)', boxShadow: 'var(--shadow-sm)' }}>
-                <strong style={{ fontSize: '1.15rem', color: 'var(--text-main)' }}>This is more than a relaunch. It is the beginning of a new legacy.</strong>
-                <div className="mt-3">
+              <div className="mt-4 p-4 text-center legacy-banner" style={{ backgroundColor: 'var(--bg-color)', borderRadius: '16px', border: '1px solid var(--border-color)', borderTop: '4px solid var(--primary)', boxShadow: 'var(--shadow-sm)' }}>
+                <strong style={{ fontSize: '1.15rem', color: 'var(--text-main)', display: 'block', marginBottom: '0.5rem' }}>
+                  This is more than a relaunch. It is the beginning of a new legacy.
+                </strong>
+                <div>
                   <span style={{ display: 'block', fontWeight: '800', color: 'var(--primary)', letterSpacing: '1px', fontSize: '1.05rem' }}>AUSPIK PHARMACEUTICALS</span>
                   <span style={{ display: 'block', fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.85rem', letterSpacing: '1.5px', marginTop: '0.2rem' }}>WELLNESS THE AUSPICIOUS WAY.</span>
                 </div>

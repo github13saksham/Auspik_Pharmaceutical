@@ -85,10 +85,15 @@ export default function Admin() {
   };
 
   const handleReSeedData = async () => {
-    if (window.confirm('Reset all formulations to the 80 uploaded images?')) {
-      const updated = await resetProductsToRealSeed();
-      setProducts(updated);
-      alert('Formulations successfully updated with authentic images!');
+    if (window.confirm('Sync and overwrite all products in Firebase Firestore with the verified 40 medicine formulations?')) {
+      try {
+        const updated = await resetProductsToRealSeed();
+        setProducts(updated);
+        alert(`Successfully synced ${updated.length} verified products into Firebase Firestore!`);
+      } catch (err) {
+        console.error("Failed to seed Firebase:", err);
+        alert("Seeding failed: " + (err.message || err));
+      }
     }
   };
 
@@ -282,10 +287,10 @@ export default function Admin() {
                 <button 
                   className="btn btn-secondary flex items-center gap-1"
                   onClick={handleReSeedData}
-                  title="Re-seed all 80 uploaded formulations"
+                  title="Re-seed all 40 verified medicine formulations into Firebase Firestore"
                 >
                   <RefreshCw size={16} />
-                  <span>Sync 80 Real Products</span>
+                  <span>Sync 40 Products to Firebase</span>
                 </button>
                 <button 
                   className="btn btn-primary flex items-center gap-1"

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { Search, Filter, Info, FileText, ChevronRight, ChevronLeft, ChevronDown } from 'lucide-react';
 import { getProducts } from '../services/pharmaService';
-import ProductDetailModal from '../components/ProductDetailModal';
 import InquiryModal from '../components/InquiryModal';
 import './Products.css';
 
@@ -225,35 +224,26 @@ export default function Products() {
                         </div>
                       </div>
 
-                      {/* Real Card Content */}
+                      {/* Real Card Content - Matching User's Clean Card Design */}
                       <div className="ac-11__real">
-                        <div className="product-img-wrapper">
+                        <Link to={`/products/${product.id}`} className="product-img-wrapper block" title={`View formulation for ${product.name}`}>
                           <img src={product.image} alt={product.name} loading="lazy" />
-                          <span className="product-category-tag">{product.category}</span>
-                        </div>
+                        </Link>
                         <div className="product-info">
-                          <div className="product-meta-top">
-                            <span className="badge-sm">{product.dosageForm}</span>
-                          </div>
-                          <h3>{product.name}</h3>
-                          <p className="generic">{product.genericName}</p>
+                          <h3 className="product-card-title">
+                            <Link to={`/products/${product.id}`}>
+                              {product.name}
+                            </Link>
+                          </h3>
+                          <p className="product-card-dosage">{product.dosageForm}</p>
+                          <p className="product-card-generic">{product.genericName}</p>
                           
-                          <div className="product-actions mt-auto">
-                            <button 
-                              type="button"
-                              className="btn btn-outline flex items-center justify-center gap-2"
-                              onClick={() => setSelectedProduct(product)}
-                            >
-                              <Info size={16} /> Details
-                            </button>
-                            <button 
-                              type="button"
-                              className="btn btn-primary flex items-center justify-center gap-2"
-                              onClick={() => handleInquire(product)}
-                            >
-                              <FileText size={16} /> Get Quote
-                            </button>
-                          </div>
+                          <Link 
+                            to={`/products/${product.id}`}
+                            className="product-card-cta"
+                          >
+                            View Formulation &rsaquo;
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -334,14 +324,6 @@ export default function Products() {
       </div>
 
       {/* Modals */}
-      {selectedProduct && !showInquiryModal && (
-        <ProductDetailModal 
-          product={selectedProduct} 
-          onClose={() => setSelectedProduct(null)} 
-          onInquire={handleInquire}
-        />
-      )}
-      
       {showInquiryModal && (
         <InquiryModal 
           product={selectedProduct} 

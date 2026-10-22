@@ -8,14 +8,23 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 export default function Header({ settings }) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        const progress = Math.min(100, Math.max(0, (window.scrollY / totalHeight) * 100));
+        setScrollProgress(progress);
+      } else {
+        setScrollProgress(0);
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setIsAdminLoggedIn(!!user);
@@ -97,6 +106,14 @@ export default function Header({ settings }) {
           </div>
         </div>
       </nav>
+
+      {/* Page Reading Progress Indicator */}
+      <div className="reading-progress-track" aria-hidden="true">
+        <div 
+          className="reading-progress-bar" 
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
     </header>
   );
 }

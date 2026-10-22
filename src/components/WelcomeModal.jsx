@@ -3,16 +3,20 @@ import { X } from 'lucide-react';
 import companyLogo from '../assets/Project_images/Pharma_Company_logo.jpeg';
 import './WelcomeModal.css';
 
-export default function WelcomeModal() {
+export default function WelcomeModal({ isReady = true }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasShown, setHasShown] = useState(false);
 
   useEffect(() => {
-    // Show modal on load
-    const timer = setTimeout(() => {
-      setIsOpen(true);
-    }, 400);
-    return () => clearTimeout(timer);
-  }, []);
+    // Show modal once the initial page skeleton has finished loading
+    if (isReady && !hasShown) {
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+        setHasShown(true);
+      }, 350);
+      return () => clearTimeout(timer);
+    }
+  }, [isReady, hasShown]);
 
   // Prevent background scrolling while welcome modal is open
   useEffect(() => {
