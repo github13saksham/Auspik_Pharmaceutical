@@ -9,6 +9,33 @@ import { getProducts } from '../services/pharmaService';
 import './Home.css';
 import InquiryModal from '../components/InquiryModal';
 
+const HERO_FRAME_URLS = Object.entries(
+  import.meta.glob('../assets/Capsule_motion_video_frames/*/frame_*.png', {
+    eager: true,
+    query: '?url',
+    import: 'default',
+  })
+)
+  .sort(([a], [b]) => {
+    const frameA = Number(a.match(/frame_(\d+)\.png$/)[1]);
+    const frameB = Number(b.match(/frame_(\d+)\.png$/)[1]);
+    return frameA - frameB;
+  })
+  .map(([, url]) => url);
+const MOBILE_HERO_FRAME_URLS = Object.entries(
+  import.meta.glob('../assets/hero-phone-frames/frame_*.jpg', {
+    eager: true,
+    query: '?url',
+    import: 'default',
+  })
+)
+  .sort(([a], [b]) => {
+    const frameA = Number(a.match(/frame_(\d+)\.jpg$/)[1]);
+    const frameB = Number(b.match(/frame_(\d+)\.jpg$/)[1]);
+    return frameA - frameB;
+  })
+  .map(([, url]) => url);
+
 export default function Home({ settings }) {
   const navigate = useNavigate();
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -27,35 +54,31 @@ export default function Home({ settings }) {
   const [scrollProgress, setScrollProgress] = useState(0);
   const imagesRef = useRef([]);
   const currentFrameRef = useRef(1);
-  const TOTAL_FRAMES = 144;
 
   // Preload and render image sequence
   useEffect(() => {
     let isMounted = true;
     const canvas = heroCanvasRef.current;
     if (!canvas) return;
+    const isMobile = window.innerWidth <= 768;
+    const frameUrls = isMobile ? MOBILE_HERO_FRAME_URLS : HERO_FRAME_URLS;
+    const totalFrames = frameUrls.length;
     const ctx = canvas.getContext('2d');
-
-    const getFrameUrl = (idx) => `/hero-sequence/ezgif-frame-${String(idx).padStart(3, '0')}.jpg`;
 
     const drawFrame = (img) => {
       if (!img || !img.complete || !img.naturalWidth || !canvas) return;
-      const w = window.innerWidth;
-      const h = window.innerHeight;
+      const w = canvas.clientWidth || window.innerWidth;
+      const h = canvas.clientHeight || window.innerHeight;
       if (!w || !h) return;
 
       const iw = img.naturalWidth;
       const ih = img.naturalHeight;
 
-      // Smart Aspect Ratio Scaling:
-      // Fit natural image without over-stretching or zooming in past 100% natural resolution.
-      // Capping scale to avoid stretching 1080p frames beyond their native pixels:
-      const scale = Math.min(Math.max(w / iw, h / ih), Math.max(1, w / iw));
+      // Fill the entire canvas viewport cleanly without letterboxing black bars
+      const scale = Math.max(w / iw, h / ih);
       const nw = iw * scale;
       const nh = ih * scale;
 
-      const isMobile = w <= 768;
-      // Position cleanly without cutting:
       const cx = isMobile ? (w - nw) / 2 : Math.min(0, w - nw);
       const cy = (h - nh) / 2;
 
@@ -65,10 +88,26 @@ export default function Home({ settings }) {
       ctx.drawImage(img, Math.round(cx), Math.round(cy), Math.round(nw), Math.round(nh));
     };
 
+    const preloadRemainingFrames = () => {
+      for (let i = 2; i <= totalFrames; i++) {
+        if (imagesRef.current[i]) continue;
+        const img = new Image();
+        imagesRef.current[i] = img;
+        img.onload = () => {
+          if (!isMounted) return;
+          if (currentFrameRef.current === i) {
+            drawFrame(img);
+          }
+        };
+        img.onerror = () => console.error(`Unable to load homepage hero frame ${i}.`);
+        img.src = frameUrls[i - 1];
+      }
+    };
+
     const updateCanvasSize = () => {
       const dpr = Math.max(window.devicePixelRatio || 1, 1);
-      const w = window.innerWidth;
-      const h = window.innerHeight;
+      const w = canvas.clientWidth || window.innerWidth;
+      const h = canvas.clientHeight || window.innerHeight;
       const targetW = Math.round(w * dpr);
       const targetH = Math.round(h * dpr);
 
@@ -84,6 +123,7 @@ export default function Home({ settings }) {
       if (curImg) {
         drawFrame(curImg);
       }
+      preloadRemainingFrames();
     };
 
     updateCanvasSize();
@@ -91,25 +131,13 @@ export default function Home({ settings }) {
 
     // Initial load first frame immediately
     const firstImg = new Image();
-    firstImg.src = getFrameUrl(1);
+    firstImg.src = frameUrls[0];
     firstImg.onload = () => {
       if (!isMounted) return;
       imagesRef.current[1] = firstImg;
       drawFrame(firstImg);
     };
-
-    // Preload remaining frames in batches
-    for (let i = 2; i <= TOTAL_FRAMES; i++) {
-      const img = new Image();
-      img.src = getFrameUrl(i);
-      img.onload = () => {
-        if (!isMounted) return;
-        imagesRef.current[i] = img;
-        if (currentFrameRef.current === i) {
-          drawFrame(img);
-        }
-      };
-    }
+    firstImg.onerror = () => console.error('Unable to load the first homepage hero frame.');
 
     // Scroll listener with requestAnimationFrame smoothing
     let ticking = false;
@@ -127,10 +155,10 @@ export default function Home({ settings }) {
           progress = Math.min(Math.max(progress, 0), 1);
           setScrollProgress(progress);
 
-          // Calculate frame index from progress (1 to 144)
+          // Calculate frame index from scroll progress.
           const frameIndex = Math.min(
-            TOTAL_FRAMES,
-            Math.max(1, Math.floor(progress * (TOTAL_FRAMES - 1)) + 1)
+            totalFrames,
+            Math.max(1, Math.floor(progress * (totalFrames - 1)) + 1)
           );
           currentFrameRef.current = frameIndex;
 
@@ -440,7 +468,7 @@ export default function Home({ settings }) {
         aria-label="Hero Overview"
       >
         <div className="hero-sticky-frame">
-          {/* Canvas Rendering 144-Frame Sequence */}
+          {/* Canvas renders the desktop or phone frame sequence. */}
           <canvas ref={heroCanvasRef} className="hero-sequence-canvas" />
 
           {/* Soft Dark Vignette Overlay for Text Readability */}
@@ -455,18 +483,17 @@ export default function Home({ settings }) {
               </h1>
 
               <p className="hero-seq-subtitle">
-                Dedicated to formulating and manufacturing international-grade pharmaceutical 
-                products under strict WHO-GMP and ISO standards.
+                Delivering High Quality Medicines in Less Time
               </p>
 
               {/* Direct Action Buttons on the Left */}
               <div className="hero-seq-cta-row">
                 <Link to="/products" className="btn btn-primary hero-seq-btn-main">
-                  <span>Explore Formulations</span>
+                  <span>Explore Products</span>
                   <ArrowRight size={18} />
                 </Link>
                 <Link to="/about" className="btn btn-outline hero-seq-btn-secondary">
-                  <span>Facility Tour</span>
+                  <span>Our Journey</span>
                 </Link>
               </div>
 
@@ -486,43 +513,6 @@ export default function Home({ settings }) {
             </div>
           </div>
 
-          {/* Quality Standard Trust Strip in Hero */}
-          <div className="hero-trust-bar-wrapper">
-            <div className="container">
-              <div className="hero-trust-bar">
-                <div className="trust-flex">
-                  <div className="trust-box">
-                    <HeartPulse size={22} className="trust-icon" />
-                    <div>
-                      <h4>High Quality Medicines</h4>
-                      <p>Rigorous Testing Standards</p>
-                    </div>
-                  </div>
-                  <div className="trust-box">
-                    <Clock size={22} className="trust-icon" />
-                    <div>
-                      <h4>Delivering In Less Time</h4>
-                      <p>Express Dispatch & Supply</p>
-                    </div>
-                  </div>
-                  <div className="trust-box">
-                    <Building2 size={22} className="trust-icon" />
-                    <div>
-                      <h4>HSIIDC Karnal</h4>
-                      <p>State-of-the-Art Facility</p>
-                    </div>
-                  </div>
-                  <div className="trust-box">
-                    <Truck size={22} className="trust-icon" />
-                    <div>
-                      <h4>Prompt Delivery</h4>
-                      <p>Pan-India Distribution</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 

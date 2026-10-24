@@ -449,6 +449,9 @@
 }
 
 .opening-apply-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: #0f172a;
   color: #ffffff;
   font-size: 0.8rem;
@@ -459,6 +462,8 @@
   border: none;
   cursor: pointer;
   white-space: nowrap;
+  text-decoration: none;
+  box-sizing: border-box;
 }
 
 .opening-apply-btn:hover {

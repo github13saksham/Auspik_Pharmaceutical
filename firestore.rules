@@ -20,10 +20,101 @@ service cloud.firestore {
       allow write: if true;
     }
 
+    match /careerApplications/{applicationId} {
+      allow create: if request.resource.data.keys().hasOnly([
+          'fullName', 'email', 'phone', 'experience', 'currentLocation',
+          'coverNote', 'resumeName', 'jobId', 'jobTitle', 'department', 'createdAt', 'status'
+        ])
+        && request.resource.data.keys().hasAll([
+          'fullName', 'email', 'phone', 'experience', 'currentLocation',
+          'coverNote', 'resumeName', 'jobId', 'jobTitle', 'department', 'createdAt', 'status'
+        ])
+        && request.resource.data.fullName is string
+        && request.resource.data.fullName.size() > 0
+        && request.resource.data.fullName.size() <= 100
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 254
+        && request.resource.data.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+        && request.resource.data.phone is string
+        && request.resource.data.phone.size() > 0
+        && request.resource.data.phone.size() <= 30
+        && request.resource.data.experience is string
+        && request.resource.data.experience.size() > 0
+        && request.resource.data.experience.size() <= 80
+        && request.resource.data.currentLocation is string
+        && request.resource.data.currentLocation.size() <= 100
+        && request.resource.data.coverNote is string
+        && request.resource.data.coverNote.size() <= 1000
+        && request.resource.data.resumeName is string
+        && request.resource.data.resumeName.size() <= 255
+        && request.resource.data.jobId is string
+        && request.resource.data.jobId.size() <= 80
+        && request.resource.data.jobTitle is string
+        && request.resource.data.jobTitle.size() <= 120
+        && request.resource.data.department is string
+        && request.resource.data.department.size() <= 120
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.status == 'new';
+      allow read, update, delete: if false;
+    }
+
+    match /mail/{mailId} {
+      allow create: if request.resource.data.keys().hasOnly([
+          'to', 'replyTo', 'applicationId', 'message'
+        ])
+        && request.resource.data.keys().hasAll(['to', 'applicationId', 'message'])
+        && request.resource.data.applicationId is string
+        && request.resource.data.to is string
+        && request.resource.data.message is map
+        && request.resource.data.message.keys().hasOnly([
+          'subject', 'text', 'html', 'attachments'
+        ])
+        && request.resource.data.message.keys().hasAll(['subject', 'text', 'html'])
+        && request.resource.data.message.subject is string
+        && request.resource.data.message.subject.size() <= 200
+        && request.resource.data.message.text is string
+        && request.resource.data.message.text.size() <= 4000
+        && request.resource.data.message.html is string
+        && request.resource.data.message.html.size() <= 8000
+        && (
+          !('attachments' in request.resource.data.message)
+          || (
+            request.resource.data.message.attachments is list
+            && request.resource.data.message.attachments.size() == 1
+            && request.resource.data.message.attachments[0] is map
+            && request.resource.data.message.attachments[0].keys().hasOnly([
+              'filename', 'path'
+            ])
+            && request.resource.data.message.attachments[0].keys().hasAll([
+              'filename', 'path'
+            ])
+            && request.resource.data.message.attachments[0].filename is string
+            && request.resource.data.message.attachments[0].filename.size() <= 255
+            && request.resource.data.message.attachments[0].path is string
+            && request.resource.data.message.attachments[0].path.size() <= 850000
+          )
+        )
+        && existsAfter(
+          /databases/$(database)/documents/careerApplications/$(request.resource.data.applicationId)
+        )
+        && (
+          request.resource.data.to == 'auspikpharma@gmail.com'
+          || request.resource.data.to == getAfter(
+            /databases/$(database)/documents/careerApplications/$(request.resource.data.applicationId)
+          ).data.email
+        )
+        && (
+          !('replyTo' in request.resource.data)
+          || request.resource.data.replyTo == getAfter(
+            /databases/$(database)/documents/careerApplications/$(request.resource.data.applicationId)
+          ).data.email
+        );
+      allow read, update, delete: if false;
+    }
+
     // Default fallback
     match /{document=**} {
-      allow read, write: if true;
+      allow read, write: if false;
     }
   }
 }
-

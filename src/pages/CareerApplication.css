@@ -1,0 +1,516 @@
+.career-application-page {
+  min-height: calc(100vh - 80px);
+  padding: 2rem 1.5rem 5rem;
+  background:
+    radial-gradient(ellipse at 9% 10%, rgba(14, 165, 233, 0.11), transparent 34rem),
+    linear-gradient(180deg, #f3f8fc 0%, #f8fafc 48%, #ffffff 100%);
+}
+
+.career-application-shell {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.career-application-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 1.5rem;
+  color: #25658a;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.career-application-back-link:hover {
+  color: #123d5a;
+}
+
+.career-application-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e0eaf1;
+  border-radius: 26px;
+  box-shadow: 0 24px 70px rgba(15, 49, 73, 0.1);
+}
+
+.career-application-role-panel {
+  padding: 3rem 2.6rem;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.2), transparent 19rem),
+    linear-gradient(150deg, #0d2942 0%, #123e5b 55%, #075985 100%);
+}
+
+.career-application-eyebrow {
+  margin: 0 0 0.75rem;
+  color: #0e7490;
+  font-size: 0.73rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.career-application-role-panel .career-application-eyebrow {
+  color: #7dd3fc;
+}
+
+.career-application-role-panel > h1 {
+  max-width: 390px;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(2.05rem, 3.3vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.career-application-role-intro {
+  max-width: 390px;
+  margin: 1rem 0 2rem;
+  color: #c9dce8;
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+.career-application-role-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 1rem;
+  border: 1px solid rgba(186, 230, 253, 0.2);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.career-application-role-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 12px;
+  color: #bae6fd;
+  background: rgba(14, 165, 233, 0.2);
+}
+
+.career-application-role-label {
+  display: block;
+  margin: 0 0 0.2rem;
+  color: #b9d0df;
+  font-size: 0.77rem;
+  font-weight: 600;
+}
+
+.career-application-role-card h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.07rem;
+  line-height: 1.4;
+}
+
+.career-application-role-meta {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.25rem 0 1.75rem;
+}
+
+.career-application-role-meta span {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: #d1e3ed;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.career-application-role-meta svg {
+  flex: 0 0 auto;
+  margin-top: 0.1rem;
+  color: #7dd3fc;
+}
+
+.career-application-requirements {
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(186, 230, 253, 0.2);
+}
+
+.career-application-requirements h3 {
+  margin: 0 0 0.8rem;
+  color: #ffffff;
+  font-size: 0.93rem;
+}
+
+.career-application-requirements ul {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+  padding-left: 1.15rem;
+  color: #c9dce8;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.career-application-requirements li::marker {
+  color: #7dd3fc;
+}
+
+.career-application-privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-top: 2rem;
+  padding: 0.8rem 0.9rem;
+  border-radius: 12px;
+  color: #c9dce8;
+  background: rgba(3, 20, 34, 0.24);
+  font-size: 0.79rem;
+  line-height: 1.5;
+}
+
+.career-application-privacy svg {
+  flex: 0 0 auto;
+  color: #7dd3fc;
+}
+
+.career-application-form-panel {
+  padding: 3rem;
+}
+
+.career-application-form-heading {
+  margin-bottom: 1.6rem;
+}
+
+.career-application-form-heading h2 {
+  margin: 0 0 0.4rem;
+  color: #102b40;
+  font-size: clamp(1.55rem, 2.4vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+.career-application-form-heading > p:last-child {
+  margin: 0;
+  color: #647789;
+  font-size: 0.9rem;
+}
+
+.career-application-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.15rem;
+}
+
+.career-application-field {
+  display: grid;
+  align-content: start;
+  gap: 0.48rem;
+  color: #243f52;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.career-application-field-wide {
+  grid-column: 1 / -1;
+}
+
+.career-application-field input,
+.career-application-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d7e3eb;
+  border-radius: 11px;
+  outline: none;
+  padding: 0.78rem 0.9rem;
+  color: #163248;
+  background: #fbfdff;
+  font: inherit;
+  font-size: 0.93rem;
+  font-weight: 400;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.career-application-field input {
+  min-height: 48px;
+}
+
+.career-application-field textarea {
+  min-height: 128px;
+  resize: vertical;
+}
+
+.career-application-field input::placeholder,
+.career-application-field textarea::placeholder {
+  color: #91a2af;
+}
+
+.career-application-field input:focus,
+.career-application-field textarea:focus {
+  border-color: #0e8cb8;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
+}
+
+.career-application-upload {
+  position: relative;
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  border: 1px dashed #b9d1dd;
+  border-radius: 11px;
+  padding: 0.7rem 0.9rem;
+  color: #587080;
+  background: #f7fbfd;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.career-application-upload:hover,
+.career-application-upload:focus-within {
+  border-color: #0e8cb8;
+  background: #f0f9fc;
+}
+
+.career-application-upload input {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.career-application-upload-prompt,
+.career-application-file-name {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.career-application-upload-prompt svg,
+.career-application-file-name > svg {
+  flex: 0 0 auto;
+  color: #087e9b;
+}
+
+.career-application-file-name {
+  width: 100%;
+  min-width: 0;
+  color: #214257;
+}
+
+.career-application-file-name > svg {
+  flex-shrink: 0;
+}
+
+.career-application-file-name button {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  place-items: center;
+  margin-left: auto;
+  border: 0;
+  border-radius: 9px;
+  color: #526879;
+  background: #e7f0f4;
+  cursor: pointer;
+}
+
+.career-application-upload-error {
+  color: #b42318;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.career-application-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e8eef2;
+}
+
+.career-application-form-footer > span {
+  max-width: 210px;
+  color: #647789;
+  font-size: 0.81rem;
+  line-height: 1.5;
+}
+
+.career-application-submit {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border: 0;
+  border-radius: 12px;
+  padding: 0.8rem 1.2rem;
+  color: #ffffff;
+  background: linear-gradient(135deg, #087ea4, #075985);
+  box-shadow: 0 8px 18px rgba(7, 89, 133, 0.2);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+}
+
+.career-application-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 11px 24px rgba(7, 89, 133, 0.27);
+}
+
+.career-application-submit:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  transform: none;
+}
+
+.career-application-error {
+  margin: 0 0 1.2rem;
+  border: 1px solid #fecaca;
+  border-radius: 11px;
+  padding: 0.8rem 1rem;
+  color: #991b1b;
+  background: #fef2f2;
+  font-size: 0.88rem;
+}
+
+.career-application-success,
+.career-application-not-found .career-application-card {
+  max-width: 620px;
+  margin: 5rem auto;
+  padding: clamp(2rem, 6vw, 4rem);
+  border: 1px solid #e0eaf1;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 24px 70px rgba(15, 49, 73, 0.1);
+  text-align: center;
+}
+
+.career-application-success-icon {
+  display: grid;
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 1.5rem;
+  place-items: center;
+  border-radius: 22px;
+  color: #047857;
+  background: #d1fae5;
+}
+
+.career-application-success h1,
+.career-application-not-found h1 {
+  margin: 0 0 0.85rem;
+  color: #102b40;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  letter-spacing: -0.04em;
+}
+
+.career-application-success > p:not(.career-application-eyebrow),
+.career-application-not-found .career-application-card > p:not(.career-application-eyebrow) {
+  margin: 0 auto 1.7rem;
+  color: #526879;
+  line-height: 1.7;
+}
+
+.career-application-not-found .career-application-eyebrow {
+  color: #0e7490;
+}
+
+.career-application-not-found .career-application-back-link {
+  margin: 0;
+}
+
+@media (max-width: 850px) {
+  .career-application-layout {
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  }
+
+  .career-application-role-panel,
+  .career-application-form-panel {
+    padding: 2.2rem 1.7rem;
+  }
+
+  .career-application-form-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .career-application-form-footer > span {
+    max-width: none;
+  }
+}
+
+@media (max-width: 650px) {
+  .career-application-page {
+    padding: 1.25rem 1rem 3rem;
+  }
+
+  .career-application-layout {
+    grid-template-columns: 1fr;
+    border-radius: 20px;
+  }
+
+  .career-application-role-panel {
+    padding: 2rem 1.35rem 1.6rem;
+  }
+
+  .career-application-role-panel > h1 {
+    max-width: 450px;
+    font-size: 2.15rem;
+  }
+
+  .career-application-role-intro {
+    margin: 0.75rem 0 1.2rem;
+  }
+
+  .career-application-role-meta {
+    margin: 1rem 0 1.25rem;
+  }
+
+  .career-application-requirements {
+    padding-top: 1rem;
+  }
+
+  .career-application-privacy {
+    margin-top: 1.25rem;
+  }
+
+  .career-application-form-panel {
+    padding: 1.8rem 1.25rem 1.4rem;
+  }
+
+  .career-application-fields {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .career-application-field-wide {
+    grid-column: auto;
+  }
+
+  .career-application-form-footer .career-application-submit {
+    width: 100%;
+  }
+
+  .career-application-success,
+  .career-application-not-found .career-application-card {
+    margin: 2rem auto;
+    padding: 2rem 1.35rem;
+    border-radius: 20px;
+  }
+}

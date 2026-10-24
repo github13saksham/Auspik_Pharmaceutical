@@ -10,6 +10,7 @@ import ProductDetail from './pages/ProductDetail';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Careers from './pages/Careers';
+import CareerApplication from './pages/CareerApplication';
 import Admin from './pages/Admin';
 
 import { getSettings } from './services/pharmaService';
@@ -35,6 +36,7 @@ function App() {
             <Route path="products/:id" element={<ProductDetail />} />
             <Route path="about" element={<About settings={settings} />} />
             <Route path="careers" element={<Careers />} />
+            <Route path="careers/apply/:jobId" element={<CareerApplication />} />
             <Route path="contact" element={<Contact settings={settings} />} />
           </Route>
           

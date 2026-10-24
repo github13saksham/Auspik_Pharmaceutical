@@ -89,7 +89,13 @@ export default function Layout({ settings }) {
         }}
       >
         <Header settings={settings} />
-        <main className="main-content-wrapper" style={{ minHeight: 'calc(100vh - 350px)', paddingTop: '92px' }}>
+        <main 
+          className="main-content-wrapper" 
+          style={{ 
+            minHeight: 'calc(100vh - 350px)', 
+            paddingTop: location.pathname === '/' ? 0 : '92px' 
+          }}
+        >
           <Outlet />
         </main>
         <WhatsAppWidget phone={settings?.phone} />

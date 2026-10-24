@@ -743,3 +743,252 @@
     padding: 2rem 1.25rem;
   }
 }
+
+.az-product-page {
+  color: #173247;
+  background:
+    radial-gradient(ellipse at 6% 7%, rgba(14, 165, 233, 0.08), transparent 28rem),
+    #f6fafc;
+  font-family: inherit;
+}
+
+.az-product-container {
+  max-width: 1280px;
+}
+
+.az-breadcrumbs-bar {
+  padding: 1.1rem 0;
+  border-bottom-color: #e1ebf0;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.az-breadcrumbs,
+.az-breadcrumbs a,
+.az-current-crumb {
+  color: #526b7c;
+}
+
+.az-back-crumb {
+  color: #0c7188;
+}
+
+.az-product-layout {
+  gap: 2rem;
+  margin: 2rem 0 3.5rem;
+}
+
+.az-sticky-image-wrap {
+  top: 105px;
+}
+
+.az-main-image-viewport {
+  aspect-ratio: 1 / 1;
+  max-height: 500px;
+  border: 1px solid #e0eaf0;
+  border-radius: 22px;
+  padding: 1.5rem;
+  background:
+    radial-gradient(circle at 50% 42%, #ffffff 0%, #f0f8fb 74%, #e8f3f7 100%);
+  box-shadow: 0 16px 42px rgba(15, 49, 73, 0.07);
+}
+
+.az-product-img {
+  filter: drop-shadow(0 16px 22px rgba(12, 42, 61, 0.11));
+}
+
+.az-image-caption {
+  color: #718696;
+}
+
+.az-details-column {
+  padding: 0.25rem 0;
+}
+
+.az-brand-link,
+.az-view-all {
+  color: #0c7188;
+}
+
+.az-product-title {
+  color: #102b40;
+  font-size: clamp(1.7rem, 2.5vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.az-generic-subtitle {
+  color: #587080;
+  font-size: 1rem;
+}
+
+.az-divider {
+  background-color: #e1ebf0;
+}
+
+.az-spec-table {
+  gap: 0.6rem;
+}
+
+.az-spec-row {
+  grid-template-columns: minmax(120px, 0.65fr) 1fr;
+  border-radius: 9px;
+  padding: 0.55rem 0.65rem;
+  background: #f3f8fa;
+}
+
+.az-spec-key {
+  color: #214257;
+}
+
+.az-spec-val {
+  color: #526b7c;
+}
+
+.az-indications-box {
+  border-left-color: #0c8ba5;
+  border-radius: 0 12px 12px 0;
+  background: #eef8fa;
+}
+
+.az-section-label,
+.az-section-heading {
+  color: #16384d;
+}
+
+.az-bullets-list li {
+  color: #405a6b;
+  line-height: 1.65;
+}
+
+.az-buybox-column {
+  position: sticky;
+  top: 105px;
+}
+
+.az-buybox-card {
+  gap: 1.1rem;
+  border-color: #dce8ee;
+  border-radius: 18px;
+  padding: 1.35rem;
+  background: #ffffff;
+  box-shadow: 0 14px 36px rgba(15, 49, 73, 0.08);
+}
+
+.az-in-stock {
+  color: #087e68;
+  font-size: 1rem;
+}
+
+.az-supply-type,
+.az-buybox-meta,
+.az-perk-item {
+  color: #5d7484;
+}
+
+.az-buybox-meta {
+  border-color: #e3edf1;
+}
+
+.az-meta-v {
+  color: #1c394c;
+}
+
+.az-btn-primary {
+  min-height: 46px;
+  border: 0;
+  border-radius: 11px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #087e8b, #075985);
+  box-shadow: 0 8px 18px rgba(7, 89, 133, 0.2);
+}
+
+.az-btn-primary:hover {
+  background: linear-gradient(135deg, #086c79, #064c72);
+}
+
+.az-btn-secondary {
+  min-height: 44px;
+  border-color: #cfe0e8;
+  border-radius: 11px;
+  color: #1c5367;
+  background: #f8fbfc;
+}
+
+.az-perk-icon {
+  color: #0c8393;
+}
+
+.az-related-section {
+  border-color: #dce8ee;
+}
+
+.az-related-header h3 {
+  color: #16384d;
+}
+
+.az-related-item {
+  border-color: #dce7ed;
+  border-radius: 15px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(15, 49, 73, 0.045);
+}
+
+.az-related-item:hover {
+  border-color: #8dc8d7;
+  box-shadow: 0 16px 32px rgba(15, 73, 100, 0.12);
+}
+
+.az-rel-name,
+.az-rel-cta {
+  color: #0c6176;
+}
+
+@media (max-width: 1024px) {
+  .az-buybox-column {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .az-product-layout {
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  .az-main-image-viewport {
+    aspect-ratio: 1.2 / 1;
+    max-height: 360px;
+    border-radius: 17px;
+    padding: 1rem;
+  }
+
+  .az-product-title {
+    font-size: 1.65rem;
+  }
+
+  .az-buybox-card {
+    border-radius: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .az-breadcrumbs-bar {
+    padding: 0.8rem 0;
+  }
+
+  .az-product-container {
+    padding: 0 0.9rem;
+  }
+
+  .az-main-image-viewport {
+    aspect-ratio: 1.15 / 1;
+    padding: 0.75rem;
+  }
+
+  .az-spec-row {
+    grid-template-columns: 105px 1fr;
+    gap: 0.4rem;
+    padding: 0.55rem;
+  }
+}

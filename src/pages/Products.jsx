@@ -108,7 +108,7 @@ export default function Products() {
 
   return (
     <div className="products-page page-padding">
-      <div className="page-header">
+      <div className="page-header products-page-header">
         <div className="container">
           <h1 className="animate-slide-up">Our Premium Products</h1>
           <p className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
@@ -230,6 +230,9 @@ export default function Products() {
                           <img src={product.image} alt={product.name} loading="lazy" />
                         </Link>
                         <div className="product-info">
+                          <span className="product-card-category">
+                            {product.category || product.dosageForm || 'Quality formulation'}
+                          </span>
                           <h3 className="product-card-title">
                             <Link to={`/products/${product.id}`}>
                               {product.name}
