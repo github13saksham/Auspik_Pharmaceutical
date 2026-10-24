@@ -52,17 +52,30 @@ export default function Home({ settings }) {
   const heroSequenceRef = useRef(null);
   const heroCanvasRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobileViewport, setIsMobileViewport] = useState(
+    () => window.innerWidth <= 768
+  );
   const imagesRef = useRef([]);
   const currentFrameRef = useRef(1);
+
+  useEffect(() => {
+    const breakpoint = window.matchMedia('(max-width: 768px)');
+    const updateViewport = () => setIsMobileViewport(breakpoint.matches);
+
+    breakpoint.addEventListener('change', updateViewport);
+    return () => breakpoint.removeEventListener('change', updateViewport);
+  }, []);
 
   // Preload and render image sequence
   useEffect(() => {
     let isMounted = true;
     const canvas = heroCanvasRef.current;
     if (!canvas) return;
-    const isMobile = window.innerWidth <= 768;
+    const isMobile = isMobileViewport;
     const frameUrls = isMobile ? MOBILE_HERO_FRAME_URLS : HERO_FRAME_URLS;
     const totalFrames = frameUrls.length;
+    imagesRef.current = [];
+    currentFrameRef.current = 1;
     const ctx = canvas.getContext('2d');
 
     const drawFrame = (img) => {
@@ -181,7 +194,7 @@ export default function Home({ settings }) {
       window.removeEventListener('resize', updateCanvasSize);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [isMobileViewport]);
 
   const productCount = featuredProducts.length;
 
