@@ -312,21 +312,97 @@
   text-decoration: underline;
 }
 
-/* Responsive */
-@media (max-width: 992px) {
+/* Responsive (Mobile & Tablet Only) */
+@media (max-width: 1024px) {
+  .contact-header {
+    padding: 7.5rem 1.5rem 4rem;
+  }
+  .contact-header h1 {
+    font-size: 2.75rem;
+  }
   .contact-v2-grid {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .contact-header {
+    padding: 6.5rem 1rem 3.5rem;
+  }
+  .contact-header h1 {
+    font-size: 2.2rem;
+  }
+  .contact-header p {
+    font-size: 1rem;
+  }
+  .contact-main-section {
+    padding-top: 2.5rem;
+    padding-bottom: 3.5rem;
+  }
+  .contact-form-card,
+  .contact-info-card {
+    padding: 1.75rem 1.5rem;
+    border-radius: 18px;
+  }
   .form-row-2 {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
   .form-action-row {
     flex-direction: column;
+    gap: 0.75rem;
   }
-  .contact-form-card {
-    padding: 1.75rem;
+  .btn-contact-submit,
+  .btn-whatsapp-direct {
+    width: 100%;
+    min-height: 48px;
+  }
+  .integrated-map-box iframe {
+    height: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-header {
+    padding: 5.5rem 1rem 2.75rem;
+  }
+  .contact-header h1 {
+    font-size: 1.85rem;
+  }
+  .contact-header p {
+    font-size: 0.92rem;
+  }
+  .contact-form-card,
+  .contact-info-card {
+    padding: 1.25rem 1rem;
+    border-radius: 14px;
+  }
+  .form-header h2,
+  .info-card-header h2 {
+    font-size: 1.45rem;
+  }
+  .form-group-v2 input,
+  .form-group-v2 select,
+  .form-group-v2 textarea {
+    font-size: 16px; /* Prevents auto zoom on mobile browsers */
+    padding: 0.75rem 0.9rem;
+  }
+  .meta-item {
+    gap: 0.75rem;
+  }
+  .meta-illustration-wrapper {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+  }
+  .meta-item strong {
+    font-size: 0.92rem;
+  }
+  .meta-value {
+    font-size: 0.85rem;
+  }
+  .integrated-map-box iframe {
+    height: 240px;
   }
 }

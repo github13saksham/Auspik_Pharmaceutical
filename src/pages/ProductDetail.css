@@ -619,3 +619,127 @@
   max-width: 500px;
   text-align: center;
 }
+
+/* ========================================================
+   RESPONSIVE DESIGN (MOBILE & TABLET ONLY)
+   Strictly scoped to max-width to protect Desktop view
+   ======================================================== */
+@media (max-width: 1024px) {
+  .az-product-layout {
+    grid-template-columns: 360px 1fr;
+    gap: 2rem;
+  }
+  .az-buybox-column {
+    grid-column: 1 / -1;
+  }
+  .az-skeleton-layout {
+    grid-template-columns: 360px 1fr;
+    gap: 2rem;
+  }
+  .az-product-title {
+    font-size: 1.65rem;
+  }
+  .az-breadcrumbs-bar {
+    padding: 1.75rem 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .az-product-container {
+    padding: 0 1rem;
+  }
+  .az-breadcrumbs-bar {
+    padding: 1.25rem 0;
+  }
+  .az-product-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .az-sticky-image-wrap {
+    position: static;
+  }
+  .az-main-image-viewport {
+    max-height: 320px;
+    aspect-ratio: 4 / 3;
+  }
+  .az-product-title {
+    font-size: 1.45rem;
+    line-height: 1.25;
+  }
+  .az-generic-subtitle {
+    font-size: 0.95rem;
+  }
+  .az-spec-row {
+    grid-template-columns: 130px 1fr;
+    font-size: 0.85rem;
+  }
+  .az-buybox-card {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  .az-btn-primary {
+    min-height: 44px;
+    font-size: 0.92rem;
+  }
+  .az-btn-secondary {
+    min-height: 44px;
+    font-size: 0.88rem;
+  }
+  .az-related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .az-related-header h3 {
+    font-size: 1.2rem;
+  }
+  .az-skeleton-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .az-sk-buybox {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .az-product-title {
+    font-size: 1.25rem;
+  }
+  .az-generic-subtitle {
+    font-size: 0.88rem;
+  }
+  .az-spec-row {
+    grid-template-columns: 110px 1fr;
+    font-size: 0.8125rem;
+  }
+  .az-bullets-list {
+    padding-left: 1.15rem;
+    font-size: 0.8125rem;
+  }
+  .az-related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .az-related-item {
+    padding: 0.85rem 0.75rem;
+  }
+  .az-rel-name {
+    font-size: 0.92rem;
+    margin-bottom: 0.25rem;
+  }
+  .az-rel-cat {
+    font-size: 0.78rem;
+    margin-bottom: 0.25rem;
+  }
+  .az-rel-generic {
+    font-size: 0.78rem;
+    margin-bottom: 0.5rem;
+  }
+  .az-rel-cta {
+    font-size: 0.82rem;
+  }
+  .not-found-card {
+    padding: 2rem 1.25rem;
+  }
+}

@@ -1,8 +1,36 @@
-import { ShieldCheck, Globe, Building, Users, Award, FlaskConical, CheckCircle2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ShieldCheck, Globe, Building, Users, Award, FlaskConical, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
 import './About.css';
 
 export default function About({ settings }) {
   const companyName = settings?.companyName || 'Auspik Pharmaceuticals';
+
+  const founders = [
+    {
+      id: 1,
+      name: 'Anand Mohan',
+      role: 'Managing Director & Founder',
+      creds: 'Formulation Science & Quality Governance',
+      img: '/anand-mohan.jpg'
+    },
+    {
+      id: 2,
+      name: 'Lalit Arora',
+      role: 'Managing Director & Founder',
+      creds: 'Operations, Supply Chain & Alliances',
+      img: '/lalit-arora.jpg'
+    }
+  ];
+
+  const [activeFounder, setActiveFounder] = useState(0);
+
+  // Auto-slide for mobile/tablet carousel
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveFounder((prev) => (prev === 0 ? 1 : 0));
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="about-page">
@@ -56,40 +84,83 @@ export default function About({ settings }) {
             <p className="founders-subheading">Steering Auspik Pharmaceuticals toward global excellence in formulation science and compassionate healthcare.</p>
           </div>
 
-          {/* Founders Grid - Two Photos with Names & Designations underneath */}
-          <div className="founders-grid">
-            {/* Founder 1 */}
-            <div className="founder-card-item">
-              <div className="founder-photo-wrapper">
-                <img 
-                  src="/anand-mohan.jpg" 
-                  alt="Anand Mohan" 
-                  className="founder-photo-img"
-                  loading="lazy"
-                />
+          {/* Founders Grid on Desktop / Slider on Mobile & Tablet */}
+          <div className="founders-desktop-grid">
+            {founders.map((founder) => (
+              <div className="founder-card-item" key={`desktop-${founder.id}`}>
+                <div className="founder-photo-wrapper">
+                  <img 
+                    src={founder.img} 
+                    alt={founder.name} 
+                    className="founder-photo-img"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="founder-meta">
+                  <h3 className="founder-person-name">{founder.name}</h3>
+                  <span className="founder-person-role">{founder.role}</span>
+                  <p className="founder-person-creds">{founder.creds}</p>
+                </div>
               </div>
-              <div className="founder-meta">
-                <h3 className="founder-person-name">Anand Mohan</h3>
-                <span className="founder-person-role">Managing Director & Founder</span>
-                <p className="founder-person-creds">Formulation Science & Quality Governance</p>
+            ))}
+          </div>
+
+          {/* Founders Auto-Slider on Mobile & Tablet view only */}
+          <div className="founders-mobile-slider-container">
+            <div className="founders-slider-viewport">
+              <div 
+                className="founders-slider-track" 
+                style={{ transform: `translateX(-${activeFounder * 100}%)` }}
+              >
+                {founders.map((founder) => (
+                  <div className="founder-slide-item" key={`slide-${founder.id}`}>
+                    <div className="founder-photo-wrapper">
+                      <img 
+                        src={founder.img} 
+                        alt={founder.name} 
+                        className="founder-photo-img"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="founder-meta">
+                      <h3 className="founder-person-name">{founder.name}</h3>
+                      <span className="founder-person-role">{founder.role}</span>
+                      <p className="founder-person-creds">{founder.creds}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Founder 2 */}
-            <div className="founder-card-item">
-              <div className="founder-photo-wrapper">
-                <img 
-                  src="/lalit-arora.jpg" 
-                  alt="Lalit Arora" 
-                  className="founder-photo-img"
-                  loading="lazy"
-                />
+            {/* Slider Controls & Dots */}
+            <div className="founders-slider-controls">
+              <button 
+                type="button"
+                className="founder-arrow-btn" 
+                onClick={() => setActiveFounder((prev) => (prev === 0 ? 1 : 0))}
+                aria-label="Previous Founder"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <div className="founders-dots">
+                {founders.map((_, idx) => (
+                  <button
+                    key={`dot-${idx}`}
+                    type="button"
+                    className={`founder-dot ${activeFounder === idx ? 'active' : ''}`}
+                    onClick={() => setActiveFounder(idx)}
+                    aria-label={`Slide to founder ${idx + 1}`}
+                  />
+                ))}
               </div>
-              <div className="founder-meta">
-                <h3 className="founder-person-name">Lalit Arora</h3>
-                <span className="founder-person-role">Managing Director & Founder</span>
-                <p className="founder-person-creds">Operations, Supply Chain & Alliances</p>
-              </div>
+              <button 
+                type="button"
+                className="founder-arrow-btn" 
+                onClick={() => setActiveFounder((prev) => (prev === 0 ? 1 : 0))}
+                aria-label="Next Founder"
+              >
+                <ChevronRight size={20} />
+              </button>
             </div>
           </div>
 

@@ -1,30 +1,12 @@
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, getDoc, setDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, doc, updateDoc, getDoc, setDoc } from 'firebase/firestore';
+import { db as firestoreDb } from '../firebase';
 
-// Firebase configuration (using process.env for Vite)
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
-};
-
-let db = null;
+let db = firestoreDb;
 let useLocalStorage = false;
 
-try {
-  if (firebaseConfig.apiKey) {
-    const app = initializeApp(firebaseConfig);
-    db = getFirestore(app);
-  } else {
-    useLocalStorage = true;
-    console.warn("Firebase credentials missing. Falling back to localStorage.");
-  }
-} catch (error) {
+if (!db) {
   useLocalStorage = true;
-  console.warn("Firebase initialization failed. Falling back to localStorage.", error);
+  console.warn("Firebase Firestore not initialized. Falling back to localStorage.");
 }
 
 import seededProducts from './seededProducts.json';

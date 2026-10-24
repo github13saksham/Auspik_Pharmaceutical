@@ -132,6 +132,7 @@
 
 .table-responsive {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .admin-table {
@@ -222,6 +223,23 @@
   }
   .admin-main {
     margin-left: 60px;
+    padding: 1rem 0.75rem;
+  }
+  .stat-card {
     padding: 1rem;
+    gap: 1rem;
+  }
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+  }
+  .admin-card {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-main {
+    padding: 0.75rem 0.5rem;
   }
 }

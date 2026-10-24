@@ -397,9 +397,22 @@
 }
 
 @media (max-width: 480px) {
+  .whatsapp-widget-container {
+    bottom: 1.25rem;
+    right: 1.25rem;
+  }
+  .whatsapp-floating-btn {
+    width: 52px;
+    height: 52px;
+  }
   .whatsapp-chat-popup {
-    width: 310px;
-    right: -10px;
-    bottom: 70px;
+    width: calc(100vw - 2.5rem);
+    max-width: 330px;
+    right: 0;
+    bottom: 64px;
+    border-radius: 12px;
+  }
+  .whatsapp-real-input {
+    font-size: 16px; /* Prevents auto zoom on mobile */
   }
 }

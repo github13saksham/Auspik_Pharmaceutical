@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { 
   Building2, Truck, FileText, ChevronRight, ChevronLeft, Info,
   Star, ThumbsUp, Sparkles, Check, HeartPulse,
-  Clock, Shield, ArrowRight, UserCheck
+  Clock, Shield, ArrowRight, UserCheck, Play, Award, Zap
 } from 'lucide-react';
 import { getProducts } from '../services/pharmaService';
 import './Home.css';
@@ -20,6 +20,140 @@ export default function Home({ settings }) {
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [isHoveredFormulation, setIsHoveredFormulation] = useState(false);
   const [activeDirector, setActiveDirector] = useState(0);
+
+  // Parallax Scroll Sequence State
+  const heroSequenceRef = useRef(null);
+  const heroCanvasRef = useRef(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const imagesRef = useRef([]);
+  const currentFrameRef = useRef(1);
+  const TOTAL_FRAMES = 144;
+
+  // Preload and render image sequence
+  useEffect(() => {
+    let isMounted = true;
+    const canvas = heroCanvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const getFrameUrl = (idx) => `/hero-sequence/ezgif-frame-${String(idx).padStart(3, '0')}.jpg`;
+
+    const drawFrame = (img) => {
+      if (!img || !img.complete || !img.naturalWidth || !canvas) return;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      if (!w || !h) return;
+
+      const iw = img.naturalWidth;
+      const ih = img.naturalHeight;
+
+      // Smart Aspect Ratio Scaling:
+      // Fit natural image without over-stretching or zooming in past 100% natural resolution.
+      // Capping scale to avoid stretching 1080p frames beyond their native pixels:
+      const scale = Math.min(Math.max(w / iw, h / ih), Math.max(1, w / iw));
+      const nw = iw * scale;
+      const nh = ih * scale;
+
+      const isMobile = w <= 768;
+      // Position cleanly without cutting:
+      const cx = isMobile ? (w - nw) / 2 : Math.min(0, w - nw);
+      const cy = (h - nh) / 2;
+
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.clearRect(0, 0, w, h);
+      ctx.drawImage(img, Math.round(cx), Math.round(cy), Math.round(nw), Math.round(nh));
+    };
+
+    const updateCanvasSize = () => {
+      const dpr = Math.max(window.devicePixelRatio || 1, 1);
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const targetW = Math.round(w * dpr);
+      const targetH = Math.round(h * dpr);
+
+      if (canvas.width !== targetW || canvas.height !== targetH) {
+        canvas.width = targetW;
+        canvas.height = targetH;
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+
+      const curImg = imagesRef.current[currentFrameRef.current] || imagesRef.current[1];
+      if (curImg) {
+        drawFrame(curImg);
+      }
+    };
+
+    updateCanvasSize();
+    window.addEventListener('resize', updateCanvasSize);
+
+    // Initial load first frame immediately
+    const firstImg = new Image();
+    firstImg.src = getFrameUrl(1);
+    firstImg.onload = () => {
+      if (!isMounted) return;
+      imagesRef.current[1] = firstImg;
+      drawFrame(firstImg);
+    };
+
+    // Preload remaining frames in batches
+    for (let i = 2; i <= TOTAL_FRAMES; i++) {
+      const img = new Image();
+      img.src = getFrameUrl(i);
+      img.onload = () => {
+        if (!isMounted) return;
+        imagesRef.current[i] = img;
+        if (currentFrameRef.current === i) {
+          drawFrame(img);
+        }
+      };
+    }
+
+    // Scroll listener with requestAnimationFrame smoothing
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const section = heroSequenceRef.current;
+          if (!section) {
+            ticking = false;
+            return;
+          }
+          const rect = section.getBoundingClientRect();
+          const totalScroll = section.offsetHeight - window.innerHeight;
+          let progress = -rect.top / Math.max(totalScroll, 1);
+          progress = Math.min(Math.max(progress, 0), 1);
+          setScrollProgress(progress);
+
+          // Calculate frame index from progress (1 to 144)
+          const frameIndex = Math.min(
+            TOTAL_FRAMES,
+            Math.max(1, Math.floor(progress * (TOTAL_FRAMES - 1)) + 1)
+          );
+          currentFrameRef.current = frameIndex;
+
+          const imgToDraw = imagesRef.current[frameIndex] || imagesRef.current[1];
+          if (imgToDraw) {
+            drawFrame(imgToDraw);
+          }
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      isMounted = false;
+      window.removeEventListener('resize', updateCanvasSize);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const productCount = featuredProducts.length;
 
@@ -298,52 +432,92 @@ export default function Home({ settings }) {
   return (
     <div className="home-page">
       {/* ========================================================
-          SECTION 1: HERO SECTION
+          SECTION 1: PARALLAX SCROLL HERO SEQUENCE (SMOOTH SCRUBBING)
           ======================================================== */}
-      <section className="hero-section" aria-label="Hero Overview">
-        <div className="hero-overlay"></div>
-        <div className="container hero-container text-center">
-          <div className="hero-text-block hero-text-centered">
-            <h1 className="hero-main-title">
-              Advancing Global Healthcare Through <span className="hero-highlight-text">Scientific Excellence</span>
-            </h1>
-            <p className="hero-subtitle">
-              Dedicated to manufacturing high-quality, pharmaceutical products for global markets.
-            </p>
-          </div>
-        </div>
+      <section 
+        ref={heroSequenceRef} 
+        className="hero-parallax-sequence-container" 
+        aria-label="Hero Overview"
+      >
+        <div className="hero-sticky-frame">
+          {/* Canvas Rendering 144-Frame Sequence */}
+          <canvas ref={heroCanvasRef} className="hero-sequence-canvas" />
 
-        {/* Quality Standard Strip: "delivering high quality medicines in less time" */}
-        <div className="hero-trust-bar-wrapper">
-          <div className="container">
-            <div className="hero-trust-bar">
-              <div className="trust-flex">
-                <div className="trust-box">
-                  <HeartPulse size={22} className="trust-icon" />
-                  <div>
-                    <h4>High Quality Medicines</h4>
-                    <p>Rigorous Testing Standards</p>
-                  </div>
+          {/* Soft Dark Vignette Overlay for Text Readability */}
+          <div className="hero-sequence-scrim" />
+
+          {/* Left-Aligned Blank Area Text Content */}
+          <div className="hero-sequence-content-wrapper">
+            <div className="hero-left-text-block">
+              <h1 className="hero-seq-main-title">
+                Advancing Healthcare With{' '}
+                <span className="hero-seq-highlight">Precision & Quality</span>
+              </h1>
+
+              <p className="hero-seq-subtitle">
+                Dedicated to formulating and manufacturing international-grade pharmaceutical 
+                products under strict WHO-GMP and ISO standards.
+              </p>
+
+              {/* Direct Action Buttons on the Left */}
+              <div className="hero-seq-cta-row">
+                <Link to="/products" className="btn btn-primary hero-seq-btn-main">
+                  <span>Explore Formulations</span>
+                  <ArrowRight size={18} />
+                </Link>
+                <Link to="/about" className="btn btn-outline hero-seq-btn-secondary">
+                  <span>Facility Tour</span>
+                </Link>
+              </div>
+
+              {/* Parallax Progress Indicator Bar */}
+              <div className="hero-seq-progress-widget">
+                <div className="seq-progress-header">
+                  <span className="seq-progress-label">Explore Auspik Manufacturing</span>
+                  <span className="seq-progress-pct">{Math.round(scrollProgress * 100)}%</span>
                 </div>
-                <div className="trust-box">
-                  <Clock size={22} className="trust-icon" />
-                  <div>
-                    <h4>Delivering In Less Time</h4>
-                    <p>Express Dispatch & Supply</p>
-                  </div>
+                <div className="seq-progress-track">
+                  <div 
+                    className="seq-progress-fill" 
+                    style={{ width: `${Math.max(5, scrollProgress * 100)}%` }} 
+                  />
                 </div>
-                <div className="trust-box">
-                  <Building2 size={22} className="trust-icon" />
-                  <div>
-                    <h4>HSIIDC Karnal</h4>
-                    <p>State-of-the-Art Facility</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Quality Standard Trust Strip in Hero */}
+          <div className="hero-trust-bar-wrapper">
+            <div className="container">
+              <div className="hero-trust-bar">
+                <div className="trust-flex">
+                  <div className="trust-box">
+                    <HeartPulse size={22} className="trust-icon" />
+                    <div>
+                      <h4>High Quality Medicines</h4>
+                      <p>Rigorous Testing Standards</p>
+                    </div>
                   </div>
-                </div>
-                <div className="trust-box">
-                  <Truck size={22} className="trust-icon" />
-                  <div>
-                    <h4>Prompt Delivery</h4>
-                    <p>Pan-India Distribution</p>
+                  <div className="trust-box">
+                    <Clock size={22} className="trust-icon" />
+                    <div>
+                      <h4>Delivering In Less Time</h4>
+                      <p>Express Dispatch & Supply</p>
+                    </div>
+                  </div>
+                  <div className="trust-box">
+                    <Building2 size={22} className="trust-icon" />
+                    <div>
+                      <h4>HSIIDC Karnal</h4>
+                      <p>State-of-the-Art Facility</p>
+                    </div>
+                  </div>
+                  <div className="trust-box">
+                    <Truck size={22} className="trust-icon" />
+                    <div>
+                      <h4>Prompt Delivery</h4>
+                      <p>Pan-India Distribution</p>
+                    </div>
                   </div>
                 </div>
               </div>

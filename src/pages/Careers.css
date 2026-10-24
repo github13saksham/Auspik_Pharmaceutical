@@ -704,12 +704,15 @@
 }
 
 /* --------------------------------------------------------------------------
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN (MOBILE & TABLET ONLY)
    -------------------------------------------------------------------------- */
 @media (max-width: 1024px) {
+  .careers-page-header {
+    padding: 7.5rem 1.5rem 4rem;
+  }
   .careers-hero-split-grid {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2.75rem;
   }
   .careers-direct-hr-box {
     flex-direction: column;
@@ -718,32 +721,94 @@
 }
 
 @media (max-width: 768px) {
+  .careers-page-header {
+    padding: 6.5rem 1rem 3.5rem;
+  }
   .careers-headline {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
   .studio-tiles-quad {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
   .studio-spotlight-drawer {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
     padding: 1.25rem;
+    max-width: 100%;
+  }
+  .careers-openings-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .openings-clean-list {
+    gap: 1rem;
   }
   .opening-row-item {
     flex-direction: column;
     align-items: flex-start;
-    padding: 1.5rem;
+    padding: 1.35rem 1.25rem;
+    gap: 1.25rem;
   }
   .opening-btn-wrap {
     width: 100%;
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
   }
   .opening-apply-btn {
     width: 100%;
     text-align: center;
+    justify-content: center;
+    min-height: 44px;
+  }
+  .openings-search-input {
+    max-width: 100%;
+    width: 100%;
   }
   .form-grid-2 {
     grid-template-columns: 1fr;
+  }
+  .careers-modal-card {
+    width: 95%;
+    max-width: 500px;
+    padding: 1.5rem 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .careers-page-header {
+    padding: 5.5rem 1rem 2.75rem;
+  }
+  .careers-headline {
+    font-size: 1.85rem;
+  }
+  .careers-lead-text {
+    font-size: 0.92rem;
+  }
+  .careers-action-top-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .openings-section-title {
+    font-size: 1.5rem;
+  }
+  .opening-title {
+    font-size: 1.15rem;
+  }
+  .opening-meta {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .opening-desc {
+    font-size: 0.88rem;
+  }
+  .careers-modal-card {
+    padding: 1.25rem 1rem;
+  }
+  .careers-modal-card input,
+  .careers-modal-card select,
+  .careers-modal-card textarea {
+    font-size: 16px; /* Prevents auto zoom on mobile */
   }
 }

@@ -174,12 +174,45 @@
 
 @media (max-width: 768px) {
   .product-modal-info {
-    padding: 1.5rem;
+    padding: 1.25rem 1rem 1.25rem;
   }
   .inquiry-header {
-    padding: 2rem 1.5rem 1rem;
+    padding: 1.75rem 1.25rem 1rem;
   }
   .inquiry-form {
-    padding: 1.5rem;
+    padding: 1.25rem;
+  }
+  .product-title {
+    font-size: 1.25rem;
+  }
+  .modal-content {
+    border-radius: 16px;
+    margin: 1rem;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .inquiry-form input,
+  .inquiry-form select,
+  .inquiry-form textarea {
+    font-size: 16px; /* Prevents auto zoom on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .product-detail-modal-wrapper {
+    width: 92% !important;
+    max-width: 360px !important;
+  }
+  .product-modal-image {
+    height: 180px;
+  }
+  .inquiry-header h2 {
+    font-size: 1.35rem;
+  }
+  .inquiry-form {
+    padding: 1rem;
+  }
+  .success-content {
+    padding: 3.5rem 1.5rem;
   }
 }

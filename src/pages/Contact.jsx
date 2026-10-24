@@ -216,9 +216,8 @@ export default function Contact({ settings }) {
     }
   };
 
-  const encodedAddress = encodeURIComponent(address);
-  const mapEmbedUrl = `https://maps.google.com/maps?q=${encodedAddress}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-  const googleMapsDirectionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+  const googleMapsDirectionsUrl = "https://maps.app.goo.gl/mbSwp7PxjSb3a6DU6";
+  const mapEmbedUrl = "https://maps.google.com/maps?q=29.6680128,76.9860419&hl=en&z=16&output=embed";
 
   return (
     <div className="contact-page-v2 page-padding">

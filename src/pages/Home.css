@@ -9,87 +9,223 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   SECTION 1: HERO SECTION
+   SECTION 1: PARALLAX SCROLL SEQUENCE HERO (144 FRAMES SCRUBBING)
    -------------------------------------------------------------------------- */
-.hero-section {
+.hero-parallax-sequence-container {
   position: relative;
-  background-image: url('https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=1920&q=80');
-  background-size: cover;
-  background-position: center;
-  margin-top: 26px;
-  padding-top: 190px;
-  padding-bottom: 5rem;
-  overflow: hidden;
+  width: 100%;
+  height: 280vh; /* Smooth, natural scroll travel distance */
+  background-color: #060b14;
+  margin-top: 0;
 }
 
-.hero-overlay {
+.hero-sticky-frame {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* Canvas displaying the 144 high-resolution sequence frames */
+.hero-sequence-canvas {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(13, 20, 34, 0.88) 0%, rgba(15, 32, 79, 0.85) 100%);
+  width: 100%;
+  height: 100%;
+  z-index: 1;
   pointer-events: none;
+  /* Smooth bilinear/bicubic rendering: prevents nearest-neighbor jagged grid noise */
+  image-rendering: auto;
+  image-rendering: smooth;
 }
 
-.hero-container {
-  display: block;
-  max-width: 900px;
-  position: relative;
+/* Gradient Scrim for Contrast & Left Blank Area Focus: Rich atmospheric depth */
+/* .hero-sequence-scrim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background: radial-gradient(circle at 18% 45%, rgba(6, 12, 26, 0.92) 0%, rgba(6, 12, 26, 0.75) 32%, rgba(6, 12, 26, 0.25) 58%, transparent 75%),
+              linear-gradient(90deg, rgba(6, 12, 26, 0.88) 0%, rgba(6, 12, 26, 0.6) 35%, transparent 65%),
+              linear-gradient(180deg, rgba(6, 12, 26, 0.5) 0%, transparent 20%, transparent 75%, rgba(6, 12, 26, 0.85) 100%); */
   z-index: 2;
+  pointer-events: none;
+} */
+
+/* Content Container on the Left side in the Blank Area */
+.hero-sequence-content-wrapper {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  max-width: 1320px;
   margin: 0 auto;
-  text-align: center;
+  padding: 100px 2.5rem 1rem;
+  display: flex;
+  align-items: center;
+  flex: 1;
 }
 
-.hero-text-centered {
+.hero-left-text-block {
+  max-width: 620px;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  animation: heroLeftFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.hero-main-title {
-  color: #FFFFFF !important;
-  font-size: 3.5rem;
-  font-weight: 800;
-  line-height: 1.18;
-  letter-spacing: -0.02em;
-  margin: 0 auto 1.5rem;
-  text-align: center;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  transform: translateY(-60px);
+@keyframes heroLeftFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.hero-highlight-text {
-  color: #479dff !important;
+.hero-seq-main-title {
+  color: #ffffff !important;
+  font-size: 3.6rem;
+  font-weight: 850;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin: 0 0 1.25rem 0;
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.7);
+}
+
+.hero-seq-highlight {
+  background: linear-gradient(135deg, #38bdf8 0%, #60a5fa 60%, #93c5fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   display: inline;
 }
 
-.hero-subtitle {
-  color: #F1F5F9 !important;
-  font-size: 1.2rem;
-  line-height: 1.6;
-  margin: 0 auto 4rem;
-  max-width: 780px;
-  text-align: center;
-  transform: translateY(-60px);
+.hero-seq-subtitle {
+  color: #e2e8f0 !important;
+  font-size: 1.15rem;
+  line-height: 1.65;
+  margin: 0 0 2rem 0;
+  max-width: 540px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+}
+
+/* Call to Action Row */
+.hero-seq-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.hero-seq-btn-main {
+  padding: 0.85rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
+  transition: all 0.25s ease;
+}
+
+.hero-seq-btn-main:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.7);
+}
+
+.hero-seq-btn-secondary {
+  padding: 0.85rem 1.85rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
+}
+
+.hero-seq-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* Parallax Scrub Progress Widget */
+.hero-seq-progress-widget {
+  width: 100%;
+  max-width: 320px;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 0.65rem 0.95rem;
+}
+
+.seq-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-bottom: 0.45rem;
+}
+
+.seq-progress-pct {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.seq-progress-track {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.seq-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%);
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+  transition: width 0.1s linear;
 }
 
 /* Quality Standard Trust Strip in Hero */
 .hero-trust-bar-wrapper {
   position: relative;
-  z-index: 2;
-  margin-top: -1rem;
+  z-index: 4;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0 1.5rem;
+  flex-shrink: 0;
 }
 
 .hero-trust-bar {
-  background: rgba(13, 22, 38, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 14px;
-  padding: 1.25rem 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  background: rgba(13, 22, 38, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  padding: 1rem 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
 }
 
 .trust-flex {
@@ -379,20 +515,57 @@
 
 @media (max-width: 900px) {
   .mission-target-section {
-    padding: 3.5rem 0 2rem;
+    padding: 4.5rem 0 3rem;
   }
-  .vision-target-section.sticky-vision-screen,
-  .director-section.sticky-reveal-section {
-    position: relative;
-    top: auto;
+
+  /* Parallax Layer 1: Vision stays sticky on mobile/tablet just like desktop */
+  .vision-target-section.sticky-vision-screen {
+    position: sticky;
+    top: 70px;
     height: auto;
-    min-height: auto;
-    padding: 3.5rem 0 2.5rem;
+    min-height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 0;
+    z-index: 1;
+    overflow: hidden;
   }
+
+  /* Operational Strengths Layer slides up directly over Vision */
+  .operational-strengths-section.black-slide-layer {
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 -25px 50px rgba(0, 0, 0, 0.6), 0 25px 50px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Director Reveal Track & Sticky Section */
+  .director-reveal-track {
+    position: relative;
+    width: 100%;
+    margin-top: -25px;
+  }
+
+  /* Parallax Layer 2: Director Section stays sticky underneath until revealed */
+  .director-section.sticky-reveal-section {
+    position: sticky;
+    top: 70px;
+    z-index: 2;
+    min-height: auto;
+    padding: 3.5rem 0;
+  }
+
+  /* Subsequent sections slide smoothly over Director section */
+  .formulations-modern-section {
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.12);
+  }
+
   .mv-presentation-row {
     grid-template-columns: 1fr !important;
-    gap: 2.5rem;
-    padding: 1rem 0;
+    gap: 1.75rem;
+    padding: 0.5rem 0;
     text-align: center;
   }
   .vision-presentation .mv-content-col {
@@ -403,14 +576,19 @@
   }
   .mv-target-desc-box {
     text-align: left;
+    padding: 1.25rem 0 0 1.25rem;
+  }
+  .mv-target-desc-box p {
+    font-size: 1rem;
+    line-height: 1.7;
   }
   .mv-png-wrap {
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 200px;
     margin: 0 auto;
   }
   .mv-target-headline {
-    font-size: 2.5rem;
+    font-size: 2.35rem;
   }
 }
 
@@ -931,7 +1109,7 @@
 }
 
 .ref-medicine-card {
-  --card-unit: 285px;
+  --card-unit: 270px;
   position: relative;
   width: var(--card-unit);
   min-width: var(--card-unit);
@@ -944,7 +1122,7 @@
   flex-direction: column;
   cursor: pointer;
   outline: none;
-  transform: scale(0.98);
+  transform: scale(0.95);
   opacity: 0.85;
   transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
               opacity 0.65s ease,
@@ -954,16 +1132,16 @@
 }
 
 .ref-medicine-card.is-active-card {
-  transform: scale(1.18);
+  transform: scale(1.04);
   opacity: 1;
   z-index: 35;
   border-color: #007185;
-  box-shadow: 0 8px 24px -4px rgba(0, 113, 133, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 113, 133, 0.16);
 }
 
 .ref-medicine-card:hover:not(.is-active-card) {
   opacity: 0.98;
-  transform: scale(1.02);
+  transform: scale(0.98);
   border-color: #007185;
 }
 
@@ -975,7 +1153,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem 1rem 0.25rem 1rem;
+  padding: 0.85rem 0.85rem 0.25rem 0.85rem;
   overflow: hidden;
 }
 
@@ -988,11 +1166,11 @@
 
 .ref-medicine-card:hover .ref-card-img-box img,
 .ref-medicine-card.is-active-card .ref-card-img-box img {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 .ref-card-body {
-  padding: 1.15rem 1.25rem 1.35rem 1.25rem;
+  padding: 1rem 1.15rem 1.25rem 1.15rem;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -1000,11 +1178,12 @@
   text-align: left;
 }
 
+/* Scaled to normal exact text size so it doesn't inflate when active */
 .ref-card-title {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #007185;
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.35rem 0;
   line-height: 1.3;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -1017,18 +1196,18 @@
 }
 
 .ref-card-dosage {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: #4b5563;
-  margin: 0 0 0.55rem 0;
-  line-height: 1.45;
+  margin: 0 0 0.45rem 0;
+  line-height: 1.4;
   font-weight: 400;
 }
 
 .ref-card-generic {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: #1f2937;
-  margin: 0 0 1.25rem 0;
-  line-height: 1.5;
+  margin: 0 0 1rem 0;
+  line-height: 1.45;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -1037,7 +1216,7 @@
 }
 
 .ref-card-cta {
-  font-size: 0.975rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: #007185;
   text-decoration: none;
@@ -1467,11 +1646,20 @@
 }
 
 /* --------------------------------------------------------------------------
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN (MOBILE & TABLET ONLY - PC VIEW UNTOUCHED)
    -------------------------------------------------------------------------- */
 @media (max-width: 1024px) {
-  .hero-main-title {
+  .hero-parallax-sequence-container {
+    height: 220vh;
+  }
+  .hero-sequence-content-wrapper {
+    padding: 120px 2rem 2rem;
+  }
+  .hero-seq-main-title {
     font-size: 2.75rem;
+  }
+  .hero-seq-subtitle {
+    font-size: 1.05rem;
   }
   .mv-scroll-layer {
     position: static;
@@ -1483,23 +1671,48 @@
   .mv-editorial-divider {
     display: none;
   }
+  .director-section {
+    padding: 4.5rem 0;
+  }
   .director-showcase {
     grid-template-columns: 1fr;
     text-align: center;
     gap: 2.5rem;
+    padding: 2.5rem;
+  }
+  .director-profile-col {
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 320px;
+  }
+  .director-photo-wrap {
+    width: 240px;
+    height: 300px;
+    margin: 0 auto 1.25rem;
+  }
+  .director-quote-text {
+    font-size: 1.15rem;
+    text-align: center;
+  }
+  .director-focus-text {
+    text-align: center;
   }
   .director-controls {
-    flex-direction: column;
-    gap: 1.25rem;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
   }
   .why-us-grid,
   .strengths-three-boxes,
   .reviews-list-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
   .reviews-summary-card {
     grid-template-columns: 1fr;
     text-align: center;
+    padding: 2rem;
   }
   .overall-score-display {
     align-items: center;
@@ -1513,57 +1726,422 @@
 }
 
 @media (max-width: 768px) {
-  .hero-main-title {
-    font-size: 2.2rem;
-    transform: translateY(-20px);
+  /* Clean hero spacing preserving desktop proportion */
+  .main-content-wrapper {
+    padding-top: 80px !important;
   }
-  .hero-subtitle {
-    font-size: 1rem;
-    transform: translateY(-20px);
+  .hero-parallax-sequence-container {
+    height: 190vh;
+  }
+  .hero-sequence-scrim {
+    background: radial-gradient(circle at 50% 35%, rgba(6, 12, 26, 0.88) 0%, rgba(6, 12, 26, 0.72) 45%, rgba(6, 12, 26, 0.3) 70%, transparent 95%),
+                linear-gradient(180deg, rgba(6, 12, 26, 0.75) 0%, rgba(6, 12, 26, 0.4) 40%, rgba(6, 12, 26, 0.88) 100%);
+  }
+  .hero-sequence-content-wrapper {
+    padding: 70px 1.5rem 1rem;
+    align-items: flex-start;
+  }
+  .hero-left-text-block {
+    max-width: 100%;
+    text-align: left;
+  }
+  .hero-seq-main-title {
+    font-size: 2.2rem;
+    line-height: 1.2;
+    margin-bottom: 0.85rem;
+  }
+  .hero-seq-subtitle {
+    font-size: 0.98rem;
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+  }
+  .hero-seq-cta-row {
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+  .hero-seq-progress-widget {
+    max-width: 280px;
+  }
+  .hero-trust-bar-wrapper {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+  }
+  .hero-trust-bar {
+    padding: 0.9rem 1.25rem;
+    border-radius: 14px;
+  }
+  .trust-flex {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem 1rem;
+    justify-content: stretch;
+  }
+  .trust-box {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    justify-content: flex-start;
+  }
+  .trust-box h4 {
+    font-size: 0.85rem;
+  }
+  .trust-box p {
+    font-size: 0.72rem;
+  }
+  .director-section {
+    padding: 3.5rem 0;
+  }
+  .director-main-heading {
+    font-size: 1.75rem;
   }
   .director-showcase {
     padding: 1.75rem;
+    gap: 1.75rem;
+  }
+  .director-photo-wrap {
+    width: 210px;
+    height: 260px;
+  }
+  .director-quote-text {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+  .director-focus-text {
+    font-size: 0.875rem;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .director-controls {
+    flex-wrap: wrap;
+    gap: 1rem;
   }
   .why-us-grid,
   .strengths-three-boxes,
   .reviews-list-grid {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
   .reviews-carousel-bar {
     flex-direction: column;
     gap: 0.75rem;
     text-align: center;
   }
+  .featured-stage-container {
+    padding: 2.25rem 0 2.5rem;
+  }
+  .featured-stage-track {
+    --card-unit: 240px;
+    --card-gap: 18px;
+  }
   .ref-medicine-card {
-    --card-unit: 230px;
+    --card-unit: 240px;
   }
   .ref-medicine-card.is-active-card {
-    transform: scale(1.15);
+    transform: scale(1.05);
   }
 
   /* Responsive strip layout */
   .strip-collapsed-bar {
-    padding: 1.15rem 1.25rem;
+    padding: 1rem 1.15rem;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 0.65rem;
   }
   .strip-number {
-    font-size: 1.6rem;
-    min-width: 36px;
+    font-size: 1.5rem;
+    min-width: 32px;
   }
   .strip-bar-divider {
-    height: 22px;
+    height: 20px;
   }
   .strip-title {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
   .strip-pill-tag {
-    display: none; /* Hide compact tag on small screens to keep bar clean */
+    display: none;
   }
   .strip-expanded-inner {
-    padding: 0 1.25rem;
+    padding: 0 1.15rem;
   }
   .pillar-strip-item.is-expanded .strip-expanded-inner {
-    padding: 0.25rem 1.25rem 1.35rem 1.25rem;
+    padding: 0.25rem 1.15rem 1.25rem 1.15rem;
+  }
+  .strip-full-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Complete flush hero for mobile phone view without top white gap */
+  .main-content-wrapper {
+    padding-top: 76px !important;
+  }
+  .hero-parallax-sequence-container {
+    height: 160vh;
+  }
+  .hero-sticky-frame {
+    height: calc(100svh - 76px);
+  }
+  .hero-sequence-scrim {
+    background: radial-gradient(circle at 50% 25%, rgba(6, 12, 26, 0.9) 0%, rgba(6, 12, 26, 0.72) 48%, rgba(6, 12, 26, 0.3) 75%, transparent 100%),
+                linear-gradient(180deg, rgba(6, 12, 26, 0.8) 0%, rgba(6, 12, 26, 0.4) 40%, rgba(6, 12, 26, 0.95) 100%);
+  }
+  .hero-sequence-content-wrapper {
+    padding: 1rem 1.15rem 0.5rem;
+    align-items: flex-start;
+  }
+  .hero-left-text-block {
+    max-width: 100%;
+  }
+  .hero-seq-main-title {
+    font-size: 1.7rem;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+  .hero-seq-subtitle {
+    font-size: 0.84rem;
+    line-height: 1.45;
+    margin-bottom: 0.85rem;
+  }
+  .hero-seq-cta-row {
+    flex-direction: row;
+    width: 100%;
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+  }
+  .hero-seq-btn-main {
+    flex: 1.1;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.82rem;
+    gap: 0.35rem;
+    border-radius: 10px;
+    justify-content: center;
+  }
+  .hero-seq-btn-secondary {
+    flex: 0.9;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.82rem;
+    border-radius: 10px;
+    justify-content: center;
+  }
+  .hero-seq-progress-widget {
+    max-width: 100%;
+    padding: 0.4rem 0.65rem;
+  }
+  .seq-progress-header {
+    font-size: 0.7rem;
+    margin-bottom: 0.3rem;
+  }
+  .hero-trust-bar-wrapper {
+    margin-bottom: 0.75rem;
+    padding: 0 0.85rem;
+  }
+  .hero-trust-bar {
+    padding: 0.65rem 0.85rem;
+    border-radius: 12px;
+  }
+  .trust-flex {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem 0.65rem;
+  }
+  .trust-box {
+    gap: 0.45rem;
+  }
+  .trust-icon {
+    width: 17px;
+    height: 17px;
+  }
+  .trust-box h4 {
+    font-size: 0.75rem;
+    margin-bottom: 0.1rem;
+  }
+  .trust-box p {
+    font-size: 0.65rem;
+  }
+
+  /* One Section Per Viewport (100svh) Sizing */
+  .mission-target-section {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0 !important;
+    box-sizing: border-box;
+  }
+
+  .vision-target-section.sticky-vision-screen {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0 !important;
+    box-sizing: border-box;
+  }
+
+  .operational-strengths-section {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem 0 !important;
+    box-sizing: border-box;
+  }
+
+  .director-section.sticky-reveal-section {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.5rem 0 !important;
+    box-sizing: border-box;
+  }
+
+  .director-showcase {
+    padding: 1.25rem 0 !important;
+    gap: 1.25rem !important;
+  }
+
+  .director-photo-wrap {
+    width: 150px;
+    height: 190px;
+    margin-bottom: 0.75rem;
+  }
+
+  .director-person-name {
+    font-size: 1.25rem;
+  }
+
+  .director-quote-text {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-bottom: 0.85rem;
+  }
+
+  .director-focus-text {
+    font-size: 0.8rem;
+    padding: 0.65rem 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .formulations-modern-section {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.5rem 0 !important;
+    box-sizing: border-box;
+  }
+
+  .why-us-section {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.5rem 0 !important;
+    box-sizing: border-box;
+  }
+
+  .reviews-feedback-section {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.5rem 0 !important;
+    box-sizing: border-box;
+  }
+
+  .hero-trust-bar-wrapper {
+    margin-top: 0;
+    position: relative;
+    z-index: 4;
+  }
+
+  .hero-trust-bar {
+    padding: 1.15rem 1rem;
+    border-radius: 16px;
+    background: rgba(11, 19, 35, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.18);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .trust-flex {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 0.75rem;
+  }
+
+  .trust-box {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    justify-content: flex-start;
+    padding: 0.25rem 0;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .trust-box h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.15rem;
+    line-height: 1.25;
+  }
+
+  .trust-box p {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    margin-bottom: 0;
+  }
+
+  .trust-icon {
+    width: 22px;
+    height: 22px;
+    color: #38bdf8;
+    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.4));
+  }
+
+  .director-photo-wrap {
+    width: 180px;
+    height: 220px;
+  }
+  .director-person-name {
+    font-size: 1.35rem;
+  }
+  .director-quote-text {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .featured-stage-container {
+    padding: 1.75rem 0;
+  }
+  .featured-stage-track {
+    --card-unit: 215px;
+    --card-gap: 14px;
+  }
+  .ref-medicine-card {
+    --card-unit: 215px;
+  }
+  .ref-card-body {
+    padding: 0.85rem 0.95rem 1rem;
+  }
+  .ref-card-title {
+    font-size: 1rem;
+  }
+  .ref-card-dosage,
+  .ref-card-generic {
+    font-size: 0.8rem;
+  }
+  .formulations-title {
+    font-size: 1.6rem;
+  }
+  .formulations-desc {
+    font-size: 0.875rem;
   }
 }

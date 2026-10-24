@@ -153,4 +153,37 @@
   transform: translateY(0);
 }
 
+/* Responsive (Mobile & Tablet Only) */
+@media (max-width: 480px) {
+  .cat-flip-container {
+    height: 250px;
+  }
+  .cat-card-front {
+    padding: 1.5rem 1rem;
+  }
+  .cat-illustration-box {
+    height: 80px;
+    margin-bottom: 0.85rem;
+  }
+  .cat-svg-illustration {
+    width: 72px;
+    height: 72px;
+  }
+  .cat-card-title {
+    font-size: 1.15rem;
+    margin-bottom: 0.35rem;
+  }
+  .cat-card-back {
+    padding: 1.5rem 1rem;
+  }
+  .cat-back-title {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+  .cat-card-desc {
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+}
+
 

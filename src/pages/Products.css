@@ -568,25 +568,69 @@
   to { opacity: 1; }
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* Responsive Media Queries (Mobile & Tablet) */
+@media (max-width: 1024px) {
+  .page-header {
+    padding: 7.5rem 1.5rem 4rem;
+  }
   .page-header h1 {
-    font-size: 2.5rem;
+    font-size: 2.75rem;
+  }
+  .filters-bar-container {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+  .modern-grid {
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    padding: 6.5rem 1rem 3.5rem;
+  }
+  .page-header h1 {
+    font-size: 2.2rem;
+  }
+  .page-header p {
+    font-size: 1rem;
   }
   .filters-bar-container {
     padding: 1rem;
-    gap: 1rem;
+    border-radius: 14px;
+    gap: 0.85rem;
   }
   .filters-row {
     flex-direction: column;
     align-items: stretch;
-    gap: 1rem;
+    gap: 0.85rem;
   }
   .category-dropdown-container {
     width: 100%;
+    min-width: 0;
   }
   .modern-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .product-info {
+    padding: 0.95rem 0.95rem 1.1rem;
+  }
+  .product-card-title {
+    font-size: 1.05rem;
+  }
+  .product-card-dosage {
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+  }
+  .product-card-generic {
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+  .product-card-cta {
+    font-size: 0.88rem;
   }
   .product-actions {
     grid-template-columns: 1fr;
@@ -595,9 +639,59 @@
     flex-direction: column;
     text-align: center;
     gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
   }
   .pagination-nav {
     flex-wrap: wrap;
     justify-content: center;
+    gap: 0.35rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header {
+    padding: 5.5rem 1rem 2.75rem;
+  }
+  .page-header h1 {
+    font-size: 1.85rem;
+  }
+  .page-header p {
+    font-size: 0.92rem;
+  }
+  .modern-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .product-img-wrapper {
+    padding: 0.5rem 0.5rem 0.15rem;
+  }
+  .product-info {
+    padding: 0.75rem 0.65rem 0.85rem;
+  }
+  .product-card-title {
+    font-size: 0.92rem;
+    margin-bottom: 0.25rem;
+  }
+  .product-card-dosage {
+    font-size: 0.78rem;
+    margin-bottom: 0.25rem;
+  }
+  .product-card-generic {
+    font-size: 0.78rem;
+    margin-bottom: 0.55rem;
+  }
+  .product-card-cta {
+    font-size: 0.82rem;
+  }
+  .pagination-number {
+    min-width: 36px;
+    height: 36px;
+    font-size: 0.82rem;
+  }
+  .pagination-btn {
+    height: 36px;
+    padding: 0 0.75rem;
+    font-size: 0.82rem;
   }
 }

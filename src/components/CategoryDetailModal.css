@@ -174,3 +174,45 @@
   align-items: center;
   gap: 0.5rem;
 }
+
+/* Responsive Media Queries (Mobile & Tablet Only) */
+@media (max-width: 768px) {
+  .category-modal-backdrop {
+    padding: 1rem;
+  }
+  .category-modal-content {
+    padding: 1.75rem 1.35rem;
+    border-radius: 20px;
+    max-height: 88vh;
+    overflow-y: auto;
+  }
+  .cat-modal-header h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-modal-content {
+    padding: 1.35rem 1rem;
+    border-radius: 16px;
+  }
+  .cat-modal-header h2 {
+    font-size: 1.3rem;
+  }
+  .cat-modal-subtitle {
+    font-size: 0.88rem;
+  }
+  .cat-modal-tags-grid {
+    grid-template-columns: 1fr;
+  }
+  .cat-modal-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .cat-modal-footer button,
+  .cat-modal-footer a {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
