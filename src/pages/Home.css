@@ -48,7 +48,7 @@
 }
 
 /* Gradient Scrim for Contrast & Left Blank Area Focus: Rich atmospheric depth */
-/* .hero-sequence-scrim {
+.hero-sequence-scrim {
   position: absolute;
   top: 0;
   left: 0;
@@ -59,7 +59,7 @@
               linear-gradient(180deg, rgba(6, 12, 26, 0.5) 0%, transparent 20%, transparent 75%, rgba(6, 12, 26, 0.85) 100%); */
   z-index: 2;
   pointer-events: none;
-} */
+}
 
 /* Content Container on the Left side in the Blank Area */
 .hero-sequence-content-wrapper {
