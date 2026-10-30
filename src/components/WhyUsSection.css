@@ -284,14 +284,16 @@
 @keyframes wuPop { from { transform: scale(0.6); opacity: 0; } }
 
 /* ---------- Entrance ---------- */
-.why-us-section:not(.why-in-view) .section-title,
-.why-us-section:not(.why-in-view) .wu-stage { opacity: 0; }
+.why-us-section .section-title,
+.why-us-section .wu-stage {
+  opacity: 1;
+}
 
-.why-in-view .section-title { animation: whyRise 0.7s var(--wu-ease) backwards; }
-.why-in-view .wu-stage      { animation: whyRise 0.9s 0.2s var(--wu-ease) backwards; }
+.why-in-view .section-title { animation: whyRise 0.7s var(--wu-ease) both; }
+.why-in-view .wu-stage      { animation: whyRise 0.9s 0.2s var(--wu-ease) both; }
 
 @keyframes whyRise {
-  from { opacity: 0; transform: translateY(32px); }
+  from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -303,8 +305,42 @@
   .why-us-section .section-eyebrow { font-size: 12px; }
   .why-us-section .section-title h2 { font-size: clamp(23px, 5.8vw, 30px); }
   .why-us-section .section-title p { font-size: 13.5px; line-height: 1.45; }
-  .wu-stage { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-  .wu-visual { min-height: 0; aspect-ratio: 16 / 9; max-height: 200px; border-radius: 18px; }
+  .wu-stage { 
+    display: flex;
+    flex-direction: column;
+    gap: 16px; 
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .wu-visual { 
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    min-height: 220px !important;
+    height: 230px !important;
+    max-height: 250px !important;
+    border-radius: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .wu-scene {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 1 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wu-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+  }
   .wu-list { gap: 8px; }
   .wu-item { padding: 12px 14px 14px; border-radius: 14px; }
   .wu-num { width: 34px; height: 34px; font-size: 13px; }
@@ -317,7 +353,12 @@
   .why-us-section .section-title { margin-bottom: 16px; gap: 6px; }
   .why-us-section .section-title h2 { font-size: 22px; }
   .why-us-section .section-title p { font-size: 13px; line-height: 1.45; }
-  .wu-visual { max-height: 175px; border-radius: 16px; }
+  .wu-visual { 
+    min-height: 210px !important;
+    height: 215px !important;
+    max-height: 220px !important;
+    border-radius: 16px; 
+  }
   .wu-item { border-radius: 12px; padding: 10px 12px 12px; }
   .wu-num { width: 30px; height: 30px; font-size: 12px; }
   .wu-item-title { font-size: 14.5px; }

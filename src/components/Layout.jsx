@@ -90,11 +90,7 @@ export default function Layout({ settings }) {
       >
         <Header settings={settings} />
         <main 
-          className="main-content-wrapper" 
-          style={{ 
-            minHeight: 'calc(100vh - 350px)', 
-            paddingTop: location.pathname === '/' ? 0 : '92px' 
-          }}
+          className={`main-content-wrapper ${location.pathname === '/' ? 'is-home' : 'is-inner-page'}`}
         >
           <Outlet />
         </main>

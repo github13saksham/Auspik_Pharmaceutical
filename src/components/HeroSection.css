@@ -494,7 +494,7 @@
     display: none;
   }
   .hero-capsule-section .h-display {
-    font-size: clamp(1.65rem, 7.5vw, 2.15rem);
+    font-size: clamp(1.45rem, 6.2vw, 1.85rem);
     line-height: 1.12;
     letter-spacing: -0.025em;
   }

@@ -117,7 +117,7 @@ const reasons = [
 
 export default function WhyUsSection() {
   const [activeId, setActiveId] = useState(1);
-  const [inView, setInView] = useState(false);
+  const [inView, setInView] = useState(true);
   const sectionRef = useRef(null);
 
   // Entrance animation when the section scrolls into view
@@ -126,7 +126,7 @@ export default function WhyUsSection() {
       ([entry]) => {
         if (entry.isIntersecting) setInView(true);
       },
-      { threshold: 0.2 }
+      { threshold: 0.05 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();

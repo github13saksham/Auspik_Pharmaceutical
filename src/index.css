@@ -410,3 +410,38 @@ p { margin-bottom: 1rem; color: var(--text-muted); font-size: 1.025rem; }
     transition: none !important;
   }
 }
+
+/* ============================================================
+   Main Content Layout Wrapper
+   Offsets all inner pages cleanly below the fixed header wrapper
+   (Header is ~120px on desktop and ~95px on mobile)
+   ============================================================ */
+.main-content-wrapper {
+  min-height: calc(100vh - 350px);
+}
+
+.main-content-wrapper.is-home {
+  padding-top: 0;
+}
+
+.main-content-wrapper.is-inner-page {
+  padding-top: 130px;
+}
+
+@media (max-width: 1024px) {
+  .main-content-wrapper.is-inner-page {
+    padding-top: 115px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content-wrapper.is-inner-page {
+    padding-top: 105px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content-wrapper.is-inner-page {
+    padding-top: 98px;
+  }
+}
