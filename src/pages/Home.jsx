@@ -8,6 +8,10 @@ import {
 import { getProducts } from '../services/pharmaService';
 import './Home.css';
 import InquiryModal from '../components/InquiryModal';
+import HeroSection from '../components/HeroSection';
+import FeaturedFormulations from '../components/FeaturedFormulations';
+import WhyUsSection from '../components/WhyUsSection';
+import OperationalPillars from '../components/OperationalPillars';
 
 const HERO_FRAME_URLS = Object.entries(
   import.meta.glob('../assets/Capsule_motion_video_frames/*/frame_*.png', {
@@ -473,61 +477,9 @@ export default function Home({ settings }) {
   return (
     <div className="home-page">
       {/* ========================================================
-          SECTION 1: PARALLAX SCROLL HERO SEQUENCE (SMOOTH SCRUBBING)
+          HERO SECTION (SCROLL-SCRUBBED CAPSULE FRAME SEQUENCE)
           ======================================================== */}
-      <section 
-        ref={heroSequenceRef} 
-        className="hero-parallax-sequence-container" 
-        aria-label="Hero Overview"
-      >
-        <div className="hero-sticky-frame">
-          {/* Canvas renders the desktop or phone frame sequence. */}
-          <canvas ref={heroCanvasRef} className="hero-sequence-canvas" />
-
-          {/* Soft Dark Vignette Overlay for Text Readability */}
-          <div className="hero-sequence-scrim" />
-
-          {/* Left-Aligned Blank Area Text Content */}
-          <div className="hero-sequence-content-wrapper">
-            <div className="hero-left-text-block">
-              <h1 className="hero-seq-main-title">
-                Advancing Healthcare With{' '}
-                <span className="hero-seq-highlight">Precision & Quality</span>
-              </h1>
-
-              <p className="hero-seq-subtitle">
-                Delivering High Quality Medicines in Less Time
-              </p>
-
-              {/* Direct Action Buttons on the Left */}
-              <div className="hero-seq-cta-row">
-                <Link to="/products" className="btn btn-primary hero-seq-btn-main">
-                  <span>Explore Products</span>
-                  <ArrowRight size={18} />
-                </Link>
-                <Link to="/about" className="btn btn-outline hero-seq-btn-secondary">
-                  <span>Our Journey</span>
-                </Link>
-              </div>
-
-              {/* Parallax Progress Indicator Bar */}
-              <div className="hero-seq-progress-widget">
-                <div className="seq-progress-header">
-                  <span className="seq-progress-label">Explore Auspik Manufacturing</span>
-                  <span className="seq-progress-pct">{Math.round(scrollProgress * 100)}%</span>
-                </div>
-                <div className="seq-progress-track">
-                  <div 
-                    className="seq-progress-fill" 
-                    style={{ width: `${Math.max(5, scrollProgress * 100)}%` }} 
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
+      <HeroSection />
 
       {/* ========================================================
           MISSION & VISION: TARGET BOARD 3D ILLUSTRATION LAYOUT
@@ -627,64 +579,8 @@ export default function Home({ settings }) {
           </div>
         </section>
 
-        {/* Operational Section: Scrolls up over Vision */}
-        <section 
-          ref={pillarsRef}
-          className={`section operational-strengths-section black-slide-layer ${pillarsVisible ? 'pillars-in-view' : ''}`} 
-          aria-label="Our Core Pillars"
-        >
-          <div className="container">
-            <div className="section-title text-center">
-              <span className="section-eyebrow dark-eyebrow">Guiding Values</span>
-              <h2>Our Operational Pillars & Strengths</h2>
-              <p>Dedicated to excellence through people, partnerships, and accessible affordability.</p>
-            </div>
-
-            <div className="pillars-strips-wrapper">
-              <div className="pillars-strips-list">
-                {strengthBoxes.map((box, idx) => {
-                  const isExpanded = activePillar === box.id;
-                  return (
-                    <div 
-                      key={box.id} 
-                      className={`pillar-strip-item ${isExpanded ? 'is-expanded' : ''}`}
-                      style={{ '--strip-index': idx }}
-                      onClick={() => setActivePillar(isExpanded ? null : box.id)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault();
-                          setActivePillar(isExpanded ? null : box.id);
-                        }
-                      }}
-                      aria-expanded={isExpanded}
-                    >
-                      {/* Bar Header */}
-                      <div className="strip-collapsed-bar">
-                        <div className="strip-left-meta">
-                          <span className="strip-number">{box.number}</span>
-                          <div className="strip-bar-divider"></div>
-                          <h3 className="strip-title">{box.title}</h3>
-                        </div>
-                      </div>
-
-                      {/* Expanded Rectangle Content (opened on click) */}
-                      <div className="strip-expanded-panel">
-                        <div className="strip-expanded-inner">
-                          <p className="strip-full-desc">{box.description}</p>
-                          <div className="strip-bottom-meta">
-                            <span className="strip-number-watermark">{box.number}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Operational Section: Interactive morphing strips & expanded card */}
+        <OperationalPillars />
       </div>
 
       {/* Spacer track that allows the Director section to be revealed from behind the operational layer */}
@@ -757,166 +653,12 @@ export default function Home({ settings }) {
       {/* ========================================================
           FEATURED MEDICINE FORMULATIONS (AUTO-SCROLLING SHOWCASE)
           ======================================================== */}
-      <section className="section formulations-modern-section" aria-label="Featured Formulations">
-        <div className="container">
-          <div className="formulations-centered-header">
-            <h2 className="formulations-title">Featured Medicine Formulations</h2>
-            <p className="formulations-desc">
-              High-bioavailability pharmaceutical syrups, creams, pain relief oils, and oral therapeutics formulated under strict quality compliance.
-            </p>
-
-            {featuredProducts.length > 0 && (
-              <div className="formulations-quick-nav">
-                <button
-                  type="button"
-                  className="card-nav-arrow-btn"
-                  onClick={handlePrev}
-                  aria-label="Previous product"
-                >
-                  <ChevronLeft size={16} />
-                </button>
-                <div className="card-nav-dots">
-                  {featuredProducts.map((_, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      className={`card-nav-dot ${activeProductIndex === i ? 'active' : ''}`}
-                      onClick={() => slideTo(productCount + i)}
-                      aria-label={`Go to product ${i + 1}`}
-                    />
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  className="card-nav-arrow-btn"
-                  onClick={handleNext}
-                  aria-label="Next product"
-                >
-                  <ChevronRight size={16} />
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {loading ? (
-          <div className="container" aria-busy="true" aria-label="Loading featured medicines">
-            <div className="featured-stage-container">
-              <div className="featured-stage-track" style={{ justifyContent: 'center', gap: '1.5rem', display: 'flex' }}>
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="ref-medicine-card is-active-card" style={{ pointerEvents: 'none' }}>
-                    <div className="sk-block" style={{ width: '100%', height: '220px', borderRadius: '12px 12px 0 0' }}></div>
-                    <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-                      <div className="sk-block" style={{ width: '70%', height: '22px', borderRadius: '6px' }}></div>
-                      <div className="sk-block" style={{ width: '90%', height: '14px', borderRadius: '6px' }}></div>
-                      <div className="sk-block" style={{ width: '50%', height: '14px', borderRadius: '6px' }}></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        ) : (
-          <>
-            <div 
-              className="featured-stage-container"
-              onMouseEnter={() => setIsHoveredFormulation(true)}
-              onMouseLeave={() => setIsHoveredFormulation(false)}
-            >
-              <div 
-                className="featured-stage-track"
-                onTransitionEnd={handleTransitionEnd}
-                style={{
-                  transform: `translateX(calc(-${sliderIndex} * (var(--card-unit, 270px) + var(--card-gap, 32px)) - (var(--card-unit, 270px) / 2)))`,
-                  transition: isTransitioning ? 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' : 'none'
-                }}
-              >
-                {productCount > 0 && [0, 1, 2].flatMap((setIdx) => 
-                  featuredProducts.map((item, originalIdx) => {
-                    const globalIdx = setIdx * productCount + originalIdx;
-                    const isActive = globalIdx === sliderIndex;
-
-                    return (
-                      <div
-                        key={`product-${item.id || originalIdx}-set-${setIdx}`}
-                        className={`ref-medicine-card ${isActive ? 'is-active-card' : ''}`}
-                        onClick={() => slideTo(globalIdx)}
-                        tabIndex={0}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' || e.key === ' ') {
-                            slideTo(globalIdx);
-                          }
-                        }}
-                        role="button"
-                        aria-pressed={isActive}
-                        aria-label={item.name}
-                      >
-                        <div className="ref-card-img-box">
-                          <img src={item.image} alt={item.name} loading="lazy" />
-                        </div>
-
-                        <div className="ref-card-body">
-                          <h3 className="ref-card-title">{item.name}</h3>
-                          <p className="ref-card-dosage">{item.dosageForm}</p>
-                          <p className="ref-card-generic">
-                            {item.genericName || 'Pharmaceutical Formulation Active Complex'}
-                          </p>
-
-                          <span 
-                            className="ref-card-cta"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(`/products/${item.id}`);
-                            }}
-                          >
-                            View Formulation &rsaquo;
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })
-                )}
-              </div>
-            </div>
-
-            <div className="container">
-              <div className="formulations-footer-nav text-center">
-                <Link to="/products" className="btn btn-primary">
-                  <span>Explore Full Formulations Directory</span>
-                  <ArrowRight size={18} />
-                </Link>
-              </div>
-            </div>
-          </>
-        )}
-      </section>
+      <FeaturedFormulations />
 
       {/* ========================================================
-          WHY US? (Points 1-3 from user image)
+          WHY US? (Interactive Spotlight Grid with Pure White Background)
           ======================================================== */}
-      <section className="section why-us-section" aria-label="Why Choose Auspik">
-        <div className="container">
-          <div className="section-title text-center">
-            <span className="section-eyebrow">Our Distinct Advantage</span>
-            <h2>Why Us?</h2>
-            <p>Delivering reliable healthcare solutions rooted in innovation, stringent testing, and patient wellness.</p>
-          </div>
-
-          <div className="why-us-grid">
-            {whyUsPoints.map((point) => (
-              <div key={point.id} className="why-us-card">
-                <div className="why-us-top">
-                  <div className="why-us-check-icon">
-                    <Check size={20} />
-                  </div>
-                </div>
-                <h3 className="why-us-card-title">{point.title}</h3>
-                <p className="why-us-card-text">{point.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <WhyUsSection />
 
       {/* ========================================================
           RATINGS & REVIEWS (Verified Buyer Feedback)

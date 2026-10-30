@@ -118,19 +118,15 @@
 .founder-photo-wrapper {
   width: 280px;
   height: 310px;
-  border-radius: 20px;
+ 
   overflow: hidden;
-  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.14);
-  border: 1px solid #e2e8f0;
+  
+
   margin-bottom: 1.25rem;
   background-color: #f1f5f9;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.founder-card-item:hover .founder-photo-wrapper {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.2);
-}
 
 .founder-photo-img {
   width: 100%;

@@ -1,9 +1,49 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Search, Filter, Info, FileText, ChevronRight, ChevronLeft, ChevronDown } from 'lucide-react';
+import { Search, Filter, ChevronRight, ChevronLeft, ChevronDown } from 'lucide-react';
 import { getProducts } from '../services/pharmaService';
 import InquiryModal from '../components/InquiryModal';
+import productsHeroImg from '../assets/pharma_careers/products_hero_banner.jpg';
 import './Products.css';
+
+const TINT_PALETTE = ['#D6EEC9', '#C9E3F6', '#F6D2DE', '#FBDFAA', '#F7C9C9', '#CDDEFA'];
+
+const getProductTint = (form = '', index = 0) => {
+  const f = (form || '').toLowerCase();
+  if (f.includes('syrup') || f.includes('tonic') || f.includes('ras') || f.includes('liquid') || f.includes('suspension')) {
+    return '#D6EEC9'; // soft kiwi green
+  }
+  if (f.includes('softgel') || f.includes('drop')) {
+    return '#C9E3F6'; // soft sky blue
+  }
+  if (f.includes('tablet')) {
+    return index % 2 === 0 ? '#CDDEFA' : '#F7C9C9'; // soft periwinkle or soft coral
+  }
+  if (f.includes('capsule')) {
+    return '#FBDFAA'; // warm light peach
+  }
+  if (f.includes('cream') || f.includes('oil') || f.includes('gel') || f.includes('ointment')) {
+    return '#F6D2DE'; // soft rose
+  }
+  return TINT_PALETTE[index % TINT_PALETTE.length];
+};
+
+const ArrowRight = ({ size = 14, className = '' }) => (
+  <svg
+    className={className}
+    aria-hidden="true"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M5 12h14M13 6l6 6-6 6" />
+  </svg>
+);
 
 export default function Products() {
   const [searchParams] = useSearchParams();
@@ -36,10 +76,9 @@ export default function Products() {
       const all = await getProducts();
       setProducts(all);
       setFilteredProducts(all);
-      // Small timeout to allow the skeleton shimmer crossfade to smoothly resolve
       setTimeout(() => {
         setLoading(false);
-      }, 350);
+      }, 300);
     };
     fetchProducts();
   }, []);
@@ -70,11 +109,6 @@ export default function Products() {
 
   const defaultCategories = ['All', 'Tablets', 'Capsules', 'Liquids Orals', 'Eye Drops', 'Powders', 'Herbals'];
   const categories = Array.from(new Set([...defaultCategories, ...products.map(p => p.category).filter(Boolean)]));
-
-  const handleInquire = (product) => {
-    setSelectedProduct(product);
-    setShowInquiryModal(true);
-  };
 
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) || 1;
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -107,12 +141,26 @@ export default function Products() {
   };
 
   return (
-    <div className="products-page page-padding">
-      <div className="page-header products-page-header">
+    <div className="products-page">
+      {/* Ambient Floating Discs Matching Homepage Theme */}
+      <span className="products-page-circle products-page-circle--a" aria-hidden="true" />
+      <span className="products-page-circle products-page-circle--b" aria-hidden="true" />
+
+      {/* Header Banner */}
+      <div 
+        className="page-header products-page-header" 
+        style={{ 
+          backgroundImage: `linear-gradient(135deg, rgba(11, 36, 71, 0.94) 0%, rgba(30, 58, 138, 0.88) 100%), url(${productsHeroImg})` 
+        }}
+      >
         <div className="container">
-          <h1 className="animate-slide-up">Our Premium Products</h1>
+          <div className="products-head-bars" aria-hidden="true">
+            <span />
+            <span />
+          </div>
+          <h1 className="animate-slide-up">Our Medicine <span>Formulations</span></h1>
           <p className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            Comprehensive and advanced solutions across various therapeutic segments.
+            High-bioavailability pharmaceutical syrups, creams, pain relief oils, tablets, capsules, and oral therapeutics formulated under strict quality compliance.
           </p>
         </div>
       </div>
@@ -123,10 +171,10 @@ export default function Products() {
           <div className="filters-bar-container">
             <div className="filters-row">
               <div className="search-box-flex">
-                <Search size={20} className="search-icon" />
+                <Search size={18} className="search-icon" />
                 <input 
                   type="text" 
-                  placeholder="Search medicines..." 
+                  placeholder="Search formulations by brand or composition..." 
                   className="modern-input-flex"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -135,24 +183,27 @@ export default function Products() {
               
               <div className="category-dropdown-container">
                 <button 
+                  type="button"
                   className="category-dropdown-btn"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  aria-expanded={isDropdownOpen}
                 >
                   <div className="dropdown-btn-content">
-                    <Filter size={18} className="filter-icon" />
+                    <Filter size={16} className="filter-icon" />
                     <span className="selected-text">
                       {selectedCategory === 'All' ? 'All Categories' : selectedCategory}
                     </span>
                   </div>
-                  <ChevronDown size={18} className={`chevron-icon ${isDropdownOpen ? 'open' : ''}`} />
+                  <ChevronDown size={16} className={`chevron-icon ${isDropdownOpen ? 'open' : ''}`} />
                 </button>
                 
                 {isDropdownOpen && (
-                  <div className="category-dropdown-menu animate-fade-in-up">
+                  <div className="category-dropdown-menu animate-fade-in">
                     <ul className="dropdown-list">
                       {categories.map((category) => (
                         <li key={category}>
                           <button
+                            type="button"
                             className={`dropdown-item ${selectedCategory === category ? 'active' : ''}`}
                             onClick={() => {
                               setSelectedCategory(category);
@@ -175,22 +226,22 @@ export default function Products() {
             </div>
           </div>
 
-          {/* Product Grid */}
+          {/* Formulations Grid */}
           <div className="products-main">
             {loading ? (
               <div className="modern-grid" role="list" aria-busy="true" aria-label="Loading products">
                 {[...Array(ITEMS_PER_PAGE)].map((_, i) => (
-                  <div key={`sk-load-${i}`} className="product-card ac-11__card" data-ready="false">
-                    <div className="ac-11__sk" aria-hidden="true">
-                      <span className="ac-11__b ac-11__b--img"></span>
-                      <div className="ac-11__sk-body">
-                        <span className="ac-11__b ac-11__b--badge"></span>
-                        <span className="ac-11__b ac-11__b--title"></span>
-                        <span className="ac-11__b ac-11__b--generic"></span>
-                        <div className="ac-11__sk-actions">
-                          <span className="ac-11__b ac-11__b--btn"></span>
-                          <span className="ac-11__b ac-11__b--btn"></span>
-                        </div>
+                  <div key={`sk-load-${i}`} className="ff-prod-card ff-prod-card--sk" aria-hidden="true">
+                    <div className="ff-prod-stage ff-sk-stage">
+                      <span className="ff-sk-disc" />
+                    </div>
+                    <div className="ff-prod-body">
+                      <span className="ff-sk-line ff-sk-form" />
+                      <span className="ff-sk-line ff-sk-name" />
+                      <span className="ff-sk-line ff-sk-comp" />
+                      <div className="ff-sk-link-row">
+                        <span className="ff-sk-line ff-sk-text" />
+                        <span className="ff-sk-go" />
                       </div>
                     </div>
                   </div>
@@ -202,54 +253,43 @@ export default function Products() {
                   className="modern-grid" 
                   role="list" 
                   aria-busy={isTransitioning}
-                  data-grid
                 >
-                  {currentProducts.map((product) => (
-                    <div 
-                      key={product.id} 
-                      className="product-card ac-11__card"
-                      data-ready={!isTransitioning}
+                  {currentProducts.map((product, idx) => (
+                    <Link
+                      key={product.id}
+                      to={`/products/${product.id}`}
+                      className="ff-prod-card"
+                      aria-label={`View formulation: ${product.name}`}
                     >
-                      {/* CodeFronts Skeleton-to-Loaded Shimmer Layer */}
-                      <div className="ac-11__sk" aria-hidden="true">
-                        <span className="ac-11__b ac-11__b--img"></span>
-                        <div className="ac-11__sk-body">
-                          <span className="ac-11__b ac-11__b--badge"></span>
-                          <span className="ac-11__b ac-11__b--title"></span>
-                          <span className="ac-11__b ac-11__b--generic"></span>
-                          <div className="ac-11__sk-actions">
-                            <span className="ac-11__b ac-11__b--btn"></span>
-                            <span className="ac-11__b ac-11__b--btn"></span>
-                          </div>
-                        </div>
+                      <div 
+                        className="ff-prod-stage" 
+                        style={{ "--tint": getProductTint(product.dosageForm || product.category, idx) }}
+                      >
+                        <span className="ff-prod-disc" aria-hidden="true" />
+                        <img 
+                          className="ff-prod-img" 
+                          src={product.image} 
+                          alt={`${product.name} pack`} 
+                          loading="lazy" 
+                        />
                       </div>
 
-                      {/* Real Card Content - Matching User's Clean Card Design */}
-                      <div className="ac-11__real">
-                        <Link to={`/products/${product.id}`} className="product-img-wrapper block" title={`View formulation for ${product.name}`}>
-                          <img src={product.image} alt={product.name} loading="lazy" />
-                        </Link>
-                        <div className="product-info">
-                          <span className="product-card-category">
-                            {product.category || product.dosageForm || 'Quality formulation'}
+                      <div className="ff-prod-body">
+                        <span className="ff-prod-form">
+                          {product.dosageForm || product.category || 'Formulation'}
+                        </span>
+                        <h3 className="ff-prod-name">{product.name}</h3>
+                        <p className="ff-prod-comp">
+                          {product.genericName || product.composition || 'Pharmaceutical Formulation Active Complex'}
+                        </p>
+                        <span className="ff-prod-link">
+                          View Formulation
+                          <span className="ff-prod-go">
+                            <ArrowRight size={14} />
                           </span>
-                          <h3 className="product-card-title">
-                            <Link to={`/products/${product.id}`}>
-                              {product.name}
-                            </Link>
-                          </h3>
-                          <p className="product-card-dosage">{product.dosageForm}</p>
-                          <p className="product-card-generic">{product.genericName}</p>
-                          
-                          <Link 
-                            to={`/products/${product.id}`}
-                            className="product-card-cta"
-                          >
-                            View Formulation &rsaquo;
-                          </Link>
-                        </div>
+                        </span>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
 
@@ -310,11 +350,13 @@ export default function Products() {
             ) : (
               <div className="no-results animate-fade-in">
                 <div className="no-results-content">
-                  <Search size={48} className="no-results-icon" />
-                  <h3>No products found</h3>
-                  <p>Try adjusting your search or selecting a different category filter.</p>
+                  <Search size={44} className="no-results-icon" />
+                  <h3>No formulations found</h3>
+                  <p>Try adjusting your search keywords or choosing another category filter.</p>
                   <button 
-                    className="btn btn-primary mt-4"
+                    type="button"
+                    className="pagination-btn"
+                    style={{ background: 'var(--ff-accent)', color: '#fff', border: 'none', margin: '0 auto' }}
                     onClick={() => { setSearchTerm(''); setSelectedCategory('All'); }}
                   >
                     Clear All Filters

@@ -1,64 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  ArrowRight, CheckCircle2, Users, HeartHandshake, Tag, Search, TrendingUp,
-  Building2, Zap, Mail
-} from 'lucide-react';
+import { Search, Mail } from 'lucide-react';
 import './Careers.css';
 import { careerOpenings } from '../services/careerOpenings';
+import CareersHeroSection from '../components/CareersHeroSection';
 
 export default function Careers() {
   const [searchFilter, setSearchFilter] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState('All');
-
-  const [activePerkIndex, setActivePerkIndex] = useState(0);
-
-  const careerPerks = [
-    {
-      id: 'salary',
-      tag: 'Compensation',
-      title: 'Competitive Salary',
-      subtitle: 'Attractive Compensation Package',
-      shortText: 'We value talent and reward performance with competitive salaries, timely payments, and performance incentives.',
-      icon: Tag,
-      accentColor: '#2563eb',
-      accentBg: '#eff6ff',
-      highlights: ['Bi-annual performance bonuses', 'Timely scheduled salary disbursement', 'Transparent growth appraisal ladder']
-    },
-    {
-      id: 'growth',
-      tag: 'Advancement',
-      title: 'Career Growth',
-      subtitle: 'Continuous Learning',
-      shortText: 'Build a rewarding trajectory with continuous learning, skill enhancement, and promotions across departments.',
-      icon: TrendingUp,
-      accentColor: '#059669',
-      accentBg: '#ecfdf5',
-      highlights: ['Specialized formulation training', 'Cross-departmental transition pathways', 'Mentorship from industry pioneers']
-    },
-    {
-      id: 'culture',
-      tag: 'Culture',
-      title: 'Positive Work Environment',
-      subtitle: 'Supportive Culture',
-      shortText: 'Work alongside dedicated pharma leaders in a supportive, team-oriented culture that empowers collaboration.',
-      icon: Users,
-      accentColor: '#7c3aed',
-      accentBg: '#f5f3ff',
-      highlights: ['Zero-politics collaborative mindset', 'Cleanroom-first safety standards', 'Open-door management approach']
-    },
-    {
-      id: 'benefits',
-      tag: 'Well-being',
-      title: 'Employee Benefits',
-      subtitle: 'Recognition & Well-being',
-      shortText: 'Enjoy employee-friendly policies, health coverage, recognition programs, and a work culture that genuinely values you.',
-      icon: HeartHandshake,
-      accentColor: '#e11d48',
-      accentBg: '#fff1f2',
-      highlights: ['Comprehensive family healthcare', 'Paid leave & annual holiday breaks', 'Employee merit recognition awards']
-    }
-  ];
 
   const filteredJobs = careerOpenings.filter(job => {
     const matchesSearch = job.title.toLowerCase().includes(searchFilter.toLowerCase()) ||
@@ -82,106 +31,9 @@ export default function Careers() {
       </div>
 
       {/* ========================================================
-      {/* ========================================================
-          CAREERS HERO SECTION
-          Left: Bold Title, Narrative, CTA, & Dynamic Spotlight Box
-          Right: 4 Clean Interactive Perk Cards
+          NEW INTERACTIVE CAREERS HERO SECTION
           ======================================================== */}
-      <section className="careers-hero-clean-section">
-        <div className="container">
-          <div className="careers-hero-split-grid">
-            {/* Left Column (Shifted up with direct spotlight reveal under button) */}
-            <div className="careers-hero-left">
-              <h1 className="careers-headline">
-                Build a Career <br />
-                <span className="careers-headline-accent">You'll Love</span>
-              </h1>
-              <p className="careers-lead-text">
-                At Auspik Pharmaceuticals, we believe our people are our greatest asset. We are committed to creating a workplace that fosters growth, innovation, and excellence. Join our team and become a part of a fast-growing pharmaceutical organization dedicated to delivering high quality medicines that improve lives.
-              </p>
-
-              <div className="careers-action-group">
-                <div className="careers-action-top-row">
-                  <a href="#openings" className="btn btn-primary careers-explore-btn">
-                    <span>Explore Open Positions</span>
-                    <ArrowRight size={18} />
-                  </a>
-                  <div className="careers-facility-meta">
-                    <Building2 size={16} />
-                    <span>Facility: HSIIDC, Sector-3, Karnal, Haryana</span>
-                  </div>
-                </div>
-
-                {/* Spotlight Box on the Left Under Button Area */}
-                <div 
-                  className="studio-spotlight-drawer"
-                  style={{
-                    '--accent': careerPerks[activePerkIndex].accentColor,
-                    '--accent-bg': careerPerks[activePerkIndex].accentBg
-                  }}
-                >
-                  <div className="drawer-header">
-                    <div className="drawer-icon-wrap">
-                      <Zap size={16} />
-                    </div>
-                    <div>
-                      <span className="drawer-eyebrow">SPOTLIGHT ADVANTAGE</span>
-                      <h4 className="drawer-title">{careerPerks[activePerkIndex].title} Insights</h4>
-                    </div>
-                  </div>
-
-                  <div className="drawer-pills-list">
-                    {careerPerks[activePerkIndex].highlights.map((item, hIdx) => (
-                      <div key={hIdx} className="drawer-pill-item">
-                        <CheckCircle2 size={15} className="drawer-check-icon" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Interactive 2x2 Clean Perk Cards (No badges, no extra subheadings) */}
-            <div className="careers-interactive-studio">
-              <div className="studio-tiles-quad">
-                {careerPerks.map((perk, idx) => {
-                  const Icon = perk.icon;
-                  const isSelected = activePerkIndex === idx;
-
-                  return (
-                    <div
-                      key={perk.id}
-                      className={`studio-perk-card ${isSelected ? 'is-active-perk' : ''}`}
-                      onClick={() => setActivePerkIndex(idx)}
-                      style={{
-                        '--accent': perk.accentColor,
-                        '--accent-bg': perk.accentBg
-                      }}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          setActivePerkIndex(idx);
-                        }
-                      }}
-                    >
-                      <div className="studio-card-top">
-                        <div className="studio-icon-bubble">
-                          <Icon size={20} />
-                        </div>
-                      </div>
-
-                      <h3 className="studio-card-title">{perk.title}</h3>
-                      <p className="studio-card-desc">{perk.shortText}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CareersHeroSection />
 
       {/* ========================================================
           JOB OPENINGS LIST
