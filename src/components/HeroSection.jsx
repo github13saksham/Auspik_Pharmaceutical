@@ -234,7 +234,7 @@ export default function HeroSection() {
               </p>
               <div className="actions">
                 <Link className="btn btn-primary" to="/products">Browse products</Link>
-                <Link className="btn btn-ghost" to="/contact">Become a partner</Link>
+                
               </div>
               <div className="hero-meta">
                 <div><strong>4.4 / 5</strong>Verified buyer rating</div>

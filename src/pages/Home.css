@@ -662,6 +662,18 @@
   transition: transform 0.4s ease;
 }
 
+.director-name-nav-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0 0 0.35rem 0;
+}
+
+.director-name-nav-row .director-person-name {
+  margin: 0;
+}
+
 .director-person-name {
   font-size: 1.55rem;
   font-weight: 800;
@@ -1737,66 +1749,93 @@
   
 
   .director-section.sticky-reveal-section {
-    min-height: 100svh;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 2.5rem 0 !important;
+    padding: 1.75rem 0 !important;
     box-sizing: border-box;
   }
 
   .director-showcase {
-    padding: 1.25rem 0 !important;
-    gap: 1.25rem !important;
+    padding: 1rem 0 !important;
+    gap: 1rem !important;
   }
 
   .director-photo-wrap {
-    width: 150px;
-    height: 190px;
-    margin-bottom: 0.75rem;
+    width: 125px;
+    height: 155px;
+    margin-bottom: 0.5rem;
+    border-radius: 14px;
+  }
+
+  .director-name-nav-row {
+    gap: 10px;
+    margin-bottom: 0.25rem;
   }
 
   .director-person-name {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .director-person-role {
+    font-size: 0.78rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .director-person-creds {
+    font-size: 0.72rem;
   }
 
   .director-quote-text {
-    font-size: 0.88rem;
-    line-height: 1.5;
-    margin-bottom: 0.85rem;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    margin-bottom: 0.6rem;
   }
 
   .director-focus-text {
-    font-size: 0.8rem;
-    padding: 0.65rem 0.85rem;
-    margin-bottom: 1rem;
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
   }
 
-  .formulations-modern-section {
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 2.5rem 0 !important;
-    box-sizing: border-box;
+  .director-controls {
+    gap: 0.65rem;
   }
 
-  .why-us-section {
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 2.5rem 0 !important;
-    box-sizing: border-box;
+  .director-pill-btn {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .director-arrow-btn {
+    width: 34px;
+    height: 34px;
   }
 
   .reviews-feedback-section {
-    min-height: 100svh;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 2.5rem 0 !important;
+    padding: 2rem 0 !important;
     box-sizing: border-box;
+  }
+
+  .reviews-summary-dashboard {
+    padding: 1.25rem 1rem;
+    gap: 1rem;
+  }
+
+  .rating-number {
+    font-size: 2.2rem;
+  }
+
+  .customer-review-card {
+    padding: 1rem 1.15rem;
+    border-radius: 14px;
   }
 
   .hero-trust-bar-wrapper {
@@ -1850,18 +1889,6 @@
     height: 22px;
     color: #38bdf8;
     filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.4));
-  }
-
-  .director-photo-wrap {
-    width: 180px;
-    height: 220px;
-  }
-  .director-person-name {
-    font-size: 1.35rem;
-  }
-  .director-quote-text {
-    font-size: 0.95rem;
-    line-height: 1.55;
   }
   .featured-stage-container {
     padding: 1.75rem 0;

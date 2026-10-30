@@ -277,3 +277,78 @@
   outline: 2px solid var(--ff-accent);
   outline-offset: 3px;
 }
+
+/* ---------- Responsive (Mobile & Tablet) ---------- */
+@media (max-width: 768px) {
+  .ff {
+    padding: 28px 14px 34px;
+  }
+  .ff__inner {
+    gap: 18px;
+  }
+  .ff__head {
+    gap: 8px;
+  }
+  .ff__title {
+    font-size: clamp(22px, 6vw, 28px);
+  }
+  .ff__sub {
+    font-size: 13.5px;
+    line-height: 1.48;
+  }
+  .ff__card {
+    flex: 0 0 240px;
+    padding: 8px;
+    border-radius: 18px;
+  }
+  .ff__stage {
+    height: 142px;
+    border-radius: 12px;
+  }
+  .ff__disc {
+    width: 104px;
+    height: 104px;
+  }
+  .ff__img {
+    max-height: 102px;
+  }
+  .ff__body {
+    padding: 12px 6px 4px;
+  }
+  .ff__name {
+    font-size: 16px;
+  }
+  .ff__comp {
+    font-size: 12px;
+    min-height: 34px;
+  }
+  .ff__controls {
+    gap: 10px;
+  }
+  .ff__nav {
+    width: 38px;
+    height: 38px;
+  }
+  .ff__cta {
+    padding: 10px 20px;
+    font-size: 13.5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ff {
+    padding: 22px 12px 28px;
+  }
+  .ff__card {
+    flex: 0 0 220px;
+  }
+  .ff__stage {
+    height: 132px;
+  }
+  .ff__title {
+    font-size: 21px;
+  }
+  .ff__sub {
+    font-size: 12.5px;
+  }
+}

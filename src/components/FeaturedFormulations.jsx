@@ -143,26 +143,10 @@ export default function FeaturedFormulations() {
         </div>
 
         <div className="ff__controls">
-          <button
-            type="button"
-            className="ff__nav"
-            aria-label="Previous formulations"
-            onClick={() => scrollTrack(-1)}
-          >
-            <Chevron dir="left" />
-          </button>
           <Link className="ff__cta" to="/products">
             Explore Full Formulations Directory
             <ArrowRight className="ff__cta-icon" />
           </Link>
-          <button
-            type="button"
-            className="ff__nav"
-            aria-label="Next formulations"
-            onClick={() => scrollTrack(1)}
-          >
-            <Chevron dir="right" />
-          </button>
         </div>
       </div>
     </section>

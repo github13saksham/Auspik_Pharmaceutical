@@ -12,6 +12,7 @@ import HeroSection from '../components/HeroSection';
 import FeaturedFormulations from '../components/FeaturedFormulations';
 import WhyUsSection from '../components/WhyUsSection';
 import OperationalPillars from '../components/OperationalPillars';
+import MissionVision from '../components/MissionVision';
 
 const HERO_FRAME_URLS = Object.entries(
   import.meta.glob('../assets/Capsule_motion_video_frames/*/frame_*.png', {
@@ -234,38 +235,8 @@ export default function Home({ settings }) {
     }
   };
 
-  const missionRef = useRef(null);
-  const visionRef = useRef(null);
-  const pillarsRef = useRef(null);
-  const [missionVisible, setMissionVisible] = useState(false);
-  const [visionVisible, setVisionVisible] = useState(false);
-  const [pillarsVisible, setPillarsVisible] = useState(false);
-  const [activePillar, setActivePillar] = useState(null);
-
   const [reviewPage, setReviewPage] = useState(0);
   const REVIEWS_PER_PAGE = 3;
-
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.target === missionRef.current && entry.isIntersecting) {
-          setMissionVisible(true);
-        }
-        if (entry.target === visionRef.current && entry.isIntersecting) {
-          setVisionVisible(true);
-        }
-        if (entry.target === pillarsRef.current && entry.isIntersecting) {
-          setPillarsVisible(true);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
-    if (missionRef.current) observer.observe(missionRef.current);
-    if (visionRef.current) observer.observe(visionRef.current);
-    if (pillarsRef.current) observer.observe(pillarsRef.current);
-
-    return () => observer.disconnect();
-  }, []);
 
   // Autoswipe for Featured Formulations (calling handleNext for smooth sliding)
   useEffect(() => {
@@ -482,106 +453,14 @@ export default function Home({ settings }) {
       <HeroSection />
 
       {/* ========================================================
-          MISSION & VISION: TARGET BOARD 3D ILLUSTRATION LAYOUT
-          (Matching user provided target reference:
-          "What is Our Mission?" with big 3D target board above/beside,
-          clean L-shaped line border, and Vision with description on right)
+          MISSION & VISION (COMPACT INTERACTIVE SHOWCASE)
           ======================================================== */}
-      {/* ========================================================
-          MISSION & VISION: 3D DARTBOARD & BINOCULARS SHOWCASE
-          (Scroll Effects:
-           - Mission slides in from LEFT as you scroll
-           - Vision slides/fades in from RIGHT as you scroll down
-           - Binoculars interchanged: Vision Description on LEFT, Binoculars on RIGHT
-           - Next dark section slides over with smooth scroll stacking effect)
-          ======================================================== */}
-      {/* ========================================================
-          MISSION SECTION
-          ======================================================== */}
-      <section className="section mission-target-section" aria-label="Our Mission">
-        <div className="container">
-          <div 
-            ref={missionRef}
-            className={`mv-presentation-row mission-presentation scroll-from-left ${missionVisible ? 'in-view' : ''}`}
-          >
-            <div className="mv-media-col">
-              <div className="mv-png-wrap">
-                <img 
-                  src="https://cdn3d.iconscout.com/3d/premium/thumb/target-3d-icon-download-in-png-blend-fbx-gltf-file-formats--dartboard-goal-aim-focus-management-vol-2-pack-business-icons-5588787.png?f=webp" 
-                  alt="Our Mission - 3D Dartboard Target" 
-                  className="mv-3d-png-img dartboard-img"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-
-            <div className="mv-content-col">
-              <div className="mv-target-title-block">
-                <h3 className="mv-target-headline">
-                  <span className="headline-dark">What is</span>
-                  <span className="headline-highlight">Our Mission?</span>
-                </h3>
-              </div>
-
-              <div className="mv-target-desc-box mission-desc-box">
-                <p>
-                  To make healthcare accessible and affordable while maintaining excellence in every aspect of our operations. Through continuous research, superior raw materials, and cutting-edge technology, we endeavor to cater to the diverse needs of healthcare providers and patients alike.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <MissionVision />
 
       {/* ========================================================
-          VISION & OPERATIONAL CURTAIN CONTAINER
-          Sticky behavior is confined strictly to this container.
-          When the operational section scrolls up over Vision,
-          the container ends, so Vision unpins and does NOT stay
-          stuck underneath any subsequent sections.
+          OPERATIONAL PILLARS & STRENGTHS
           ======================================================== */}
-      <div className="vision-curtain-container">
-        {/* Vision Section: Screen stays here in full view */}
-        <section className="section vision-target-section sticky-vision-screen" aria-label="Our Vision">
-          <div className="container">
-            <div 
-              ref={visionRef}
-              className={`mv-presentation-row vision-presentation scroll-from-right ${visionVisible ? 'in-view' : ''}`}
-            >
-              {/* Description on LEFT */}
-              <div className="mv-content-col">
-                <div className="mv-target-title-block">
-                  <h3 className="mv-target-headline">
-                    <span className="headline-dark">What is</span>
-                    <span className="headline-highlight-cyan">Our Vision?</span>
-                  </h3>
-                </div>
-
-                <div className="mv-target-desc-box vision-desc-box">
-                  <p>
-                    With a state-of-the-art facility at <strong>HSIIDC, Sector-3, Karnal</strong>, and a team of seasoned professionals, our commitment is rooted in innovation, stringent quality standards, and a patient-centric approach—ensuring that every syrup, cream, and pain relief oil we deliver meets national and international standards.
-                  </p>
-                </div>
-              </div>
-
-              {/* Binoculars image on RIGHT */}
-              <div className="mv-media-col">
-                <div className="mv-png-wrap">
-                  <img 
-                    src="https://static.vecteezy.com/system/resources/thumbnails/039/145/613/small/binoculars-travel-3d-illustration-for-web-app-infographic-etc-png.png" 
-                    alt="Our Vision - 3D Binoculars" 
-                    className="mv-3d-png-img binoculars-img"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Operational Section: Interactive morphing strips & expanded card */}
-        <OperationalPillars />
-      </div>
+      <OperationalPillars />
 
       {/* Spacer track that allows the Director section to be revealed from behind the operational layer */}
       <div className="director-reveal-track">
@@ -607,7 +486,27 @@ export default function Home({ settings }) {
                   className="director-portrait-img"
                 />
               </div>
-              <h3 className="director-person-name">{directors[activeDirector].name}</h3>
+
+              <div className="director-name-nav-row">
+                <button 
+                  type="button"
+                  className="director-arrow-btn" 
+                  onClick={() => setActiveDirector(activeDirector === 0 ? 1 : 0)}
+                  aria-label="Previous Director"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <h3 className="director-person-name">{directors[activeDirector].name}</h3>
+                <button 
+                  type="button"
+                  className="director-arrow-btn" 
+                  onClick={() => setActiveDirector(activeDirector === 0 ? 1 : 0)}
+                  aria-label="Next Director"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+
               <p className="director-person-role">{directors[activeDirector].role}</p>
               <span className="director-person-creds">{directors[activeDirector].credentials}</span>
             </div>
@@ -621,29 +520,6 @@ export default function Home({ settings }) {
               <p className="director-focus-text">
                 <strong>Focus Area:</strong> {directors[activeDirector].focus}
               </p>
-
-              <div className="director-controls">
-                
-
-                <div className="director-nav-arrows">
-                  <button 
-                    type="button"
-                    className="director-arrow-btn" 
-                    onClick={() => setActiveDirector(activeDirector === 0 ? 1 : 0)}
-                    aria-label="Previous Director"
-                  >
-                    <ChevronLeft size={18} />
-                  </button>
-                  <button 
-                    type="button"
-                    className="director-arrow-btn" 
-                    onClick={() => setActiveDirector(activeDirector === 0 ? 1 : 0)}
-                    aria-label="Next Director"
-                  >
-                    <ChevronRight size={18} />
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>

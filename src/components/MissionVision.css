@@ -1,0 +1,361 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ============================================================
+   Mission & Vision — Auspik Pharmaceuticals  (compact stage)
+
+   One card. Left: switch + statement. Right: an illustrated stage
+   that wipes between green (Mission) and blue (Vision), with depth
+   that follows the cursor. Scoped under .mv-section.
+   ============================================================ */
+
+/* lets the accent colour glide on switch (modern browsers) */
+@property --acc {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #16a34a;
+}
+
+.mv-section {
+  --mv-ink: #14302a;
+  --mv-muted: #4b5d63;
+  --mv-line: #e1ebe8;
+  --mv-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  padding: 44px 0;
+  background: #fff;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: var(--mv-ink);
+}
+
+.mv-section .container {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ---------- Card ---------- */
+.mv-card {
+  --acc: #16a34a;
+  --acc-soft: rgba(22, 163, 74, 0.14);
+  --px: 0;
+  --py: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 12px;
+  padding: 12px;
+  border-radius: 38px;
+  background: #fff;
+  border: 1px solid var(--mv-line);
+  box-shadow: 0 40px 70px -48px rgba(20, 48, 42, 0.5);
+  transition: --acc 0.7s ease;
+}
+
+.mv-card.is-vision { --acc: #0284c7; --acc-soft: rgba(2, 132, 199, 0.14); }
+
+/* ---------- Left ---------- */
+.mv-left {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 28px 36px 30px 32px;
+  min-width: 0;
+}
+
+/* segmented switch */
+.mv-switch {
+  position: relative;
+  align-self: flex-start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 5px;
+  border-radius: 999px;
+  background: #f1f5f4;
+  border: 1px solid var(--mv-line);
+}
+
+.mv-thumb {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 5px;
+  width: calc(50% - 5px);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 6px 14px -6px rgba(20, 48, 42, 0.35), 0 0 0 1px var(--mv-line);
+  transition: transform 0.55s var(--mv-ease);
+}
+
+.mv-card.is-vision .mv-thumb { transform: translateX(100%); }
+
+.mv-tab {
+  all: unset;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 128px;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: #6b7c80;
+  transition: color 0.4s ease;
+}
+
+.mv-tab i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+  transition: background 0.4s ease, opacity 0.4s ease, transform 0.4s var(--mv-ease);
+}
+
+.mv-tab:hover { color: var(--mv-ink); }
+.mv-tab:focus-visible { outline: 3px solid var(--acc-soft); outline-offset: 2px; }
+.mv-tab.is-on { color: var(--mv-ink); }
+.mv-tab.is-on i { background: var(--acc); opacity: 1; transform: scale(1.3); }
+
+/* statement */
+.mv-copy { display: flex; flex-direction: column; gap: 16px; animation: mvIn 0.6s var(--mv-ease) backwards; }
+
+@keyframes mvIn {
+  from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
+.mv-copy h2 {
+  margin: 0;
+  font-size: clamp(30px, 3.4vw, 40px);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  color: var(--mv-ink);
+}
+
+.mv-copy h2 span { color: var(--acc); }
+
+.mv-copy p {
+  position: relative;
+  margin: 0;
+  padding-top: 18px;
+  max-width: 560px;
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: var(--mv-muted);
+  text-wrap: pretty;
+}
+
+.mv-copy p::before {                   /* accent tab on a hairline */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--mv-line);
+}
+
+.mv-copy p::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 44px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--acc);
+  animation: mvTab 0.8s 0.2s var(--mv-ease) backwards;
+}
+
+@keyframes mvTab { from { width: 0; } }
+
+.mv-copy mark {
+  padding: 0;
+  background: linear-gradient(transparent 62%, var(--acc-soft) 62%);
+  color: var(--mv-ink);
+  font-weight: 600;
+}
+
+.mv-copy strong { color: var(--mv-ink); font-weight: 700; }
+
+/* ---------- Right: stage ---------- */
+.mv-stage {
+  position: relative;
+  overflow: hidden;
+  min-height: 360px;
+  border-radius: 28px;
+  background: #effaf3;
+  isolation: isolate;
+}
+
+.mv-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle, rgba(20, 48, 42, 0.1) 1px, transparent 1.6px) 0 0 / 22px 22px,
+    #eef6fd;
+  clip-path: circle(0% at 14% 96%);
+  transition: clip-path 0.95s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+.mv-card.is-vision .mv-bg { clip-path: circle(160% at 14% 96%); }
+
+.mv-stage::before {                    /* dots on the mission layer */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(20, 48, 42, 0.1) 1px, transparent 1.6px) 0 0 / 22px 22px;
+  z-index: -1;
+}
+
+/* dial ring */
+.mv-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 330px;
+  height: 330px;
+  margin: -165px 0 0 -165px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(var(--acc) 0 0.8deg, transparent 0.8deg 6deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+  opacity: 0.45;
+  animation: mvSpin 90s linear infinite;
+}
+
+@keyframes mvSpin { to { transform: rotate(360deg); } }
+
+.mv-disc {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 252px;
+  height: 252px;
+  margin: -126px 0 0 -126px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 34px 60px -30px var(--acc), 0 0 0 1px rgba(20, 48, 42, 0.05);
+  transform: translate(calc(var(--px) * 6px), calc(var(--py) * 5px));
+  transition: transform 0.3s ease-out;
+}
+
+/* hero illustration */
+.mv-hero {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 236px;
+  height: 236px;
+  margin: -118px 0 0 -118px;
+  transform: translate(calc(var(--px) * 20px), calc(var(--py) * 16px)) rotateY(calc(var(--px) * 8deg));
+  transition: transform 0.3s ease-out;
+}
+
+.mv-hero-in {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: mvPop 0.9s cubic-bezier(0.2, 1.25, 0.35, 1) backwards, mvFloat 5.5s 0.9s ease-in-out infinite;
+}
+
+.mv-hero svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.mv-hero img { 
+  display: block; 
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain; 
+  filter: drop-shadow(0 14px 28px rgba(20, 48, 42, 0.22)); 
+}
+
+@keyframes mvPop   { from { opacity: 0; transform: scale(0.55) rotate(-14deg); } }
+@keyframes mvFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+.mv-arrow { animation: mvShoot 0.7s 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+@keyframes mvShoot { from { transform: translate(90px, -80px); opacity: 0; } }
+
+.mv-bino { transform-origin: 180px 200px; animation: mvSway 5s ease-in-out infinite; }
+@keyframes mvSway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(5deg); } }
+
+.mv-glint { animation: mvGlint 3s ease-in-out infinite; }
+@keyframes mvGlint { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.8; } }
+
+/* floating capsules + crosses (depth layer) */
+.mv-cap {
+  position: absolute;
+  transform: translate(calc(var(--px) * var(--d) * 1px), calc(var(--py) * var(--d) * 1px));
+  transition: transform 0.35s ease-out;
+}
+
+.mv-cap > * { display: block; animation: mvDrift 6s ease-in-out infinite; animation-delay: var(--delay, 0s); }
+
+@keyframes mvDrift {
+  0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+  50%      { transform: translateY(-10px) rotate(calc(var(--r, 0deg) + 8deg)); }
+}
+
+.mv-cap svg { display: block; overflow: visible; }
+.mv-cap .half  { fill: var(--acc); }
+.mv-cap .shell { fill: #fff; stroke: var(--acc); stroke-opacity: 0.35; }
+.mv-cap .cross { stroke: var(--acc); stroke-width: 2.5; stroke-linecap: round; fill: none; opacity: 0.55; }
+
+/* ---------- Entrance ---------- */
+.mv-section:not(.mv-in-view) .mv-card { opacity: 0; }
+.mv-in-view .mv-card { animation: mvRise 0.9s var(--mv-ease) backwards; }
+
+@keyframes mvRise {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .mv-section { padding: 22px 0; }
+  .mv-section .container { padding: 0 14px; }
+  .mv-card { 
+    grid-template-columns: minmax(0, 1fr); 
+    border-radius: 24px; 
+    padding: 10px;
+    gap: 10px;
+  }
+  .mv-stage { 
+    order: -1; 
+    min-height: 195px; 
+    border-radius: 18px;
+  }
+  .mv-ring { width: 190px; height: 190px; margin: -95px 0 0 -95px; }
+  .mv-disc { width: 146px; height: 146px; margin: -73px 0 0 -73px; }
+  .mv-hero { width: 136px; height: 136px; margin: -68px 0 0 -68px; }
+  .mv-left { padding: 12px 10px 14px; gap: 12px; }
+  .mv-switch { padding: 3px; }
+  .mv-tab { min-width: 0; height: 34px; padding: 0 14px; font-size: 13px; }
+  .mv-copy { gap: 8px; }
+  .mv-copy h2 { font-size: clamp(20px, 5.2vw, 24px); }
+  .mv-copy p { font-size: 13px; line-height: 1.5; padding-top: 10px; }
+}
+
+@media (max-width: 480px) {
+  .mv-section { padding: 16px 0; }
+  .mv-stage { min-height: 175px; }
+  .mv-ring { width: 170px; height: 170px; margin: -85px 0 0 -85px; }
+  .mv-disc { width: 130px; height: 130px; margin: -65px 0 0 -65px; }
+  .mv-hero { width: 120px; height: 120px; margin: -60px 0 0 -60px; }
+  .mv-copy h2 { font-size: 20px; }
+  .mv-copy p { font-size: 12.5px; line-height: 1.48; }
+}
+
+@media (hover: none) { .mv-card { --px: 0 !important; --py: 0 !important; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .mv-in-view .mv-card, .mv-copy, .mv-hero-in, .mv-arrow, .mv-bino, .mv-glint, .mv-ring, .mv-cap > * { animation: none; }
+  .mv-card * { transition-duration: 0.01ms !important; }
+}

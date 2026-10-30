@@ -462,11 +462,15 @@
 
 /* ---------- Responsive (Mobile & Tablet) ---------- */
 @media (max-width: 900px) {
-  .operational-strengths-section { padding: 64px 0 72px; }
-  .operational-strengths-section .container { padding: 0 20px; }
+  .operational-strengths-section { padding: 32px 0 38px; }
+  .operational-strengths-section .container { padding: 0 16px; }
+  .operational-strengths-section .section-title { margin-bottom: 22px; gap: 8px; }
+  .operational-strengths-section .section-eyebrow { font-size: 12px; }
+  .operational-strengths-section .section-title h2 { font-size: clamp(23px, 5.5vw, 30px); }
+  .operational-strengths-section .section-title p { font-size: 14px; line-height: 1.5; }
 
   .pillars-strips-wrapper { flex-direction: column; }
-  .pillars-strips-wrapper.has-active-pillar { gap: 20px; }
+  .pillars-strips-wrapper.has-active-pillar { gap: 14px; }
 
   .has-active-pillar .pillars-strips-list {
     width: 100%;
@@ -474,40 +478,43 @@
     justify-content: center;
   }
 
-  .has-active-pillar .pillar-strip-item { width: 76px; }
-  .has-active-pillar .strip-collapsed-bar { min-height: 76px; }
+  .pillars-strips-list { gap: 10px; }
+  .has-active-pillar .pillar-strip-item { width: 64px; }
+  .has-active-pillar .strip-collapsed-bar { min-height: 56px; }
 
-  .strip-collapsed-bar { min-height: 96px; padding: 0 20px; }
-  .strip-number { width: 48px; height: 48px; font-size: 16px; }
-  .strip-bar-divider { margin: 0 18px; height: 32px; }
-  .strip-title { font-size: 19px; }
-  .strip-hint { font-size: 14px; }
+  .strip-collapsed-bar { min-height: 68px; padding: 0 16px; border-radius: 18px; }
+  .strip-number { width: 38px; height: 38px; font-size: 14.5px; }
+  .strip-bar-divider { margin: 0 14px; height: 26px; }
+  .strip-title { font-size: 16.5px; }
+  .strip-hint { font-size: 12.5px; }
   .strip-arrow { display: none; }
 
-  .pillar-card-content { padding: 40px 28px 28px; }
-  .pillar-card-watermark { font-size: 200px; }
-  .pillar-expanded-card { min-height: 400px; }
+  .pillar-card-content { padding: 28px 20px 22px; gap: 12px; }
+  .pillar-card-watermark { font-size: 160px; }
+  .pillar-card-title { font-size: 21px; }
+  .pillar-card-desc { font-size: 14px; line-height: 1.55; }
+  .pillar-expanded-card { min-height: auto; border-radius: 22px; }
 }
 
 @media (max-width: 480px) {
-  .operational-strengths-section { padding: 48px 0 56px; }
-  .operational-strengths-section .section-title { margin-bottom: 36px; gap: 10px; }
-  .operational-strengths-section .section-title h2 { font-size: 26px; }
-  .operational-strengths-section .section-title p { font-size: 15px; }
+  .operational-strengths-section { padding: 22px 0 26px; }
+  .operational-strengths-section .section-title { margin-bottom: 16px; gap: 6px; }
+  .operational-strengths-section .section-title h2 { font-size: 22px; }
+  .operational-strengths-section .section-title p { font-size: 13px; line-height: 1.45; }
 
-  .strip-collapsed-bar { min-height: 80px; padding: 0 14px; }
-  .strip-number { width: 40px; height: 40px; font-size: 15px; }
-  .strip-bar-divider { margin: 0 12px; height: 26px; }
-  .strip-title { font-size: 17px; }
-  .strip-hint { font-size: 13px; }
-  .has-active-pillar .pillars-strips-list { gap: 10px; }
-  .has-active-pillar .pillar-strip-item { width: 64px; }
-  .has-active-pillar .strip-collapsed-bar { min-height: 64px; }
+  .strip-collapsed-bar { min-height: 60px; padding: 0 12px; border-radius: 14px; }
+  .strip-number { width: 34px; height: 34px; font-size: 13.5px; }
+  .strip-bar-divider { margin: 0 10px; height: 20px; }
+  .strip-title { font-size: 15px; }
+  .strip-hint { font-size: 11.5px; }
+  .has-active-pillar .pillars-strips-list { gap: 8px; }
+  .has-active-pillar .pillar-strip-item { width: 52px; }
+  .has-active-pillar .strip-collapsed-bar { min-height: 52px; border-radius: 14px; }
 
-  .pillar-card-content { padding: 32px 20px 24px; gap: 16px; }
-  .pillar-card-title { font-size: 24px; }
-  .pillar-card-desc { font-size: 15px; }
-  .pillar-card-close { top: 16px; right: 16px; width: 36px; height: 36px; }
+  .pillar-card-content { padding: 22px 16px 18px; gap: 10px; }
+  .pillar-card-title { font-size: 19px; }
+  .pillar-card-desc { font-size: 13px; line-height: 1.48; }
+  .pillar-card-close { top: 14px; right: 14px; width: 32px; height: 32px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

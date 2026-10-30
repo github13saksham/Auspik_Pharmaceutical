@@ -472,8 +472,12 @@
   }
   .hero-capsule-section .beat {
     top: auto;
-    bottom: 96px;
+    bottom: clamp(62px, 8.5vh, 76px);
     transform: translateY(16px);
+    max-width: none;
+    right: var(--gutter);
+  }
+  .hero-capsule-section .beat[data-beat="2"] {
     max-width: none;
     right: var(--gutter);
   }
@@ -490,16 +494,43 @@
     display: none;
   }
   .hero-capsule-section .h-display {
-    font-size: clamp(2.1rem, 9vw, 3rem);
+    font-size: clamp(1.65rem, 7.5vw, 2.15rem);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+  }
+  .hero-capsule-section .eyebrow {
+    font-size: 0.74rem;
+    margin: 0 0 8px;
+    gap: 6px;
   }
   .hero-capsule-section .beat .lede {
-    font-size: 1rem;
+    font-size: clamp(0.85rem, 3.6vw, 0.94rem);
+    line-height: 1.45;
+    margin: 8px 0 0;
+    max-width: 94%;
   }
   .hero-capsule-section .beat .actions {
-    margin-top: 22px;
+    margin-top: 14px;
+    gap: 8px;
   }
   .hero-capsule-section .beat .btn {
-    height: 48px;
-    padding: 0 20px;
+    height: 42px;
+    padding: 0 18px;
+    font-size: 0.86rem;
+  }
+  .hero-capsule-section .hero-progress {
+    left: var(--gutter);
+    right: 76px;
+    bottom: 14px;
+    gap: 8px;
+    max-width: calc(100% - 90px);
+  }
+  .hero-capsule-section .hp-step {
+    font-size: 0.68rem;
+    white-space: nowrap;
+  }
+  .hero-capsule-section .hp-bar {
+    height: 2.5px;
+    margin-bottom: 5px;
   }
 }

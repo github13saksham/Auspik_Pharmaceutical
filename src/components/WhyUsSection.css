@@ -297,25 +297,31 @@
 
 /* ---------- Responsive (Mobile & Tablet) ---------- */
 @media (max-width: 900px) {
-  .why-us-section { padding: 64px 0 72px; }
-  .why-us-section .container { padding: 0 20px; }
-  .wu-stage { grid-template-columns: minmax(0, 1fr); gap: 24px; }
-  .wu-visual { min-height: 0; aspect-ratio: 520 / 440; }
-  .wu-item { padding: 18px 20px 20px; }
-  .wu-item-title { font-size: 18px; }
-  .wu-desc { padding-left: 0; font-size: 14.5px; }
+  .why-us-section { padding: 32px 0 36px; }
+  .why-us-section .container { padding: 0 16px; }
+  .why-us-section .section-title { margin-bottom: 20px; gap: 6px; }
+  .why-us-section .section-eyebrow { font-size: 12px; }
+  .why-us-section .section-title h2 { font-size: clamp(23px, 5.8vw, 30px); }
+  .why-us-section .section-title p { font-size: 13.5px; line-height: 1.45; }
+  .wu-stage { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .wu-visual { min-height: 0; aspect-ratio: 16 / 9; max-height: 200px; border-radius: 18px; }
+  .wu-list { gap: 8px; }
+  .wu-item { padding: 12px 14px 14px; border-radius: 14px; }
+  .wu-num { width: 34px; height: 34px; font-size: 13px; }
+  .wu-item-title { font-size: 15.5px; }
+  .wu-desc { padding-left: 0; font-size: 13px; line-height: 1.48; }
 }
 
 @media (max-width: 480px) {
-  .why-us-section { padding: 48px 0 56px; }
-  .why-us-section .section-title { margin-bottom: 36px; gap: 10px; }
-  .why-us-section .section-title h2 { font-size: 28px; }
-  .why-us-section .section-title p { font-size: 15px; }
-  .wu-visual { min-height: 0; aspect-ratio: 520 / 460; border-radius: 24px; }
-  .wu-item { border-radius: 18px; padding: 16px; }
-  .wu-num { width: 38px; height: 38px; font-size: 14px; }
-  .wu-item-title { font-size: 17px; }
-  .wu-item-head { gap: 12px; }
+  .why-us-section { padding: 22px 0 26px; }
+  .why-us-section .section-title { margin-bottom: 16px; gap: 6px; }
+  .why-us-section .section-title h2 { font-size: 22px; }
+  .why-us-section .section-title p { font-size: 13px; line-height: 1.45; }
+  .wu-visual { max-height: 175px; border-radius: 16px; }
+  .wu-item { border-radius: 12px; padding: 10px 12px 12px; }
+  .wu-num { width: 30px; height: 30px; font-size: 12px; }
+  .wu-item-title { font-size: 14.5px; }
+  .wu-item-head { gap: 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
