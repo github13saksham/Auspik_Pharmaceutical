@@ -3,14 +3,11 @@ import { NavLink, Link } from 'react-router-dom';
 import { Menu, X, Phone, Mail, Award, Activity, ArrowRight } from 'lucide-react';
 import companyLogo from '../assets/Project_images/Pharma_Company_logo.jpeg';
 import './Header.css';
-import { auth } from '../firebase';
-import { onAuthStateChanged } from 'firebase/auth';
 
 export default function Header({ settings }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,14 +22,9 @@ export default function Header({ settings }) {
       }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsAdminLoggedIn(!!user);
-    });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      unsubscribe();
     };
   }, []);
 
@@ -88,11 +80,6 @@ export default function Header({ settings }) {
             <NavLink to="/contact" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'} onClick={closeMenu}>
               Contact Us
             </NavLink>
-            {isAdminLoggedIn && (
-              <NavLink to="/admin" className={({isActive}) => isActive ? 'nav-item admin-tag' : 'nav-item admin-tag'} onClick={closeMenu}>
-                Portal Admin
-              </NavLink>
-            )}
           </div>
 
           <div className="header-actions">

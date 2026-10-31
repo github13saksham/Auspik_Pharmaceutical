@@ -26,23 +26,35 @@ function App() {
     fetchSettings();
   }, []);
 
+  // Check if user is accessing through the admin subdomain (e.g. admin.auspikpharmaceuticals.com or admin.localhost)
+  const hostname = typeof window !== 'undefined' ? window.location.hostname.toLowerCase() : '';
+  const isSubdomainAdmin = hostname.startsWith('admin.');
+
   return (
     <ErrorBoundary>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout settings={settings} />}>
-            <Route index element={<Home settings={settings} />} />
-            <Route path="products" element={<Products />} />
-            <Route path="products/:id" element={<ProductDetail />} />
-            <Route path="about" element={<About settings={settings} />} />
-            <Route path="careers" element={<Careers />} />
-            <Route path="careers/apply/:jobId" element={<CareerApplication />} />
-            <Route path="contact" element={<Contact settings={settings} />} />
-          </Route>
-          
-          {/* Admin Route outside Layout to avoid header/footer overlap */}
-          <Route path="/admin" element={<Admin />} />
-        </Routes>
+        {isSubdomainAdmin ? (
+          /* When on admin.auspikpharmaceuticals.com, serve the Admin Portal exclusively at root */
+          <Routes>
+            <Route path="/*" element={<Admin />} />
+          </Routes>
+        ) : (
+          /* Normal public website routes */
+          <Routes>
+            <Route path="/" element={<Layout settings={settings} />}>
+              <Route index element={<Home settings={settings} />} />
+              <Route path="products" element={<Products />} />
+              <Route path="products/:id" element={<ProductDetail />} />
+              <Route path="about" element={<About settings={settings} />} />
+              <Route path="careers" element={<Careers />} />
+              <Route path="careers/apply/:jobId" element={<CareerApplication />} />
+              <Route path="contact" element={<Contact settings={settings} />} />
+            </Route>
+            
+            {/* Direct fallback route for local development */}
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+        )}
       </BrowserRouter>
     </ErrorBoundary>
   );

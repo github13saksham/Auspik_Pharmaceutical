@@ -20,6 +20,8 @@ import { getProducts } from '../services/pharmaService';
 import InquiryModal from '../components/InquiryModal';
 import './ProductDetail.css';
 
+const RELATED_CARD_TINTS = ['#D6EEC9', '#C9E3F6', '#F6D2DE', '#FBDFAA'];
+
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ export default function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const [showInquiryModal, setShowInquiryModal] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [shareError, setShareError] = useState('');
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -63,11 +66,37 @@ export default function ProductDetail() {
     loadProductData();
   }, [id]);
 
-  const handleShare = () => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href);
+  const handleShare = async () => {
+    const productUrl = new URL(`/products/${encodeURIComponent(product.id)}`, window.location.origin).toString();
+
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(productUrl);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = productUrl;
+        textArea.setAttribute('readonly', '');
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        let didCopy = false;
+        try {
+          textArea.focus();
+          textArea.select();
+          didCopy = document.execCommand('copy');
+        } finally {
+          textArea.remove();
+        }
+        if (!didCopy) throw new Error('Clipboard copy was not available.');
+      }
+
       setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
+      setShareError('');
+      window.setTimeout(() => setCopied(false), 2500);
+    } catch (error) {
+      console.error('Unable to copy product link:', error);
+      setCopied(false);
+      setShareError('Unable to copy the product link. Please try again.');
     }
   };
 
@@ -210,7 +239,7 @@ export default function ProductDetail() {
                   <strong>Active Pharmaceutical Formulation:</strong> {product.genericName}.
                 </li>
                 <li>
-                  <strong>Targeted Therapeutic Utility:</strong> {product.description}
+                  <strong>Targeted Therapeutic Utility:</strong> {product.description || product.genericName}
                 </li>
                 <li>
                   <strong>High Quality Assurance:</strong> Fully compliant with WHO-GMP manufacturing and rigorous analytical pharmacopeial assay tests.
@@ -262,10 +291,12 @@ export default function ProductDetail() {
                   type="button" 
                   className={`az-btn-secondary ${copied ? 'copied' : ''}`}
                   onClick={handleShare}
+                  aria-live="polite"
                 >
                   {copied ? <Check size={16} /> : <Share2 size={16} />}
-                  <span>{copied ? 'Link Copied!' : 'Share Product'}</span>
+                  <span>{copied ? 'Product Link Copied!' : shareError ? 'Copy Failed' : 'Share Product'}</span>
                 </button>
+                {shareError && <p className="az-share-error" role="status">{shareError}</p>}
               </div>
 
               <div className="az-buybox-perks">
@@ -297,20 +328,30 @@ export default function ProductDetail() {
             </div>
 
             <div className="az-related-grid">
-              {relatedProducts.map(rel => (
+              {relatedProducts.map((rel, index) => (
                 <Link 
                   to={`/products/${rel.id}`} 
                   key={rel.id} 
                   className="az-related-item"
+                  aria-label={`View formulation: ${rel.name}`}
                 >
-                  <div className="az-related-thumb">
+                  <div
+                    className="az-related-thumb"
+                    style={{ '--related-tint': RELATED_CARD_TINTS[index % RELATED_CARD_TINTS.length] }}
+                  >
+                    <span className="az-related-disc" aria-hidden="true" />
                     <img src={rel.image} alt={rel.name} loading="lazy" />
                   </div>
                   <div className="az-related-desc">
+                    <span className="az-rel-cat">{rel.dosageForm || rel.category || 'Formulation'}</span>
                     <h4 className="az-rel-name">{rel.name}</h4>
-                    <span className="az-rel-cat">{rel.dosageForm}</span>
-                    <p className="az-rel-generic">{rel.genericName}</p>
-                    <span className="az-rel-cta">View Formulation &rsaquo;</span>
+                    <p className="az-rel-generic">{rel.genericName || rel.composition}</p>
+                    <span className="az-rel-cta">
+                      View Formulation
+                      <span className="az-rel-go" aria-hidden="true">
+                        <ChevronRight size={14} />
+                      </span>
+                    </span>
                   </div>
                 </Link>
               ))}
