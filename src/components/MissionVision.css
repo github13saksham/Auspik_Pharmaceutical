@@ -45,8 +45,6 @@
   padding: 12px;
   border-radius: 38px;
   background: #fff;
-  border: 1px solid var(--mv-line);
-  box-shadow: 0 40px 70px -48px rgba(20, 48, 42, 0.5);
   transition: --acc 0.7s ease;
 }
 
