@@ -167,7 +167,7 @@ export default function About({ settings }) {
           {/* Common Shared Description under both Founders */}
           <div className="founders-shared-description text-center">
             <p>
-              At Auspik Pharmaceuticals, our vision extends beyond the manufacturing of medicines. Guided by intellectual rigour, progressive thinking, and an unwavering commitment to human well-being, we have built an enterprise where experience meets ambition and heritage meets modern healthcare innovation. Every therapeutic formulation is crafted to the most stringent international quality benchmarks, fostering enduring partnerships and delivering accessible, life-enhancing wellness across communities.
+              At Auspik Pharmaceuticals, an ISO and GMP pharmaceutical company based in Karnal, Haryana, our vision extends beyond conventional medicine supply. Guided by intellectual rigour, progressive thinking, and an unwavering commitment to human well-being, we have built an enterprise where experience meets ambition and heritage meets modern healthcare innovation. Every therapeutic formulation is crafted to the most stringent international quality benchmarks, fostering enduring partnerships and delivering accessible, life-enhancing wellness across communities.
             </p>
           </div>
         </div>
@@ -186,7 +186,7 @@ export default function About({ settings }) {
                 <ShieldCheck size={32} />
               </div>
               <h3>Quality First</h3>
-              <p>We adhere to the highest international standards in manufacturing, ensuring every tablet, capsule, and syrup is safe, pure, and potent.</p>
+              <p>We adhere to the highest international standards in pharmaceutical quality and compliance, ensuring every tablet, capsule, and syrup is safe, pure, and potent.</p>
             </div>
 
             <div className="value-card">

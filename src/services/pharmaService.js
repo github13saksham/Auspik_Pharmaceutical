@@ -10,6 +10,7 @@ if (!db) {
 }
 
 import seededProducts from './seededProducts.json';
+import { triggerEmailNotification } from './emailService';
 
 // Seed Data with all uploaded authentic product images (40 authentic items)
 const seedProducts = seededProducts;
@@ -23,7 +24,7 @@ const seedSettings = {
   certifications: 'Dedicated to High Quality Medicines'
 };
 
-const CURRENT_VERSION = 'v4_exact_medicine_names_and_descriptions';
+const CURRENT_VERSION = 'v5_scope_of_business_catalog_connected';
 
 // Initialize LocalStorage Data if Empty or if outdated data detected
 export const initLocalData = (forceReset = false) => {
@@ -69,10 +70,10 @@ export const getProducts = async () => {
     // Check if Firestore needs re-seeding: empty, has duplicate/old items, or doesn't have the new verified names (e.g. NEUROBEE FORTE)
     const needsReseed = querySnapshot.empty || 
       docs.length !== seedProducts.length ||
-      docs.some(p => p.name === 'NeuroXel-500' || p.name === 'CardioStat-40' || p.name?.startsWith('Auspik Formulation #') || p.name === 'Livpik Ayurvedic Liver Tonic' || Number(p.id) > 40);
+      docs.some(p => p.name === 'NeuroXel-500' || p.name === 'CardioStat-40' || p.name?.startsWith('Auspik Formulation #') || p.name === 'Livpik Ayurvedic Liver Tonic');
 
     if (needsReseed) {
-      console.log("Seeding authentic 40 products to Firebase Firestore...");
+      console.log("Seeding authentic scope-connected products to Firebase Firestore...");
       const { deleteDoc } = await import('firebase/firestore');
       
       // Delete any surplus/duplicate docs from Firestore
@@ -191,10 +192,15 @@ export const addInquiry = async (inquiryData) => {
     const inquiries = JSON.parse(localStorage.getItem('inquiries'));
     inquiries.push(inquiry);
     localStorage.setItem('inquiries', JSON.stringify(inquiries));
+    triggerEmailNotification('inquiry', inquiryData);
     return inquiry;
   }
   
   await setDoc(doc(collection(db, "inquiries"), inquiry.id), inquiry);
+  
+  // Trigger dual notification email via Resend
+  triggerEmailNotification('inquiry', inquiryData);
+
   return inquiry;
 };
 

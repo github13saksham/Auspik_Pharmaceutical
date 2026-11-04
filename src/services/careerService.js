@@ -1,5 +1,6 @@
 import { collection, doc, serverTimestamp, writeBatch } from 'firebase/firestore';
 import { db } from '../firebase';
+import { triggerEmailNotification } from './emailService';
 
 const HR_EMAIL = 'auspikpharma@gmail.com';
 const MAX_RESUME_SIZE = 600 * 1024;
@@ -105,4 +106,12 @@ export const submitCareerApplication = async ({ job, applicant, resumeFile }) =>
   });
 
   await batch.commit();
+
+  // Dispatch transactional email via Resend (Admin notification + Applicant confirmation)
+  triggerEmailNotification('career_application', {
+    job,
+    applicant,
+    resumeName: resumeFile?.name || '',
+    resumeDataUrl
+  });
 };

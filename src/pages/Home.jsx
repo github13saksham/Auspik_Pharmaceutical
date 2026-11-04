@@ -256,7 +256,7 @@ export default function Home({ settings }) {
       credentials: 'Leader in Pharmaceutical Formulation & Quality Governance',
       image: '/anand-mohan.jpg',
       period: 'Leadership & Formulation Science',
-      statement: 'At Auspik, pharmaceutical manufacturing is our solemn commitment to human well-being. Every medicine is engineered with uncompromising precision and rigorous scientific ethics to make premium healthcare accessible across borders.',
+      statement: 'At Auspik, our solemn commitment as an ISO and GMP pharmaceutical company based in Karnal, Haryana is to human well-being. Every formulation is engineered with uncompromising precision and rigorous scientific ethics to make premium healthcare accessible across borders.',
       focus: 'Pioneering formulation excellence, strict quality benchmarks, and therapeutic syrups, creams and pain relief oils.'
     },
     {

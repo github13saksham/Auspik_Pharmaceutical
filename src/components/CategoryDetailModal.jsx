@@ -35,7 +35,7 @@ export default function CategoryDetailModal({ category, onClose }) {
         <div className="cat-modal-body">
           {/* Highlights Box */}
           <div className="cat-modal-section">
-            <h3><Award size={18} className="sec-icon" /> Manufacturing Standards</h3>
+            <h3><Award size={18} className="sec-icon" /> Quality &amp; Compliance Standards</h3>
             <ul className="cat-modal-list">
               <li>
                 <CheckCircle2 size={16} className="list-icon" />

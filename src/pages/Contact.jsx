@@ -226,7 +226,7 @@ export default function Contact({ settings }) {
         <div className="container">
           <h1 className="animate-slide-up">Contact Us</h1>
           <p className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            Get in touch with our team for bulk product inquiries, PCD franchise options, or contract manufacturing.
+            Get in touch with our team for bulk product inquiries, PCD franchise options, or institutional supply.
           </p>
         </div>
       </div>
@@ -352,7 +352,7 @@ export default function Contact({ settings }) {
           <div className="contact-info-card">
             <div className="info-card-header">
               <h2>Contact Information</h2>
-              <p>Direct communication channels, corporate offices & manufacturing facilities.</p>
+              <p>Direct communication channels, corporate offices & operational facilities.</p>
             </div>
 
             <div className="info-meta-list">
@@ -390,7 +390,7 @@ export default function Contact({ settings }) {
                   <ContactIllustrations.Building />
                 </div>
                 <div>
-                  <strong>Manufacturing & Corporate Address</strong>
+                  <strong>Corporate & Operational Address (Karnal, Haryana)</strong>
                   <p className="meta-value">{address}</p>
                   <a href={googleMapsDirectionsUrl} target="_blank" rel="noopener noreferrer" className="unified-link">
                     Get directions on Google Maps &rarr;

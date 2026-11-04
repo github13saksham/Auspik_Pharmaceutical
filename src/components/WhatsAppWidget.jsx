@@ -60,11 +60,11 @@ export default function WhatsAppWidget({ phone }) {
           { id: 'nav_prod', label: 'Browse Medicine Directory', action: 'navigate', url: '/products' },
           { id: 'wa_prod', label: 'Inquire on WhatsApp', action: 'whatsapp', query: 'Inquire about medicine formulations' }
         ];
-      } else if (query.includes('service') || query.includes('manufacturing') || query.includes('third party') || query.includes('distribution')) {
-        replyText = 'We provide advanced formulation development, third-party contract manufacturing, and pan-India distribution meeting stringent national and international standards.';
+      } else if (query.includes('service') || query.includes('manufacturing') || query.includes('third party') || query.includes('distribution') || query.includes('supply')) {
+        replyText = 'As an ISO and GMP pharmaceutical company based in Karnal, Haryana, we provide advanced formulation development, institutional supply, and pan-India distribution meeting stringent national and international standards.';
         replyButtons = [
           { id: 'nav_about', label: 'About Our Facility', action: 'navigate', url: '/about' },
-          { id: 'wa_serv', label: 'Inquire on WhatsApp', action: 'whatsapp', query: 'Inquire about manufacturing services' }
+          { id: 'wa_serv', label: 'Inquire on WhatsApp', action: 'whatsapp', query: 'Inquire about supply and distribution services' }
         ];
       } else if (query.includes('location') || query.includes('address') || query.includes('karnal') || query.includes('where') || query.includes('contact')) {
         replyText = 'Our modern facility is located at HSIIDC, Sector-3, Karnal, Haryana. You can reach out directly via our contact directory or WhatsApp.';

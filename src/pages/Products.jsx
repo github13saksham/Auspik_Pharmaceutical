@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Search, Filter, ChevronRight, ChevronLeft, ChevronDown } from 'lucide-react';
+import { Search, Filter, ChevronRight, ChevronLeft, ChevronDown, PackageCheck } from 'lucide-react';
 import { getProducts } from '../services/pharmaService';
 import InquiryModal from '../components/InquiryModal';
 import productsHeroImg from '../assets/pharma_careers/products_hero_banner.jpg';
@@ -45,16 +45,99 @@ const ArrowRight = ({ size = 14, className = '' }) => (
   </svg>
 );
 
+// Scope of Business Categories:
+// Marketing, Trading, Distribution, and Supply of Medicinal and Pharmaceutical Preparations
+export const SCOPE_OF_BUSINESS_CATEGORIES = [
+  'All Categories',
+  'Tablets',
+  'Capsules',
+  'Injectables',
+  'Sterile Pharmaceutical Preparations',
+  'Ophthalmic Preparations (Eye Drops & Eye Ointments)',
+  'Syrups',
+  'Oral Liquids',
+  'Food Supplements',
+  'Nutraceuticals',
+  'Vitamins',
+  'Minerals',
+  'Medical Devices',
+  'Medical Equipment',
+  'Orthopaedic Supports, Braces & Belts',
+  'Rehabilitation Aids'
+];
+
+export const matchesScopeCategory = (p, cat) => {
+  if (!cat || cat === 'All' || cat === 'All Categories') return true;
+  const c = cat.toLowerCase();
+  const form = (p.dosageForm || '').toLowerCase();
+  const category = (p.category || '').toLowerCase();
+  const name = (p.name || '').toLowerCase();
+  const generic = (p.genericName || '').toLowerCase();
+  const comp = (p.composition || '').toLowerCase();
+  const indications = Array.isArray(p.indications)
+    ? p.indications.join(' ').toLowerCase()
+    : (p.indications || '').toLowerCase();
+
+  if (c.includes('tablet')) {
+    return form.includes('tablet') || category.includes('tablet');
+  }
+  if (c.includes('capsule')) {
+    return form.includes('capsule') || category.includes('capsule');
+  }
+  if (c.includes('injectable')) {
+    return form.includes('inject') || category.includes('inject');
+  }
+  if (c.includes('sterile')) {
+    return form.includes('sterile') || form.includes('inject') || form.includes('drop') || category.includes('sterile') || category.includes('ophthalmic') || form.includes('ophthalmic');
+  }
+  if (c.includes('ophthalmic') || c.includes('eye drop') || c.includes('eye ointment')) {
+    return form.includes('eye') || form.includes('ophthalmic') || form.includes('drop') || category.includes('eye drop') || category.includes('ophthalmic');
+  }
+  if (c === 'syrups' || c === 'syrup') {
+    return form.includes('syrup') || category.includes('syrup') || form.includes('tonic');
+  }
+  if (c.includes('oral liquid')) {
+    return form.includes('oral') || form.includes('liquid') || form.includes('syrup') || form.includes('tonic') || form.includes('ras') || form.includes('suspension') || category.includes('liquid') || category.includes('syrup');
+  }
+  if (c.includes('food supplement')) {
+    return category.includes('nutra') || form.includes('softgel') || indications.includes('supplement') || indications.includes('nutritional') || indications.includes('deficiency') || generic.includes('vitamin');
+  }
+  if (c.includes('nutraceutical')) {
+    return category.includes('nutra') || form.includes('softgel') || name.includes('ev-pik') || generic.includes('vitamin') || generic.includes('cholecalciferol') || generic.includes('tocopherol');
+  }
+  if (c.includes('vitamin')) {
+    return generic.includes('vitamin') || name.includes('vit') || generic.includes('cholecalciferol') || generic.includes('tocopherol') || generic.includes('methylcobalamin') || generic.includes('d3') || indications.includes('vitamin');
+  }
+  if (c.includes('mineral')) {
+    return generic.includes('zinc') || generic.includes('calcium') || generic.includes('ferrous') || generic.includes('iron') || generic.includes('mineral') || generic.includes('magnesium') || comp.includes('zinc') || comp.includes('calcium') || comp.includes('iron');
+  }
+  if (c.includes('medical device')) {
+    return category.includes('device') || form.includes('device');
+  }
+  if (c.includes('medical equipment')) {
+    return category.includes('equipment') || form.includes('equipment');
+  }
+  if (c.includes('orthopaedic') || c.includes('brace') || c.includes('belt')) {
+    const isGel = form === 'gel' || (form.includes('gel') && !form.includes('softgel') && !form.includes('gelatin'));
+    return category.includes('ortho') || form.includes('brace') || form.includes('belt') || (form.includes('oil') && category.includes('oint')) || isGel || name.includes('curcuflex');
+  }
+  if (c.includes('rehabilitation')) {
+    return category.includes('rehab') || form.includes('rehab');
+  }
+  return category.includes(c) || form.includes(c);
+};
+
 export default function Products() {
   const [searchParams] = useSearchParams();
   const categoryParam = searchParams.get('category');
+  const dropdownRef = useRef(null);
 
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState(categoryParam || 'All');
+  const [selectedCategory, setSelectedCategory] = useState('All Categories');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -65,9 +148,27 @@ export default function Products() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
   useEffect(() => {
     if (categoryParam) {
-      setSelectedCategory(categoryParam);
+      const match = SCOPE_OF_BUSINESS_CATEGORIES.find(
+        c => c.toLowerCase() === categoryParam.toLowerCase() || c.toLowerCase().includes(categoryParam.toLowerCase())
+      );
+      setSelectedCategory(match || categoryParam);
     }
   }, [categoryParam]);
 
@@ -86,12 +187,8 @@ export default function Products() {
   useEffect(() => {
     let result = products;
     
-    if (selectedCategory !== 'All') {
-      const catLower = selectedCategory.toLowerCase();
-      result = result.filter(p => 
-        (p.category && p.category.toLowerCase().includes(catLower)) ||
-        (p.dosageForm && p.dosageForm.toLowerCase().includes(catLower))
-      );
+    if (selectedCategory && selectedCategory !== 'All' && selectedCategory !== 'All Categories') {
+      result = result.filter(p => matchesScopeCategory(p, selectedCategory));
     }
     
     if (searchTerm) {
@@ -99,7 +196,8 @@ export default function Products() {
       result = result.filter(p => 
         p.name.toLowerCase().includes(lowerTerm) || 
         p.genericName.toLowerCase().includes(lowerTerm) ||
-        (p.category && p.category.toLowerCase().includes(lowerTerm))
+        (p.category && p.category.toLowerCase().includes(lowerTerm)) ||
+        (p.dosageForm && p.dosageForm.toLowerCase().includes(lowerTerm))
       );
     }
     
@@ -107,8 +205,7 @@ export default function Products() {
     setCurrentPage(1);
   }, [searchTerm, selectedCategory, products]);
 
-  const defaultCategories = ['All', 'Tablets', 'Capsules', 'Liquids Orals', 'Eye Drops', 'Powders', 'Herbals'];
-  const categories = Array.from(new Set([...defaultCategories, ...products.map(p => p.category).filter(Boolean)]));
+  const categories = SCOPE_OF_BUSINESS_CATEGORIES;
 
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) || 1;
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -181,7 +278,7 @@ export default function Products() {
                 />
               </div>
               
-              <div className="category-dropdown-container">
+              <div className="category-dropdown-container" ref={dropdownRef}>
                 <button 
                   type="button"
                   className="category-dropdown-btn"
@@ -191,7 +288,7 @@ export default function Products() {
                   <div className="dropdown-btn-content">
                     <Filter size={16} className="filter-icon" />
                     <span className="selected-text">
-                      {selectedCategory === 'All' ? 'All Categories' : selectedCategory}
+                      {selectedCategory}
                     </span>
                   </div>
                   <ChevronDown size={16} className={`chevron-icon ${isDropdownOpen ? 'open' : ''}`} />
@@ -200,25 +297,26 @@ export default function Products() {
                 {isDropdownOpen && (
                   <div className="category-dropdown-menu animate-fade-in">
                     <ul className="dropdown-list">
-                      {categories.map((category) => (
-                        <li key={category}>
-                          <button
-                            type="button"
-                            className={`dropdown-item ${selectedCategory === category ? 'active' : ''}`}
-                            onClick={() => {
-                              setSelectedCategory(category);
-                              setIsDropdownOpen(false);
-                            }}
-                          >
-                            <span className="cat-name">{category === 'All' ? 'All Categories' : category}</span>
-                            {category !== 'All' && (
-                              <span className="count">
-                                {products.filter(p => p.category === category).length}
-                              </span>
-                            )}
-                          </button>
-                        </li>
-                      ))}
+                      {categories.map((category) => {
+                        const count = category === 'All Categories'
+                          ? products.length
+                          : products.filter(p => matchesScopeCategory(p, category)).length;
+                        return (
+                          <li key={category}>
+                            <button
+                              type="button"
+                              className={`dropdown-item ${selectedCategory === category ? 'active' : ''}`}
+                              onClick={() => {
+                                setSelectedCategory(category);
+                                setIsDropdownOpen(false);
+                              }}
+                            >
+                              <span className="cat-name">{category}</span>
+                              <span className="count">{count}</span>
+                            </button>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 )}
@@ -347,6 +445,39 @@ export default function Products() {
                   </div>
                 )}
               </>
+            ) : selectedCategory !== 'All Categories' && !searchTerm ? (
+              <div className="no-results animate-fade-in scope-procurement-state">
+                <div className="no-results-content">
+                  <div className="scope-icon-pill" style={{ display: 'inline-flex', padding: '14px', borderRadius: '50%', background: '#eff6ff', color: '#2563eb', marginBottom: '16px' }}>
+                    <PackageCheck size={38} className="no-results-icon" style={{ margin: 0, color: '#2563eb' }} />
+                  </div>
+                  <h3>{selectedCategory}</h3>
+                  <p style={{ maxWidth: '580px', margin: '0 auto 20px', color: 'var(--ff-muted)', lineHeight: '1.6' }}>
+                    This segment is an authorized part of our <strong>Scope of Business</strong> (Marketing, Trading, Distribution &amp; Supply). We supply certified high-grade formulations on institutional contract and custom orders.
+                  </p>
+                  <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                    <button 
+                      type="button"
+                      className="pagination-btn"
+                      style={{ background: 'var(--ff-accent)', color: '#fff', border: 'none' }}
+                      onClick={() => {
+                        setSelectedProduct({ name: `${selectedCategory} Supply Inquiry`, category: selectedCategory });
+                        setShowInquiryModal(true);
+                      }}
+                    >
+                      Inquire for Institutional Supply
+                    </button>
+                    <button 
+                      type="button"
+                      className="pagination-btn"
+                      style={{ background: '#f1f5f9', color: 'var(--ff-ink)', border: '1px solid var(--ff-border)' }}
+                      onClick={() => { setSearchTerm(''); setSelectedCategory('All Categories'); }}
+                    >
+                      View All Formulations
+                    </button>
+                  </div>
+                </div>
+              </div>
             ) : (
               <div className="no-results animate-fade-in">
                 <div className="no-results-content">
@@ -357,7 +488,7 @@ export default function Products() {
                     type="button"
                     className="pagination-btn"
                     style={{ background: 'var(--ff-accent)', color: '#fff', border: 'none', margin: '0 auto' }}
-                    onClick={() => { setSearchTerm(''); setSelectedCategory('All'); }}
+                    onClick={() => { setSearchTerm(''); setSelectedCategory('All Categories'); }}
                   >
                     Clear All Filters
                   </button>

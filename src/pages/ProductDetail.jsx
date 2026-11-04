@@ -214,8 +214,8 @@ export default function ProductDetail() {
                 <span className="az-spec-val">IP / BP / USP Pharmaceutical Quality</span>
               </div>
               <div className="az-spec-row">
-                <span className="az-spec-key">Manufacturer</span>
-                <span className="az-spec-val">WHO-GMP Compliant State-of-the-Art Cleanroom</span>
+                <span className="az-spec-key">Quality Standard</span>
+                <span className="az-spec-val">An ISO and GMP Pharmaceutical Company based in Karnal, Haryana</span>
               </div>
             </div>
 
@@ -242,13 +242,13 @@ export default function ProductDetail() {
                   <strong>Targeted Therapeutic Utility:</strong> {product.description || product.genericName}
                 </li>
                 <li>
-                  <strong>High Quality Assurance:</strong> Fully compliant with WHO-GMP manufacturing and rigorous analytical pharmacopeial assay tests.
+                  <strong>High Quality Assurance:</strong> Fully compliant with WHO-GMP and ISO standards with rigorous analytical pharmacopeial assay tests.
                 </li>
                 <li>
                   <strong>Packaging & Distribution:</strong> High barrier protective Alu-Alu / Blister / HDPE packaging preserving chemical stability and shelf life.
                 </li>
                 <li>
-                  <strong>Direct Inquiry:</strong> Available for PCD Pharma Franchise, third-party manufacturing, hospital orders, and ethical distributor partnerships across India.
+                  <strong>Direct Inquiry:</strong> Available for PCD Pharma Franchise, institutional supply, hospital orders, and ethical distributor partnerships across India.
                 </li>
               </ul>
             </div>
@@ -259,7 +259,7 @@ export default function ProductDetail() {
             <div className="az-buybox-card">
               <div className="az-buybox-status">
                 <span className="az-in-stock">Available for Supply</span>
-                <span className="az-supply-type">PCD Franchise & Third-Party Manufacturing</span>
+                <span className="az-supply-type">PCD Franchise &amp; Institutional Supply</span>
               </div>
 
               <div className="az-buybox-meta">
@@ -310,7 +310,7 @@ export default function ProductDetail() {
                 </div>
                 <div className="az-perk-item">
                   <Building2 size={16} className="az-perk-icon" />
-                  <span>Direct Corporate Manufacturer Price</span>
+                  <span>Direct Supply Price (ISO &amp; GMP Facility, Karnal)</span>
                 </div>
               </div>
             </div>

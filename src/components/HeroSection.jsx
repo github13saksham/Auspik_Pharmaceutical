@@ -227,7 +227,7 @@ export default function HeroSection() {
         <div className="hero-copy">
           <div className="wrap">
             <div className={`beat ${activeBeat === 0 ? 'on' : ''}`} data-beat="0">
-              <p className="eyebrow">Pharmaceutical manufacturer in Karnal, Haryana</p>
+              <p className="eyebrow">An ISO and GMP Pharmaceutical Company based in Karnal, Haryana</p>
               <h1 className="h-display">Advancing Healthcare With Precision &amp; Quality</h1>
               <p className="lede">
                 Syrups, tablets, capsules, softgels and creams for distributors, wholesalers and healthcare providers across India. High quality medicines, delivered in less time.
