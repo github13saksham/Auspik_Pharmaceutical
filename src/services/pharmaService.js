@@ -24,7 +24,7 @@ const seedSettings = {
   certifications: 'Dedicated to High Quality Medicines'
 };
 
-const CURRENT_VERSION = 'v5_scope_of_business_catalog_connected';
+const CURRENT_VERSION = 'v6_authentic_40_products_exact';
 
 // Initialize LocalStorage Data if Empty or if outdated data detected
 export const initLocalData = (forceReset = false) => {
@@ -69,7 +69,7 @@ export const getProducts = async () => {
     
     // Check if Firestore needs re-seeding: empty, has duplicate/old items, or doesn't have the new verified names (e.g. NEUROBEE FORTE)
     const needsReseed = querySnapshot.empty || 
-      docs.length !== seedProducts.length ||
+      docs.length !== 40 ||
       docs.some(p => p.name === 'NeuroXel-500' || p.name === 'CardioStat-40' || p.name?.startsWith('Auspik Formulation #') || p.name === 'Livpik Ayurvedic Liver Tonic');
 
     if (needsReseed) {
