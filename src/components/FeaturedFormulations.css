@@ -156,6 +156,19 @@
   mix-blend-mode: multiply;
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
+.ff__stage--custom {
+  background: #f1f5f9;
+}
+
+.ff__img--custom {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+  mix-blend-mode: normal !important;
+  border-radius: 14px;
+}
 .ff__card:hover .ff__img {
   transform: translateY(-4px) scale(1.08);
 }

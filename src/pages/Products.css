@@ -386,6 +386,20 @@
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
+/* User uploaded or custom full-bleed images */
+.ff-prod-stage--custom {
+  background: #f1f5f9;
+}
+
+.ff-prod-img--custom {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+  mix-blend-mode: normal !important;
+  border-radius: 14px;
+}
+
 .ff-prod-card:hover .ff-prod-img {
   transform: translateY(-4px) scale(1.08);
 }
