@@ -29,16 +29,25 @@ const CURRENT_VERSION = 'v6_authentic_40_products_exact';
 // Initialize LocalStorage Data if Empty or if outdated data detected
 export const initLocalData = (forceReset = false) => {
   if (typeof window === 'undefined') return;
-  const currentProds = localStorage.getItem('products');
-  const catalogVersion = localStorage.getItem('catalog_version');
-  const hasOutdatedData = !currentProds || 
-    currentProds.includes('Auspik Formulation #') || 
-    currentProds.includes('NeuroXel-500') || 
-    currentProds.includes('CardioStat-40') || 
-    catalogVersion !== CURRENT_VERSION;
-  
-  if (forceReset || hasOutdatedData) {
-    localStorage.setItem('products', JSON.stringify(seedProducts));
+  const rawProds = localStorage.getItem('products');
+  let currentProds = [];
+  try {
+    currentProds = rawProds ? JSON.parse(rawProds) : [];
+  } catch (e) {
+    currentProds = [];
+  }
+
+  const hasOutdatedDummyNames = rawProds && (
+    rawProds.includes('Auspik Formulation #') || 
+    rawProds.includes('NeuroXel-500') || 
+    rawProds.includes('CardioStat-40') ||
+    rawProds.includes('Livpik Ayurvedic Liver Tonic')
+  );
+
+  if (forceReset || !rawProds || currentProds.length === 0 || hasOutdatedDummyNames) {
+    // Preserve any custom items user added if fixing old dummy data
+    const customItems = currentProds.filter(p => !p.name?.startsWith('Auspik Formulation #') && p.name !== 'NeuroXel-500' && p.name !== 'CardioStat-40' && !seedProducts.some(sp => sp.id === p.id));
+    localStorage.setItem('products', JSON.stringify([...seedProducts, ...customItems]));
     localStorage.setItem('catalog_version', CURRENT_VERSION);
   }
   if (!localStorage.getItem('inquiries')) {
@@ -67,18 +76,23 @@ export const getProducts = async () => {
     const querySnapshot = await getDocs(collection(db, "products"));
     const docs = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     
-    // Check if Firestore needs re-seeding: empty, has duplicate/old items, or doesn't have the new verified names (e.g. NEUROBEE FORTE)
+    // Check if Firestore needs initial seeding: only if empty or contains legacy placeholders
     const needsReseed = querySnapshot.empty || 
-      docs.length !== 40 ||
       docs.some(p => p.name === 'NeuroXel-500' || p.name === 'CardioStat-40' || p.name?.startsWith('Auspik Formulation #') || p.name === 'Livpik Ayurvedic Liver Tonic');
 
     if (needsReseed) {
       console.log("Seeding authentic scope-connected products to Firebase Firestore...");
       const { deleteDoc } = await import('firebase/firestore');
       
-      // Delete any surplus/duplicate docs from Firestore
+      // Delete legacy/corrupt placeholder docs from Firestore, but keep any legitimate custom user-added products
       for (const d of querySnapshot.docs) {
-        if (!seedProducts.some(p => p.id === d.id)) {
+        const docData = d.data();
+        const isCorruptOrOld = docData.name === 'NeuroXel-500' || 
+          docData.name === 'CardioStat-40' || 
+          docData.name?.startsWith('Auspik Formulation #') || 
+          docData.name === 'Livpik Ayurvedic Liver Tonic';
+
+        if (isCorruptOrOld) {
           try {
             await deleteDoc(doc(db, "products", d.id));
           } catch (delErr) {
@@ -92,7 +106,10 @@ export const getProducts = async () => {
       for (const prod of seedProducts) {
         await setDoc(doc(productsRef, prod.id), prod);
       }
-      return seedProducts;
+      
+      // Re-fetch so any preserved custom products are included along with seedProducts
+      const updatedSnapshot = await getDocs(collection(db, "products"));
+      return updatedSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     }
     return docs;
   } catch (error) {

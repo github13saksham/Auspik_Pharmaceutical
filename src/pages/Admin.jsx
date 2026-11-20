@@ -14,7 +14,9 @@ import {
   Lock,
   Eye,
   EyeOff,
-  ArrowRight
+  ArrowRight,
+  Upload,
+  Image as ImageIcon
 } from 'lucide-react';
 import companyLogo from '../assets/Project_images/Pharma_Company_logo.jpeg';
 import { 
@@ -53,9 +55,12 @@ export default function Admin() {
     name: '',
     genericName: '',
     category: 'Tablets',
-    dosageForm: 'Tablet',
+    dosageForm: 'Film Coated Tablet',
+    packaging: '',
     indications: '',
-    image: ''
+    description: '',
+    image: '',
+    featured: false
   });
 
   // Load Data & Auth
@@ -85,14 +90,99 @@ export default function Admin() {
     return () => unsubscribe();
   }, []);
 
+  const [imageUploadLoading, setImageUploadLoading] = useState(false);
+  const [imageUploadError, setImageUploadError] = useState('');
+
+  // Handle local image file upload and optimize/convert to high quality data URL
+  const handleImageFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      setImageUploadError('Please select a valid image file (PNG, JPG, JPEG, WEBP).');
+      return;
+    }
+
+    // Limit raw file selection to 10MB
+    if (file.size > 10 * 1024 * 1024) {
+      setImageUploadError('Selected image is too large. Please select an image under 10MB.');
+      return;
+    }
+
+    setImageUploadLoading(true);
+    setImageUploadError('');
+
+    const reader = new FileReader();
+    reader.onerror = () => {
+      setImageUploadError('Failed to read image file.');
+      setImageUploadLoading(false);
+    };
+
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onerror = () => {
+        setImageUploadError('Could not process image.');
+        setImageUploadLoading(false);
+      };
+
+      img.onload = () => {
+        // Automatically optimize/resize image to standard web resolution if needed
+        const maxDim = 1200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Convert to web-optimized JPEG data URL
+        const optimizedDataUrl = canvas.toDataURL('image/jpeg', 0.88);
+        setNewProduct(prev => ({ ...prev, image: optimizedDataUrl }));
+        setImageUploadLoading(false);
+      };
+
+      img.src = event.target.result;
+    };
+
+    reader.readAsDataURL(file);
+  };
+
   const handleAddProductSubmit = async (e) => {
     e.preventDefault();
     if (!newProduct.name) return;
-    await addProduct(newProduct);
+    const prodToSave = {
+      ...newProduct,
+      image: newProduct.image?.trim() || '/product_images/WhatsApp Image 2026-09-28 at 11.50.14 AM.jpeg',
+      packaging: newProduct.packaging?.trim() || '10 x 10 Pack',
+      description: newProduct.description?.trim() || newProduct.indications || newProduct.genericName
+    };
+    await addProduct(prodToSave);
     const updated = await getProducts();
     setProducts(updated);
     setShowAddModal(false);
-    setNewProduct({ name: '', genericName: '', category: 'Tablets', dosageForm: 'Tablet', indications: '', image: '' });
+    setNewProduct({
+      name: '',
+      genericName: '',
+      category: 'Tablets',
+      dosageForm: 'Film Coated Tablet',
+      packaging: '',
+      indications: '',
+      description: '',
+      image: '',
+      featured: false
+    });
   };
 
   const handleDeleteProduct = async (id) => {
@@ -447,7 +537,7 @@ export default function Admin() {
                     </div>
                     <div className="form-row-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                       <div className="form-group mb-3">
-                        <label className="form-label">Therapeutic Category</label>
+                        <label className="form-label">Therapeutic Category *</label>
                         <select 
                           className="form-control"
                           value={newProduct.category}
@@ -455,47 +545,201 @@ export default function Admin() {
                         >
                           <option value="Tablets">Tablets</option>
                           <option value="Capsules">Capsules</option>
-                          <option value="Liquids Orals">Liquids Orals</option>
-                          <option value="Eye Drops">Eye Drops</option>
-                          <option value="Powders">Powders</option>
-                          <option value="Herbals">Herbals</option>
+                          <option value="Syrups">Syrups</option>
+                          <option value="Oral Liquids">Oral Liquids</option>
+                          <option value="Nutraceuticals">Nutraceuticals</option>
+                          <option value="Food Supplements">Food Supplements</option>
+                          <option value="Injectables">Injectables</option>
+                          <option value="Sterile Pharmaceutical Preparations">Sterile Pharmaceutical Preparations</option>
+                          <option value="Ophthalmic Preparations (Eye Drops & Eye Ointments)">Ophthalmic Preparations (Eye Drops & Eye Ointments)</option>
+                          <option value="Vitamins & Minerals">Vitamins & Minerals</option>
+                          <option value="Ointments & Topicals">Ointments & Topicals</option>
+                          <option value="Medical Devices">Medical Devices</option>
                         </select>
                       </div>
                       <div className="form-group mb-3">
-                        <label className="form-label">Dosage Form</label>
+                        <label className="form-label">Dosage Form *</label>
                         <select 
                           className="form-control"
                           value={newProduct.dosageForm}
                           onChange={e => setNewProduct({...newProduct, dosageForm: e.target.value})}
                         >
-                          <option value="Tablet">Tablet</option>
-                          <option value="Capsule">Capsule</option>
-                          <option value="Syrup (Oral Liquid)">Syrup (Oral Liquid)</option>
+                          <option value="Film Coated Tablet">Film Coated Tablet</option>
+                          <option value="Uncoated Tablet">Uncoated Tablet</option>
+                          <option value="Enteric Coated Tablet">Enteric Coated Tablet</option>
+                          <option value="Sustained Release Tablet">Sustained Release Tablet</option>
+                          <option value="Hard Gelatin Capsule">Hard Gelatin Capsule</option>
+                          <option value="Softgel Capsule">Softgel Capsule</option>
+                          <option value="Syrup">Syrup</option>
+                          <option value="Suspension">Suspension</option>
+                          <option value="Oral Solution (Nano Shot)">Oral Solution (Nano Shot)</option>
                           <option value="Eye Drops">Eye Drops</option>
-                          <option value="Dry Powder">Dry Powder</option>
-                          <option value="Herbal Formulation">Herbal Formulation</option>
+                          <option value="Eye Ointment">Eye Ointment</option>
+                          <option value="Injectable">Injectable</option>
+                          <option value="Gel">Gel</option>
+                          <option value="Cream">Cream</option>
+                          <option value="Ointment">Ointment</option>
+                          <option value="Ayurvedic Liver Tonic">Ayurvedic Liver Tonic</option>
+                          <option value="Dry Syrup / Powder">Dry Syrup / Powder</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="form-row-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                      <div className="form-group mb-3">
+                        <label className="form-label">Packaging Specification *</label>
+                        <input 
+                          type="text" 
+                          required
+                          className="form-control" 
+                          placeholder="e.g. 10 x 10 Tablets / 200 ml Bottle"
+                          value={newProduct.packaging}
+                          onChange={e => setNewProduct({...newProduct, packaging: e.target.value})}
+                        />
+                      </div>
+                      <div className="form-group mb-3">
+                        <label className="form-label">Featured Product</label>
+                        <select
+                          className="form-control"
+                          value={newProduct.featured ? 'yes' : 'no'}
+                          onChange={e => setNewProduct({...newProduct, featured: e.target.value === 'yes'})}
+                        >
+                          <option value="no">Standard Catalog Item</option>
+                          <option value="yes">★ Featured on Home & Highlights</option>
                         </select>
                       </div>
                     </div>
                     <div className="form-group mb-3">
-                      <label className="form-label">Image Path / URL (Optional)</label>
-                      <input 
-                        type="text" 
-                        className="form-control" 
-                        placeholder="/product_images/... or external link"
-                        value={newProduct.image}
-                        onChange={e => setNewProduct({...newProduct, image: e.target.value})}
-                      />
-                      <small className="text-muted text-sm">Leave empty to use default pack shot</small>
+                      <label className="form-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span>Product Pack Shot / Image</span>
+                        {newProduct.image && (
+                          <button
+                            type="button"
+                            className="text-xs text-red-600 hover:underline"
+                            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                            onClick={() => setNewProduct(prev => ({ ...prev, image: '' }))}
+                          >
+                            Remove Image
+                          </button>
+                        )}
+                      </label>
+                      
+                      {/* Image Upload Box */}
+                      <div 
+                        style={{
+                          border: '2px dashed #CBD5E1',
+                          borderRadius: '10px',
+                          padding: '1.25rem',
+                          textAlign: 'center',
+                          backgroundColor: '#F8FAFC',
+                          position: 'relative',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                          marginBottom: '0.75rem'
+                        }}
+                        onClick={() => document.getElementById('admin-product-file-input')?.click()}
+                      >
+                        <input 
+                          type="file" 
+                          id="admin-product-file-input"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={handleImageFileChange}
+                        />
+
+                        {imageUploadLoading ? (
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', color: '#0284C7' }}>
+                            <RefreshCw size={24} className="animate-spin" />
+                            <span style={{ fontSize: '0.875rem', fontWeight: 500 }}>Optimizing & uploading image...</span>
+                          </div>
+                        ) : newProduct.image ? (
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+                            <img 
+                              src={newProduct.image} 
+                              alt="Preview" 
+                              style={{ 
+                                width: '72px', 
+                                height: '72px', 
+                                objectFit: 'cover', 
+                                borderRadius: '8px', 
+                                border: '1px solid #E2E8F0',
+                                boxShadow: '0 2px 4px rgba(0,0,0,0.06)' 
+                              }} 
+                            />
+                            <div style={{ textAlign: 'left' }}>
+                              <span style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: '#16A34A' }}>
+                                ✓ Image ready
+                              </span>
+                              <span style={{ display: 'block', fontSize: '0.75rem', color: '#64748B' }}>
+                                Click to replace with another photo
+                              </span>
+                            </div>
+                          </div>
+                        ) : (
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.35rem' }}>
+                            <div style={{
+                              width: '40px',
+                              height: '40px',
+                              borderRadius: '50%',
+                              backgroundColor: '#E0F2FE',
+                              color: '#0284C7',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              marginBottom: '0.25rem'
+                            }}>
+                              <Upload size={20} />
+                            </div>
+                            <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#1E293B' }}>
+                              Click to upload product image
+                            </span>
+                            <span style={{ fontSize: '0.75rem', color: '#64748B' }}>
+                              Supports PNG, JPG, JPEG, WEBP (auto-optimized for web)
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {imageUploadError && (
+                        <p style={{ color: '#EF4444', fontSize: '0.8rem', marginTop: '-0.25rem', marginBottom: '0.5rem' }}>
+                          {imageUploadError}
+                        </p>
+                      )}
+
+                      {/* Fallback URL input option */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '0.75rem', color: '#94A3B8', whiteSpace: 'nowrap' }}>Or use image URL:</span>
+                        <input 
+                          type="text" 
+                          className="form-control" 
+                          style={{ fontSize: '0.8rem', padding: '0.35rem 0.6rem' }}
+                          placeholder="/product_images/... or https://..."
+                          value={newProduct.image?.startsWith('data:') ? '' : (newProduct.image || '')}
+                          onChange={e => setNewProduct({...newProduct, image: e.target.value})}
+                        />
+                      </div>
+                      <small className="text-muted text-sm" style={{ display: 'block', marginTop: '0.25rem' }}>
+                        If left blank, the standard Auspik pack packaging shot is automatically used.
+                      </small>
                     </div>
                     <div className="form-group mb-3">
-                      <label className="form-label">Indications / Therapeutic Notes</label>
+                      <label className="form-label">Therapeutic Indications *</label>
+                      <textarea 
+                        rows="2" 
+                        required
+                        className="form-control"
+                        placeholder="e.g. Relief of smooth muscle spasm, spasmodic dysmenorrhea, abdominal pain..."
+                        value={newProduct.indications}
+                        onChange={e => setNewProduct({...newProduct, indications: e.target.value})}
+                      ></textarea>
+                    </div>
+                    <div className="form-group mb-3">
+                      <label className="form-label">Detailed Formulation Description</label>
                       <textarea 
                         rows="3" 
                         className="form-control"
-                        placeholder="Clinical use, packaging details, storage instructions..."
-                        value={newProduct.indications}
-                        onChange={e => setNewProduct({...newProduct, indications: e.target.value})}
+                        placeholder="e.g. Synergistic antispasmodic and analgesic formulation containing active ingredients..."
+                        value={newProduct.description}
+                        onChange={e => setNewProduct({...newProduct, description: e.target.value})}
                       ></textarea>
                     </div>
                     <div className="flex justify-end gap-2 mt-4">
