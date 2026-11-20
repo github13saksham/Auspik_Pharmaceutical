@@ -152,15 +152,12 @@
 .ff__img {
   position: relative;
   z-index: 2;
-  width: 82%;
-  height: 82%;
-  max-height: 136px;
+  width: 90%;
+  height: 90%;
+  max-height: 142px;
   object-fit: contain;
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.ff__img[src*="/product_images/"],
-.ff__img[src*="WhatsApp%20Image"] {
   mix-blend-mode: multiply;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .ff__card:hover .ff__img {
   transform: translateY(-4px) scale(1.08);

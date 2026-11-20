@@ -381,17 +381,12 @@
 .ff-prod-img {
   position: relative;
   z-index: 2;
-  width: 82%;
-  height: 82%;
-  max-height: 136px;
+  width: 90%;
+  height: 90%;
+  max-height: 142px;
   object-fit: contain;
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-/* Authentic transparent or white pack shots blend with stage tint and circle disc */
-.ff-prod-img[src*="/product_images/"],
-.ff-prod-img[src*="WhatsApp%20Image"] {
   mix-blend-mode: multiply;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .ff-prod-card:hover .ff-prod-img {

@@ -195,8 +195,11 @@ export default function Admin() {
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
 
-        // Convert to web-optimized JPEG data URL
-        const optimizedDataUrl = canvas.toDataURL('image/jpeg', 0.88);
+        // Keep transparent PNG if uploaded as PNG, otherwise export as web-optimized PNG/JPEG
+        const isPng = file.type === 'image/png';
+        const optimizedDataUrl = isPng 
+          ? canvas.toDataURL('image/png')
+          : canvas.toDataURL('image/jpeg', 0.90);
         setNewProduct(prev => ({ ...prev, image: optimizedDataUrl }));
         setImageUploadLoading(false);
       };
