@@ -360,14 +360,12 @@ export default function Products() {
                       aria-label={`View formulation: ${product.name}`}
                     >
                       <div 
-                        className={`ff-prod-stage ${product.image && !product.image.includes('/product_images/') ? 'ff-prod-stage--custom' : ''}`}
+                        className="ff-prod-stage" 
                         style={{ "--tint": getProductTint(product.dosageForm || product.category, idx) }}
                       >
-                        {!product.image?.startsWith('data:') && !product.image?.includes('blob:') && (
-                          <span className="ff-prod-disc" aria-hidden="true" />
-                        )}
+                        <span className="ff-prod-disc" aria-hidden="true" />
                         <img 
-                          className={`ff-prod-img ${product.image && (product.image.startsWith('data:') || product.image.startsWith('http') || !product.image.includes('/product_images/')) ? 'ff-prod-img--custom' : ''}`}
+                          className="ff-prod-img" 
                           src={product.image} 
                           alt={`${product.name} pack`} 
                           loading="lazy" 

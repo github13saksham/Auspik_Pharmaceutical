@@ -146,28 +146,21 @@
   width: 128px;
   height: 128px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.65);
+  z-index: 1;
 }
 .ff__img {
   position: relative;
-  width: 78%;
-  max-height: 124px;
+  z-index: 2;
+  width: 82%;
+  height: 82%;
+  max-height: 136px;
   object-fit: contain;
-  mix-blend-mode: multiply;
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-
-.ff__stage--custom {
-  background: #f1f5f9;
-}
-
-.ff__img--custom {
-  width: 100% !important;
-  height: 100% !important;
-  max-height: 100% !important;
-  object-fit: cover !important;
-  mix-blend-mode: normal !important;
-  border-radius: 14px;
+.ff__img[src*="/product_images/"],
+.ff__img[src*="WhatsApp%20Image"] {
+  mix-blend-mode: multiply;
 }
 .ff__card:hover .ff__img {
   transform: translateY(-4px) scale(1.08);
