@@ -5,8 +5,6 @@ import {
   MessageSquare, 
   Settings, 
   LogOut, 
-  Check, 
-  Clock, 
   Plus, 
   Trash2, 
   RefreshCw,
@@ -16,7 +14,11 @@ import {
   EyeOff,
   ArrowRight,
   Upload,
-  Image as ImageIcon
+  Activity,
+  Users,
+  Globe,
+  TrendingUp,
+  Radio
 } from 'lucide-react';
 import companyLogo from '../assets/Project_images/Pharma_Company_logo.jpeg';
 import { 
@@ -31,7 +33,10 @@ import {
 } from '../services/pharmaService';
 import { ADMIN_EMAIL, auth } from '../firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { subscribeToAnalytics } from '../services/analyticsService';
 import './Admin.css';
+
+const initialAnalyticsTime = Date.now();
 
 export default function Admin() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -50,6 +55,9 @@ export default function Admin() {
   const [inquiries, setInquiries] = useState([]);
   const [settings, setSettingsData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [analytics, setAnalytics] = useState({ activeSessions: [], pageViews: [] });
+  const [analyticsError, setAnalyticsError] = useState('');
+  const [analyticsNow, setAnalyticsNow] = useState(initialAnalyticsTime);
   const [showAddModal, setShowAddModal] = useState(false);
   const [newProduct, setNewProduct] = useState({
     name: '',
@@ -89,6 +97,43 @@ export default function Admin() {
     loadData();
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (!user) return undefined;
+    return subscribeToAnalytics(setAnalytics, (error) => {
+      console.error('Unable to subscribe to website analytics:', error);
+      setAnalyticsError('Live analytics are unavailable. Check your Firestore rules and connection.');
+    });
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) return undefined;
+    const intervalId = window.setInterval(() => setAnalyticsNow(Date.now()), 10000);
+    return () => window.clearInterval(intervalId);
+  }, [user]);
+
+  const activeSessions = analytics.activeSessions.filter((session) => {
+    const lastSeen = session.lastSeen?.toDate?.().getTime();
+    return lastSeen && analyticsNow - lastSeen <= 90000;
+  }).sort((a, b) => b.lastSeen.toMillis() - a.lastSeen.toMillis());
+  const recentPageViews = analytics.pageViews
+    .map((view) => ({ ...view, viewedAt: view.createdAt?.toDate?.() }))
+    .filter((view) => view.viewedAt && analyticsNow - view.viewedAt.getTime() <= 24 * 60 * 60 * 1000);
+  const pageViewBuckets = Array.from({ length: 12 }, (_, index) => {
+    return recentPageViews.filter((view) => {
+      const age = analyticsNow - view.viewedAt.getTime();
+      return age >= (11 - index) * 2 * 60 * 60 * 1000
+        && age < (12 - index) * 2 * 60 * 60 * 1000;
+    }).length;
+  });
+  const chartMax = Math.max(...pageViewBuckets, 1);
+  const chartPoints = pageViewBuckets
+    .map((count, index) => `${(index / (pageViewBuckets.length - 1)) * 100},${100 - (count / chartMax) * 88}`)
+    .join(' ');
+  const popularPages = Object.entries(recentPageViews.reduce((counts, view) => {
+    counts[view.path] = (counts[view.path] || 0) + 1;
+    return counts;
+  }, {})).sort((a, b) => b[1] - a[1]).slice(0, 5);
 
   const [imageUploadLoading, setImageUploadLoading] = useState(false);
   const [imageUploadError, setImageUploadError] = useState('');
@@ -390,27 +435,42 @@ export default function Admin() {
       {/* Sidebar */}
       <aside className="admin-sidebar">
         <div className="admin-logo">
-          <h2>Ausptik Admin</h2>
+          <div className="admin-brand-mark">A</div>
+          <div className="admin-brand-copy">
+            <strong>Auspik</strong>
+            <span>ADMIN PORTAL</span>
+          </div>
         </div>
         <nav className="admin-nav">
           <button className={`admin-nav-item ${activeTab === 'dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('dashboard')}>
-            <LayoutDashboard size={20} /> Dashboard
+            <LayoutDashboard size={19} /><span>Overview</span>
+          </button>
+          <button className={`admin-nav-item ${activeTab === 'analytics' ? 'active' : ''}`} onClick={() => setActiveTab('analytics')}>
+            <Activity size={19} /><span>Analytics</span><span className="nav-live-dot" />
           </button>
           <button className={`admin-nav-item ${activeTab === 'products' ? 'active' : ''}`} onClick={() => setActiveTab('products')}>
-            <Package size={20} /> Products
+            <Package size={19} /><span>Products</span>
           </button>
           <button className={`admin-nav-item ${activeTab === 'inquiries' ? 'active' : ''}`} onClick={() => setActiveTab('inquiries')}>
-            <MessageSquare size={20} /> Inquiries
+            <MessageSquare size={19} /><span>Inquiries</span>
             {inquiries.filter(i => i.status === 'New').length > 0 && 
               <span className="badge-count">{inquiries.filter(i => i.status === 'New').length}</span>
             }
           </button>
           <button className={`admin-nav-item ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => setActiveTab('settings')}>
-            <Settings size={20} /> Settings
+            <Settings size={19} /><span>Settings</span>
           </button>
         </nav>
+        <div className="admin-sidebar-status">
+          <span className="status-indicator" />
+          <span>Consent-based analytics</span>
+        </div>
         <div className="admin-footer">
-          <button onClick={handleLogout} className="btn btn-secondary w-full" style={{ padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}><LogOut size={16} /> Exit Admin</button>
+          <div className="admin-profile">
+            <div className="admin-avatar">{user.email?.charAt(0).toUpperCase()}</div>
+            <div className="admin-profile-copy"><strong>Administrator</strong><span>{user.email}</span></div>
+            <button onClick={handleLogout} className="admin-logout" aria-label="Sign out"><LogOut size={17} /></button>
+          </div>
         </div>
       </aside>
 
@@ -420,33 +480,96 @@ export default function Admin() {
         {/* Dashboard Tab */}
         {activeTab === 'dashboard' && (
           <div className="animate-fade-in">
-            <h2 className="mb-4">Dashboard Overview</h2>
-            <div className="grid-3">
+            <header className="admin-page-header">
+              <div>
+                <span className="admin-eyebrow">AUSPIK / OVERVIEW</span>
+                <h1>Good to see you</h1>
+                <p>Your website activity and operations at a glance.</p>
+              </div>
+              <div className="admin-live-status"><span className="status-indicator" /> Live updates</div>
+            </header>
+
+            {analyticsError && <div className="analytics-error" role="alert">{analyticsError}</div>}
+
+            <div className="admin-stat-grid">
               <div className="stat-card">
-                <div className="stat-icon bg-primary"><Package size={24} color="white" /></div>
+                <div className="stat-icon stat-icon-blue"><Package size={21} /></div>
                 <div className="stat-info">
-                  <h3>Total Products</h3>
+                  <h3>Total products</h3>
                   <p>{products.length}</p>
                 </div>
               </div>
               <div className="stat-card">
-                <div className="stat-icon bg-warning"><MessageSquare size={24} color="white" /></div>
+                <div className="stat-icon stat-icon-amber"><MessageSquare size={21} /></div>
                 <div className="stat-info">
-                  <h3>New Inquiries</h3>
+                  <h3>New inquiries</h3>
                   <p>{inquiries.filter(i => i.status === 'New').length}</p>
                 </div>
               </div>
               <div className="stat-card">
-                <div className="stat-icon bg-success"><Check size={24} color="white" /></div>
+                <div className="stat-icon stat-icon-green"><Eye size={21} /></div>
                 <div className="stat-info">
-                  <h3>Resolved</h3>
-                  <p>{inquiries.filter(i => i.status === 'Completed').length}</p>
+                  <h3>Page views · 24h</h3>
+                  <p>{recentPageViews.length}</p>
+                </div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-icon stat-icon-purple"><Users size={21} /></div>
+                <div className="stat-info">
+                  <h3>Visitors online</h3>
+                  <p>{activeSessions.length}</p>
                 </div>
               </div>
             </div>
-            
-            <h3 className="mt-4 mb-2">Recent Inquiries</h3>
-            <div className="admin-card">
+
+            <div className="admin-dashboard-grid">
+              <section className="admin-card analytics-chart-card">
+                <div className="admin-card-heading">
+                  <div><h2>Website traffic</h2><p>Page views over the last 24 hours</p></div>
+                  <span className="live-tag"><span className="status-indicator" /> LIVE</span>
+                </div>
+                <div className="chart-summary"><strong>{recentPageViews.length}</strong><span>views tracked in the last 24 hours</span></div>
+                <div className="traffic-chart" role="img" aria-label={`Website page views over the past 24 hours. ${recentPageViews.length} total views.`}>
+                  <div className="chart-y-labels"><span>{chartMax}</span><span>{Math.ceil(chartMax / 2)}</span><span>0</span></div>
+                  <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                    <line x1="0" y1="12" x2="100" y2="12" />
+                    <line x1="0" y1="56" x2="100" y2="56" />
+                    <line x1="0" y1="99" x2="100" y2="99" />
+                    <polygon className="chart-area" points={`0,100 ${chartPoints} 100,100`} />
+                    <polyline className="chart-line" points={chartPoints} />
+                  </svg>
+                </div>
+                <div className="chart-x-labels"><span>24 hours ago</span><span>12 hours ago</span><span>Now</span></div>
+                <p className="analytics-sample-note">Showing up to the latest 500 page-view events.</p>
+              </section>
+
+              <section className="admin-card live-visitors-card">
+                <div className="admin-card-heading">
+                  <div><h2>Live visitors</h2><p>Active in the last 90 seconds</p></div>
+                  <span className="visitor-count">{activeSessions.length}</span>
+                </div>
+                {activeSessions.length ? (
+                  <ul className="visitor-list">
+                    {activeSessions.slice(0, 6).map((session) => (
+                      <li key={session.id}>
+                        <span className="visitor-dot" />
+                        <span className="visitor-path">{session.path}</span>
+                        <span className="visitor-time">{Math.max(0, Math.floor((analyticsNow - session.lastSeen.toMillis()) / 1000))}s ago</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div className="empty-analytics"><Radio size={22} /><span>No active visitors right now</span></div>
+                )}
+                <div className="privacy-note"><Globe size={14} /> Anonymous activity only — no personal data collected</div>
+              </section>
+            </div>
+
+            <section className="admin-card recent-inquiries-card">
+              <div className="admin-card-heading">
+                <div><h2>Recent inquiries</h2><p>The latest messages from your website</p></div>
+                <button className="admin-text-link" onClick={() => setActiveTab('inquiries')}>View all <ArrowRight size={15} /></button>
+              </div>
               <div className="table-responsive">
                 <table className="admin-table">
                   <thead>
@@ -469,7 +592,83 @@ export default function Admin() {
                   </tbody>
                 </table>
               </div>
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'analytics' && (
+          <div className="animate-fade-in">
+            <header className="admin-page-header">
+              <div>
+                <span className="admin-eyebrow">AUSPIK / INSIGHTS</span>
+                <h1>Website analytics</h1>
+                <p>Live visitor activity and recent page traffic.</p>
+              </div>
+              <div className="admin-live-status"><span className="status-indicator" /> Updating in real time</div>
+            </header>
+            {analyticsError && <div className="analytics-error" role="alert">{analyticsError}</div>}
+            <div className="admin-stat-grid analytics-stat-grid">
+              <div className="stat-card">
+                <div className="stat-icon stat-icon-blue"><Eye size={21} /></div>
+                <div className="stat-info"><h3>Page views · 24h</h3><p>{recentPageViews.length}</p></div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-icon stat-icon-purple"><Users size={21} /></div>
+                <div className="stat-info"><h3>Active visitors</h3><p>{activeSessions.length}</p></div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-icon stat-icon-green"><Globe size={21} /></div>
+                <div className="stat-info"><h3>Pages visited · 24h</h3><p>{new Set(recentPageViews.map((view) => view.path)).size}</p></div>
+              </div>
             </div>
+            <div className="admin-dashboard-grid analytics-detail-grid">
+              <section className="admin-card analytics-chart-card">
+                <div className="admin-card-heading">
+                  <div><h2>Traffic activity</h2><p>Page views grouped into two-hour intervals</p></div>
+                  <span className="live-tag"><span className="status-indicator" /> LIVE</span>
+                </div>
+                <div className="chart-summary"><strong>{recentPageViews.length}</strong><span>views tracked in the last 24 hours</span></div>
+                <div className="traffic-chart large" role="img" aria-label={`Website page views over the past 24 hours. ${recentPageViews.length} total views.`}>
+                  <div className="chart-y-labels"><span>{chartMax}</span><span>{Math.ceil(chartMax / 2)}</span><span>0</span></div>
+                  <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                    <line x1="0" y1="12" x2="100" y2="12" />
+                    <line x1="0" y1="56" x2="100" y2="56" />
+                    <line x1="0" y1="99" x2="100" y2="99" />
+                    <polygon className="chart-area" points={`0,100 ${chartPoints} 100,100`} />
+                    <polyline className="chart-line" points={chartPoints} />
+                  </svg>
+                </div>
+                <div className="chart-x-labels"><span>24 hours ago</span><span>12 hours ago</span><span>Now</span></div>
+                <p className="analytics-sample-note">Showing up to the latest 500 page-view events.</p>
+              </section>
+              <section className="admin-card">
+                <div className="admin-card-heading"><div><h2>Most visited pages</h2><p>Based on the latest tracked page views</p></div><TrendingUp size={19} /></div>
+                {popularPages.length ? (
+                  <ul className="popular-page-list">
+                    {popularPages.map(([path, count]) => (
+                      <li key={path}><span>{path}</span><strong>{count}<small> views</small></strong></li>
+                    ))}
+                  </ul>
+                ) : <div className="empty-analytics"><Activity size={22} /><span>Page view data will appear here</span></div>}
+              </section>
+            </div>
+            <section className="admin-card live-session-table">
+              <div className="admin-card-heading"><div><h2>Visitors online now</h2><p>Anonymous sessions active within the last 90 seconds</p></div><span className="visitor-count">{activeSessions.length}</span></div>
+              {activeSessions.length ? (
+                <div className="table-responsive">
+                  <table className="admin-table">
+                    <thead><tr><th>Page</th><th>Activity</th></tr></thead>
+                    <tbody>{activeSessions.map((session) => (
+                      <tr key={session.id}>
+                        <td><span className="visitor-dot table-visitor-dot" />{session.path}</td>
+                        <td>Last seen {Math.max(0, Math.floor((analyticsNow - session.lastSeen.toMillis()) / 1000))} seconds ago</td>
+                      </tr>
+                    ))}</tbody>
+                  </table>
+                </div>
+              ) : <div className="empty-analytics"><Radio size={22} /><span>No active visitors at the moment</span></div>}
+              <div className="privacy-note"><Globe size={14} /> Visitor counts are approximate and use anonymous session IDs.</div>
+            </section>
           </div>
         )}
 

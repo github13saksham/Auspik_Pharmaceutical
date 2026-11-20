@@ -18,7 +18,8 @@ export default function CookieConsent() {
       if (typeof window !== 'undefined' && window.localStorage) {
         localStorage.setItem('auspik_cookie_consent', 'accepted');
       }
-    } catch (e) {}
+    } catch {}
+    window.dispatchEvent(new Event('auspik-cookie-consent-change'));
     setShowConsent(false);
   };
 
@@ -27,7 +28,8 @@ export default function CookieConsent() {
       if (typeof window !== 'undefined' && window.localStorage) {
         localStorage.setItem('auspik_cookie_consent', 'dismissed');
       }
-    } catch (e) {}
+    } catch {}
+    window.dispatchEvent(new Event('auspik-cookie-consent-change'));
     setShowConsent(false);
   };
 
@@ -41,7 +43,7 @@ export default function CookieConsent() {
             <Cookie size={16} />
           </div>
           <p className="cookie-pill-text">
-            We consume cookies to guarantee high-quality pharmaceutical service and secure formulation inquiries.
+            Optional anonymous analytics help us understand website visits. Choose Essential Only to opt out.
           </p>
         </div>
 

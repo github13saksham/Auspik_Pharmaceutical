@@ -6,12 +6,49 @@ import WhatsAppWidget from './WhatsAppWidget';
 import CookieConsent from './CookieConsent';
 import WelcomeModal from './WelcomeModal';
 import WebsiteSkeleton from './WebsiteSkeleton';
+import { recordPageView, startVisitorPresence } from '../services/analyticsService';
 
 export default function Layout({ settings }) {
   const location = useLocation();
+  const currentPath = useRef(location.pathname);
+  const trackedPath = useRef(null);
+  const [analyticsConsent, setAnalyticsConsent] = useState(false);
   const [isPageReady, setIsPageReady] = useState(false);
   // Track visited routes so skeleton shows ONLY ONCE per page
   const visitedRoutes = useRef(new Set());
+
+  useEffect(() => {
+    currentPath.current = location.pathname;
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const syncConsent = () => {
+      try {
+        setAnalyticsConsent(window.localStorage.getItem('auspik_cookie_consent') === 'accepted');
+      } catch (error) {
+        console.warn('Unable to read analytics consent:', error);
+        setAnalyticsConsent(false);
+      }
+    };
+
+    syncConsent();
+    window.addEventListener('auspik-cookie-consent-change', syncConsent);
+    return () => window.removeEventListener('auspik-cookie-consent-change', syncConsent);
+  }, []);
+
+  useEffect(() => {
+    if (!analyticsConsent) return undefined;
+    return startVisitorPresence(currentPath);
+  }, [analyticsConsent]);
+
+  useEffect(() => {
+    if (!analyticsConsent) return;
+    if (trackedPath.current === location.pathname) return;
+    trackedPath.current = location.pathname;
+    recordPageView(location.pathname).catch((error) => {
+      console.error('Unable to record website page view:', error);
+    });
+  }, [analyticsConsent, location.pathname]);
 
   useEffect(() => {
     const currentPath = location.pathname;
