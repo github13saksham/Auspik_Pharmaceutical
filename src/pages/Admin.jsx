@@ -14,6 +14,7 @@ import {
   EyeOff,
   ArrowRight,
   Upload,
+  Edit2,
   Activity,
   Users,
   Globe,
@@ -24,6 +25,7 @@ import companyLogo from '../assets/Project_images/Pharma_Company_logo.jpeg';
 import { 
   getProducts, 
   addProduct, 
+  updateProduct,
   deleteProduct, 
   resetProductsToRealSeed, 
   getInquiries, 
@@ -59,6 +61,7 @@ export default function Admin() {
   const [analyticsError, setAnalyticsError] = useState('');
   const [analyticsNow, setAnalyticsNow] = useState(initialAnalyticsTime);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
   const [newProduct, setNewProduct] = useState({
     name: '',
     genericName: '',
@@ -204,6 +207,40 @@ export default function Admin() {
     reader.readAsDataURL(file);
   };
 
+  const handleOpenAddModal = () => {
+    setEditingProduct(null);
+    setNewProduct({
+      name: '',
+      genericName: '',
+      category: 'Tablets',
+      dosageForm: 'Film Coated Tablet',
+      packaging: '',
+      indications: '',
+      description: '',
+      image: '',
+      featured: false
+    });
+    setImageUploadError('');
+    setShowAddModal(true);
+  };
+
+  const handleOpenEditModal = (prod) => {
+    setEditingProduct(prod);
+    setNewProduct({
+      name: prod.name || '',
+      genericName: prod.genericName || '',
+      category: prod.category || 'Tablets',
+      dosageForm: prod.dosageForm || 'Film Coated Tablet',
+      packaging: prod.packaging || '',
+      indications: prod.indications || '',
+      description: prod.description || '',
+      image: prod.image || '',
+      featured: Boolean(prod.featured)
+    });
+    setImageUploadError('');
+    setShowAddModal(true);
+  };
+
   const handleAddProductSubmit = async (e) => {
     e.preventDefault();
     if (!newProduct.name) return;
@@ -213,10 +250,17 @@ export default function Admin() {
       packaging: newProduct.packaging?.trim() || '10 x 10 Pack',
       description: newProduct.description?.trim() || newProduct.indications || newProduct.genericName
     };
-    await addProduct(prodToSave);
+
+    if (editingProduct) {
+      await updateProduct(editingProduct.id, prodToSave);
+    } else {
+      await addProduct(prodToSave);
+    }
+
     const updated = await getProducts();
     setProducts(updated);
     setShowAddModal(false);
+    setEditingProduct(null);
     setNewProduct({
       name: '',
       genericName: '',
@@ -691,7 +735,7 @@ export default function Admin() {
                 </button>
                 <button 
                   className="btn btn-primary flex items-center gap-1"
-                  onClick={() => setShowAddModal(true)}
+                  onClick={handleOpenAddModal}
                 >
                   <Plus size={16} />
                   <span>Add New Product</span>
@@ -708,8 +752,10 @@ export default function Admin() {
               }}>
                 <div className="admin-card" style={{ maxWidth: '540px', width: '100%', maxHeight: '90vh', overflowY: 'auto' }}>
                   <div className="flex justify-between items-center mb-3">
-                    <h3 style={{ margin: 0 }}>Add New Pharmaceutical Product</h3>
-                    <button className="btn-icon" onClick={() => setShowAddModal(false)} style={{ fontSize: '1.25rem' }}>✕</button>
+                    <h3 style={{ margin: 0 }}>
+                      {editingProduct ? 'Edit Pharmaceutical Product' : 'Add New Pharmaceutical Product'}
+                    </h3>
+                    <button className="btn-icon" onClick={() => { setShowAddModal(false); setEditingProduct(null); }} style={{ fontSize: '1.25rem' }}>✕</button>
                   </div>
                   <form onSubmit={handleAddProductSubmit}>
                     <div className="form-group mb-3">
@@ -942,8 +988,10 @@ export default function Admin() {
                       ></textarea>
                     </div>
                     <div className="flex justify-end gap-2 mt-4">
-                      <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}>Cancel</button>
-                      <button type="submit" className="btn btn-primary">Save Product</button>
+                      <button type="button" className="btn btn-secondary" onClick={() => { setShowAddModal(false); setEditingProduct(null); }}>Cancel</button>
+                      <button type="submit" className="btn btn-primary">
+                        {editingProduct ? 'Save Changes' : 'Save Product'}
+                      </button>
                     </div>
                   </form>
                 </div>
@@ -980,14 +1028,24 @@ export default function Admin() {
                         <td><span className="badge-sm bg-light">{prod.category}</span></td>
                         <td>{prod.dosageForm}</td>
                         <td>
-                          <button 
-                            className="btn-icon" 
-                            onClick={() => handleDeleteProduct(prod.id)}
-                            title="Delete Formulation"
-                            style={{ color: '#EF4444' }}
-                          >
-                            <Trash2 size={16} />
-                          </button>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                            <button 
+                              className="btn-icon" 
+                              onClick={() => handleOpenEditModal(prod)}
+                              title="Edit Formulation"
+                              style={{ color: '#0284C7' }}
+                            >
+                              <Edit2 size={16} />
+                            </button>
+                            <button 
+                              className="btn-icon" 
+                              onClick={() => handleDeleteProduct(prod.id)}
+                              title="Delete Formulation"
+                              style={{ color: '#EF4444' }}
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}

@@ -141,6 +141,42 @@ export const addProduct = async (productData) => {
   return product;
 };
 
+export const updateProduct = async (productId, updatedData) => {
+  if (useLocalStorage) {
+    await delay(200);
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+    const index = products.findIndex(p => String(p.id) === String(productId));
+    if (index !== -1) {
+      products[index] = { ...products[index], ...updatedData, id: productId };
+      localStorage.setItem('products', JSON.stringify(products));
+      return products[index];
+    }
+    return null;
+  }
+  try {
+    const productRef = doc(db, "products", String(productId));
+    await setDoc(productRef, { ...updatedData, id: String(productId) }, { merge: true });
+    // Also keep local storage mirror updated if present
+    const local = JSON.parse(localStorage.getItem('products')) || [];
+    const idx = local.findIndex(p => String(p.id) === String(productId));
+    if (idx !== -1) {
+      local[idx] = { ...local[idx], ...updatedData, id: String(productId) };
+      localStorage.setItem('products', JSON.stringify(local));
+    }
+    return { ...updatedData, id: String(productId) };
+  } catch (e) {
+    console.error("Error updating product in DB, saving locally:", e);
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+    const index = products.findIndex(p => String(p.id) === String(productId));
+    if (index !== -1) {
+      products[index] = { ...products[index], ...updatedData, id: productId };
+      localStorage.setItem('products', JSON.stringify(products));
+      return products[index];
+    }
+    return null;
+  }
+};
+
 export const deleteProduct = async (productId) => {
   if (useLocalStorage) {
     await delay(200);

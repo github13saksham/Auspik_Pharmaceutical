@@ -1038,21 +1038,23 @@
 
 .az-rel-go {
   display: inline-flex;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   border-radius: 50%;
-  background: #dee9fb;
-  color: #2563eb;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .az-related-item:hover .az-rel-go {
-  transform: translateX(3px);
-  background: #2563eb;
+  transform: translateX(3px) scale(1.05);
+  background: #1d4fd7;
   color: #ffffff;
+  box-shadow: 0 6px 14px rgba(29, 79, 215, 0.38);
 }
 
 @media (max-width: 1024px) {

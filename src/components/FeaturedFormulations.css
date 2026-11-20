@@ -212,17 +212,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: #dee9fb;
-  color: var(--ff-accent);
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
-}
-.ff__card:hover .ff__go {
   background: var(--ff-accent);
   color: #fff;
-  transform: translateX(3px);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.ff__card:hover .ff__go {
+  background: var(--ff-accent-dark, #1d4fd7);
+  color: #fff;
+  transform: translateX(3px) scale(1.05);
+  box-shadow: 0 6px 14px rgba(29, 79, 215, 0.38);
 }
 
 /* controls */
