@@ -6,6 +6,81 @@
   padding-top: 80px;
 }
 
+.admin-new-product-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.admin-new-product-toggle strong,
+.admin-new-product-toggle small {
+  display: block;
+}
+
+.admin-new-product-toggle strong {
+  color: #1e293b;
+  font-size: 0.9rem;
+}
+
+.admin-new-product-toggle small {
+  margin-top: 0.2rem;
+  color: #64748b;
+  font-size: 0.76rem;
+}
+
+.admin-toggle {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.admin-toggle input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.admin-toggle-track {
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: #cbd5e1;
+  transition: background-color 0.2s ease;
+}
+
+.admin-toggle-track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.admin-toggle input:checked + .admin-toggle-track {
+  background: #2563eb;
+}
+
+.admin-toggle input:checked + .admin-toggle-track::after {
+  transform: translateX(18px);
+}
+
+.admin-toggle input:focus-visible + .admin-toggle-track {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
 .admin-sidebar {
   width: 260px;
   background-color: white;

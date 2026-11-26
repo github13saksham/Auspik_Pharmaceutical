@@ -32,6 +32,19 @@ export default function ProductDetail() {
   const [showInquiryModal, setShowInquiryModal] = useState(false);
   const [copied, setCopied] = useState(false);
   const [shareError, setShareError] = useState('');
+  const [isImageHovered, setIsImageHovered] = useState(false);
+  const [pinnedPreviewProductId, setPinnedPreviewProductId] = useState(null);
+  const [zoomPosition, setZoomPosition] = useState({ x: 0.5, y: 0.5 });
+  const isZoomPreviewPinned = pinnedPreviewProductId === id;
+  const showZoomPreview = isImageHovered || isZoomPreviewPinned;
+
+  const handleImagePointerMove = (event) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    setZoomPosition({
+      x: Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width)),
+      y: Math.max(0, Math.min(1, (event.clientY - bounds.top) / bounds.height))
+    });
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -168,15 +181,38 @@ export default function ProductDetail() {
           {/* COLUMN 1: Visual Sticky Gallery */}
           <div className="az-image-column">
             <div className="az-sticky-image-wrap">
-              <div className="az-main-image-viewport">
+              <button
+                type="button"
+                className="az-main-image-viewport"
+                onPointerEnter={() => setIsImageHovered(true)}
+                onPointerLeave={() => setIsImageHovered(false)}
+                onPointerMove={handleImagePointerMove}
+                onFocus={() => setIsImageHovered(true)}
+                onBlur={() => setIsImageHovered(false)}
+                onClick={() => setPinnedPreviewProductId(pinnedId => pinnedId === id ? null : id)}
+                aria-label="Show a magnified product image preview"
+                aria-expanded={showZoomPreview}
+              >
                 <img 
                   src={product.image} 
                   alt={product.name} 
                   className="az-product-img"
                   loading="eager"
                 />
-              </div>
-              <p className="az-image-caption">Hover or tap on image to inspect formulation details</p>
+              </button>
+              {showZoomPreview && (
+                <div
+                  className="az-image-zoom-preview"
+                  style={{
+                    '--zoom-x': `${zoomPosition.x * 250}%`,
+                    '--zoom-y': `${zoomPosition.y * 250}%`
+                  }}
+                  aria-hidden="true"
+                >
+                  <img src={product.image} alt="" />
+                </div>
+              )}
+              <p className="az-image-caption">Hover or tap the image to inspect it in the zoom preview</p>
             </div>
           </div>
 

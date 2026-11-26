@@ -71,7 +71,8 @@ export default function Admin() {
     indications: '',
     description: '',
     image: '',
-    featured: false
+    featured: false,
+    isNew: false
   });
 
   // Load Data & Auth
@@ -221,7 +222,8 @@ export default function Admin() {
       indications: '',
       description: '',
       image: '',
-      featured: false
+      featured: false,
+      isNew: false
     });
     setImageUploadError('');
     setShowAddModal(true);
@@ -238,7 +240,8 @@ export default function Admin() {
       indications: prod.indications || '',
       description: prod.description || '',
       image: prod.image || '',
-      featured: Boolean(prod.featured)
+      featured: Boolean(prod.featured),
+      isNew: Boolean(prod.isNew)
     });
     setImageUploadError('');
     setShowAddModal(true);
@@ -246,9 +249,15 @@ export default function Admin() {
 
   const handleAddProductSubmit = async (e) => {
     e.preventDefault();
-    if (!newProduct.name) return;
+    if (!newProduct.name.trim() || !newProduct.dosageForm.trim()) {
+      window.alert('Please enter the product name and dosage form.');
+      return;
+    }
     const prodToSave = {
       ...newProduct,
+      name: newProduct.name.trim(),
+      genericName: newProduct.genericName.trim(),
+      dosageForm: newProduct.dosageForm.trim(),
       image: newProduct.image?.trim() || '/product_images/WhatsApp Image 2026-09-28 at 11.50.14 AM.jpeg',
       packaging: newProduct.packaging?.trim() || '10 x 10 Pack',
       description: newProduct.description?.trim() || newProduct.indications || newProduct.genericName
@@ -273,7 +282,8 @@ export default function Admin() {
       indications: '',
       description: '',
       image: '',
-      featured: false
+      featured: false,
+      isNew: false
     });
   };
 
@@ -807,29 +817,14 @@ export default function Admin() {
                       </div>
                       <div className="form-group mb-3">
                         <label className="form-label">Dosage Form *</label>
-                        <select 
+                        <input
+                          type="text"
+                          required
                           className="form-control"
+                          placeholder="e.g. Film Coated Tablet"
                           value={newProduct.dosageForm}
                           onChange={e => setNewProduct({...newProduct, dosageForm: e.target.value})}
-                        >
-                          <option value="Film Coated Tablet">Film Coated Tablet</option>
-                          <option value="Uncoated Tablet">Uncoated Tablet</option>
-                          <option value="Enteric Coated Tablet">Enteric Coated Tablet</option>
-                          <option value="Sustained Release Tablet">Sustained Release Tablet</option>
-                          <option value="Hard Gelatin Capsule">Hard Gelatin Capsule</option>
-                          <option value="Softgel Capsule">Softgel Capsule</option>
-                          <option value="Syrup">Syrup</option>
-                          <option value="Suspension">Suspension</option>
-                          <option value="Oral Solution (Nano Shot)">Oral Solution (Nano Shot)</option>
-                          <option value="Eye Drops">Eye Drops</option>
-                          <option value="Eye Ointment">Eye Ointment</option>
-                          <option value="Injectable">Injectable</option>
-                          <option value="Gel">Gel</option>
-                          <option value="Cream">Cream</option>
-                          <option value="Ointment">Ointment</option>
-                          <option value="Ayurvedic Liver Tonic">Ayurvedic Liver Tonic</option>
-                          <option value="Dry Syrup / Powder">Dry Syrup / Powder</option>
-                        </select>
+                        />
                       </div>
                     </div>
                     <div className="form-row-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
@@ -856,6 +851,21 @@ export default function Admin() {
                         </select>
                       </div>
                     </div>
+                    <label className="admin-new-product-toggle">
+                      <span>
+                        <strong>Show “New” label</strong>
+                        <small>Display a New badge on this product’s catalog card.</small>
+                      </span>
+                      <span className="admin-toggle">
+                        <input
+                          type="checkbox"
+                          checked={newProduct.isNew}
+                          onChange={e => setNewProduct({ ...newProduct, isNew: e.target.checked })}
+                          aria-label="Show New label on product card"
+                        />
+                        <span className="admin-toggle-track" aria-hidden="true" />
+                      </span>
+                    </label>
                     <div className="form-group mb-3">
                       <label className="form-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <span>Product Pack Shot / Image</span>

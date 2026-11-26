@@ -193,11 +193,10 @@ export default function Products() {
     
     if (searchTerm) {
       const lowerTerm = searchTerm.toLowerCase();
-      result = result.filter(p => 
-        p.name.toLowerCase().includes(lowerTerm) || 
-        p.genericName.toLowerCase().includes(lowerTerm) ||
-        (p.category && p.category.toLowerCase().includes(lowerTerm)) ||
-        (p.dosageForm && p.dosageForm.toLowerCase().includes(lowerTerm))
+      result = result.filter(p =>
+        [p.name, p.genericName, p.category, p.dosageForm]
+          .filter(Boolean)
+          .some(value => String(value).toLowerCase().includes(lowerTerm))
       );
     }
     
@@ -359,6 +358,9 @@ export default function Products() {
                       className="ff-prod-card"
                       aria-label={`View formulation: ${product.name}`}
                     >
+                    {product.isNew && (
+                      <span className="ff-prod-new-badge">New</span>
+                    )}
                       <div 
                         className="ff-prod-stage" 
                         style={{ "--tint": getProductTint(product.dosageForm || product.category, idx) }}
@@ -374,7 +376,7 @@ export default function Products() {
 
                       <div className="ff-prod-body">
                         <span className="ff-prod-form">
-                          {product.dosageForm || product.category || 'Formulation'}
+                          {String(product.dosageForm || '').trim() || product.category || 'Formulation'}
                         </span>
                         <h3 className="ff-prod-name">{product.name}</h3>
                         <p className="ff-prod-comp">

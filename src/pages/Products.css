@@ -333,6 +333,7 @@
    Featured Formulation Card Style (Identical to Homepage)
    ============================================================ */
 .ff-prod-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -354,6 +355,23 @@
 .ff-prod-card:focus-visible {
   outline: 2px solid var(--ff-accent);
   outline-offset: 3px;
+}
+
+.ff-prod-new-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 3;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  background: #dc2626;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(127, 29, 29, 0.2);
 }
 
 /* Card Stage (with colored disc background) */
